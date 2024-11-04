@@ -1,14 +1,14 @@
 import React, { ReactNode } from "react";
 import { MainHeader } from "../MainHeader/main-header.component";
 import { Categories } from "../Categories/categories.component";
-import { Sreadcrumbs } from "../Breadcrumbs/breadcrumbs.component";
+import { Breadcrumbs } from "../Breadcrumbs/breadcrumbs.component";
 import { Footer } from "../Footer/footer.component";
 
-interface ILayout {
+interface Props {
   children: ReactNode;
 }
 
-export const Layout: React.FC<ILayout> = ({ children }) => {
+export const Layout: React.FC<Props> = ({ children }) => {
   return (
     <div className="w-full px-[45px] mx-auto flex flex-col min-h-screen">
       <div className="h-[48px] px-[45px] flex items-center justify-between border-b border-style: solid border-gray-200">
@@ -25,7 +25,7 @@ export const Layout: React.FC<ILayout> = ({ children }) => {
       </div>
       <MainHeader />
       <Categories />
-      <Sreadcrumbs />
+      <Breadcrumbs />
       <div className="flex-grow">{children}</div>
       <Footer />
     </div>
