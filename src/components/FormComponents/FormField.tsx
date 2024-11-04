@@ -19,16 +19,10 @@ const FormField: React.FC<IFieldProps> = ({
   placeholder,
   error,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
   return (
-    <FormControl
-      variant="standard"
-      error={true}
-      classes={classes}
-    >
-      <Label
-        htmlFor="input1"
-      >
+    <FormControl variant="standard" error={true} classes={classes}>
+      <Label htmlFor="input1" error={error ? true : false}>
         {label}
       </Label>
       <Input
@@ -45,7 +39,7 @@ const FormField: React.FC<IFieldProps> = ({
 const useStyles = makeStyles(() => {
   return {
     root: {
-      alignItems: 'flex-start'
+      alignItems: "flex-start",
     },
   };
 });

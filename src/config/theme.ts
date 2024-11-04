@@ -1,16 +1,5 @@
 import { createTheme } from "@mui/material/styles";
 
-export interface ButtonStyles {
-  border: string;
-  background: string;
-}
-
-export interface ButtonConfig {
-  primary: ButtonStyles;
-  secondary: ButtonStyles;
-  radius: string;
-}
-
 export interface Font {
   fontWeight?: number;
   fontFamily?: "Open Sans" | "Poppins";
@@ -32,11 +21,29 @@ declare module "@mui/material/styles" {
         default: string;
         radius: string;
       };
+      height: string;
+      padding: string;
     };
+
     button: {
-      primary: ButtonStyles;
-      secondary: ButtonStyles;
-      radius: string;
+      background: {
+        primary: string;
+        secondary: string;
+      };
+      color: {
+        primary: string;
+        secondary: string;
+      };
+      borderRadius: string;
+      border: {
+        primary: string;
+        secondary: string;
+      };
+      sizes: {
+        small: { height: string; padding: string };
+        medium: { height: string; padding: string };
+        large: { height: string; padding: string };
+      };
     };
   }
 
@@ -49,49 +56,64 @@ declare module "@mui/material/styles" {
         default?: string;
         radius?: string;
       };
+      height?: string;
+      padding?: string;
     };
+
     button?: {
-      primary?: ButtonStyles;
-      secondary?: ButtonStyles;
-      radius?: string;
+      background?: {
+        primary?: string;
+        secondary?: string;
+      };
+      color?: {
+        primary?: string;
+        secondary?: string;
+      };
+      borderRadius?: string;
+      border?: {
+        primary: string;
+        secondary: string;
+      };
+      sizes?: {
+        small?: { height: string; padding: string };
+        medium?: { height: string; padding: string };
+        large?: { height: string; padding: string };
+      };
     };
   }
 }
 
 export const theme = createTheme({
-  // typography: {
-  //   fontFamily: "Poppins, Open Sans, Arial, sans-serif",
-  //   caption: {
-  //     fontWeight: 400,
-  //     fontFamily: "Open Sans",
-  //     fontSize: "12px",
-  //   },
-  //   bodyDefault: {
-  //     fontWeight: 400,
-  //     fontFamily: "Open Sans",
-  //     fontSize: "14px",
-  //   },
-  //   subtitle: { fontFamily: "Poppins, sans-serif" },
-  // },
   input: {
     background: {
       default: "rgba(249, 249, 249, 1)",
     },
     border: {
-      default: "rgba(209, 209, 209, 1)",
+      default: "1px solid rgba(209, 209, 209, 1)",
       radius: "12px",
     },
+    height: "42px",
+    padding: "0 20px",
   },
 
   button: {
-    primary: {
-      border: "2px solid rgba(70, 118, 10, 1)",
-      background: "rgba(106, 152, 60, 1)",
+    background: {
+      primary: "rgba(106, 152, 60, 1)",
+      secondary: "rgba(245, 245, 245, 1)",
     },
-    secondary: {
-      border: "2px solid transparent",
-      background: "rgba(245, 245, 245, 1)",
+    color: {
+      primary: "white",
+      secondary: "black",
     },
-    radius: "12px",
+    borderRadius: "12px",
+    border: {
+      primary: "2px solid rgba(70, 118, 10, 1)",
+      secondary: "none",
+    },
+    sizes: {
+      small: { height: "36px", padding: "0 10px" },
+      medium: { height: "47px", padding: "0 14px" },
+      large: { height: "56px", padding: "0 46px" },
+    },
   },
 });

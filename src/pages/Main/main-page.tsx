@@ -1,4 +1,5 @@
 import { Button } from "../../components/Button/Button";
+
 import FormField from "../../components/FormComponents/FormField";
 import Input from "../../components/FormComponents/Input";
 
@@ -12,7 +13,7 @@ export const Main = () => {
       large
       <Button size="large">Complete order</Button>
       Color primary
-      <Button color="primary">Submit</Button>
+      <Button color="primary">open Modal</Button>
       secondary
       <Button color="secondary">Add to wish list</Button>
       <FormField label="lsda" error="name is required" />

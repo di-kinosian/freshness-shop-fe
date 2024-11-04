@@ -1,4 +1,4 @@
-import { Button as MuiButton, ButtonProps } from "@mui/material";
+import { Button as MuiButton, ButtonProps, Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 interface Props extends ButtonProps {
@@ -11,44 +11,46 @@ export const Button: React.FC<Props> = ({
   ...props
 }) => {
   const classes = useStyles(props.color);
+
   return (
-    <MuiButton
-      classes={classes}
-      variant={variant}
-      {...props}
-    >
+    <MuiButton classes={classes} variant={variant} {...props}>
       {children}
     </MuiButton>
   );
 };
 
-const useStyles = makeStyles(() => {
+const useStyles = makeStyles((theme: Theme) => {
   return {
     root: {
       "&.MuiButtonBase-root": {
         boxShadow: "none",
         width: "fit-content",
-        borderRadius: "12px",
-        padding: "0 46px",
+        borderRadius: theme.button.borderRadius,
+        fontWeight: 700,
+        fontSize: "15px",
+        fontFamily: "Poppins",
       },
       "&.MuiButton-colorSecondary": {
-        backgroundColor: "rgba(245, 245, 245, 1)",
-        color: "black",
-        border: "none",
+        backgroundColor: theme.button.background.secondary,
+        color: theme.button.color.secondary,
+        border: theme.button.border?.secondary,
       },
       "&.MuiButton-colorPrimary": {
-        backgroundColor: "rgba(106, 152, 60, 1)",
-        color: "white",
-        border: "2px solid rgba(70, 118, 10, 1)",
+        backgroundColor: theme.button.background.primary,
+        color: theme.button.color.primary,
+        border: theme.button.border?.primary,
       },
       "&.MuiButton-containedSizeSmall": {
-        height: "36px",
+        height: theme.button.sizes.small.height,
+        padding: theme.button.sizes.small.padding,
       },
       "&.MuiButton-containedSizeMedium": {
-        height: "47px",
+        height: theme.button.sizes.medium.height,
+        padding: theme.button.sizes.medium.padding,
       },
       "&.MuiButton-containedSizeLarge": {
-        height: "56px",
+        height: theme.button.sizes.large.height,
+        padding: theme.button.sizes.large.padding,
       },
     },
   };
