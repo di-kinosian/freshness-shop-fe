@@ -1,8 +1,7 @@
 import React, { ReactNode } from "react";
-import { MainHeader } from "../MainHeader/main-header.component";
-import { Categories } from "../Categories/categories.component";
-import { Sreadcrumbs } from "../Breadcrumbs/breadcrumbs.component";
-import { Footer } from "../Footer/footer.component";
+import { MainHeader } from "../MainHeader/MainHeader";
+import { Categories } from "../Categories/Categories";
+import { Sreadcrumbs } from "../Breadcrumbs/Breadcrumbs";
 
 interface ILayout {
   children: ReactNode;
@@ -27,7 +26,7 @@ export const Layout: React.FC<ILayout> = ({ children }) => {
       <Categories />
       <Sreadcrumbs />
       <div className="flex-grow">{children}</div>
-      <Footer />
+      <div className="max-h-[556px] flex-col gap-8">Footer</div>
     </div>
   );
 };
