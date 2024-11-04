@@ -5,17 +5,13 @@ import Input from "../../components/FormComponents/Input";
 export const Main = () => {
   return (
     <div className=" flex flex-col gap-[34px]">
-      Size
-
-      small
+      Size small
       <Button size="small">Buy now</Button>
       medium
       <Button size="medium">+ Add to cart</Button>
       large
       <Button size="large">Complete order</Button>
-      Color
-
-      primary
+      Color primary
       <Button color="primary">Submit</Button>
       secondary
       <Button color="secondary">Add to wish list</Button>
