@@ -2,12 +2,11 @@ import React, { ReactNode } from "react";
 import { MainHeader } from "./MainHeader/MainHeader";
 import { Categories } from "./Categories/Categories";
 import { Breadcrumbs } from "./Breadcrumbs/Breadcrumbs";
-
-interface Props {
+interface IProps {
   children: ReactNode;
 }
 
-export const Layout: React.FC<Props> = ({ children }) => {
+export const Layout: React.FC<IProps> = ({ children }) => {
   return (
     <div className="w-full px-[45px] mx-auto flex flex-col min-h-screen">
       <div className="h-[48px] px-[45px] flex items-center justify-between border-b border-style: solid border-gray-200">

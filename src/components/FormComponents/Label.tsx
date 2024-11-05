@@ -1,6 +1,7 @@
 import { FormLabel } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { ComponentProps } from "react";
+import { PALETTE } from "../../constants/palette";
 
 export default function Label(props: ComponentProps<typeof FormLabel>) {
   const classes = useStyles(props);
@@ -21,7 +22,7 @@ const useStyles = makeStyles(() => {
         color: "black",
       },
       "&.Mui-error": {
-        color: "#d32f2f;",
+        color: PALETTE.errorText,
       },
     },
   };

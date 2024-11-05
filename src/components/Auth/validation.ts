@@ -4,6 +4,10 @@ export const validationSchema = yup.object().shape({
   email: yup
     .string()
     .email("Invalid email format")
+    .matches(
+      /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.com$/i,
+      "Email must be a valid .com address",
+    )
     .required("Email is required"),
 
   password: yup

@@ -1,34 +1,51 @@
+import axios, { AxiosError } from "axios";
 import FormField from "../FormComponents/FormField";
 import { Button } from "../Button/Button";
 import { ButtonSize, ButtonVariant } from "../../types/enums";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "./validation";
+import { useState } from "react";
 
+const url = import.meta.env.VITE_APP_BE_URL;
 interface Props {
-  contentText?: string;
   onClose: () => void;
 }
 
-export const Login: React.FC<Props> = () => {
+export const Login: React.FC<Props> = ({ onClose }) => {
   const {
     handleSubmit,
     register,
     formState: { errors },
     getValues,
+    reset,
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = () => {
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const onSubmit = async () => {
     const formData = getValues();
-    console.log("onSubmit");
-
-    console.log(formData, "formData");
-    //form obj for login and sent to BE
+    try {
+      const response = await axios.post(`${url}/auth/login`, {
+        email: formData.email,
+        password: formData.password,
+      });
+      const { access_token } = response.data;
+      localStorage.setItem("access_token", access_token);
+      setErrorMessage("");
+      onClose();
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response && axiosError.status === 401) {
+        setErrorMessage("Account not found. Please sign up.");
+      } else {
+        setErrorMessage("Login failed. Please try again later.");
+      }
+    }
+    reset();
   };
-
-  console.log(register("email"));
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7">
@@ -55,12 +72,22 @@ export const Login: React.FC<Props> = () => {
         Login
       </Button>
       <div className="flex flex-col items-center">
+        {errorMessage && (
+          <span className="m-auto text-errorText font-bold">
+            Account not found. Please sign up.
+          </span>
+        )}
         <span>If you don’t have an account, </span>
-        <a href="/signup" className="text-blue-500 underline">
+        <a
+          href="/signup"
+          className="text-linkColor underline"
+          onClick={(event) => {
+            event.preventDefault();
+          }}
+        >
           sign up
         </a>
       </div>
-      <div></div>
     </form>
   );
 };

@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 import { FormControl, FormHelperText } from "@mui/material";
 import Input from "./Input";
 import Label from "./Label";
-interface IFieldProps {
+interface IProps {
   label: string;
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -11,7 +11,7 @@ interface IFieldProps {
   name?: string
 }
 
-const FormField = forwardRef<HTMLInputElement, IFieldProps>(
+const FormField = forwardRef<HTMLInputElement, IProps>(
   ({ label, value, onChange, placeholder, error, name }, ref) => {
     return (
       <FormControl variant="standard" error={!!error} className="items-start">

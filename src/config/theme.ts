@@ -87,12 +87,12 @@ export const theme = createTheme({
   components: {
     MuiDialog: {
       defaultProps: {
-        container: document.getElementById('root'),
+        container: document.getElementById("root"),
       },
     },
     MuiModal: {
       defaultProps: {
-        container: document.getElementById('root'),
+        container: document.getElementById("root"),
       },
     },
   },
