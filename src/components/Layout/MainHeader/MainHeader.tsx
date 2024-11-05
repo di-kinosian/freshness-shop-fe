@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { Login } from "../Auth/Login";
+import { Login } from "../../Auth/Login";
+import { Dialog } from "../../Dialog/Dialog";
 
 export const MainHeader = () => {
-  const [openDialog, setOpenDialog] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
 
   const handleOpenDialog = () => {
-    setOpenDialog(true);
+    setLoginOpen(true);
   };
 
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
+  const onCloseLogin = () => {
+    setLoginOpen(false);
   };
   return (
     <div className="px-[45px] h-[64px] flex justify-between items-center">
@@ -21,11 +22,14 @@ export const MainHeader = () => {
         </div>
         <div>icon</div>
       </div>
-      <Login
-        openDialog={openDialog}
-        onClose={handleCloseDialog}
+      <Dialog
         title="Login"
-      />
+        onClose={onCloseLogin}
+        isOpen={loginOpen}
+        className="w-[400px]"
+      >
+        <Login onClose={onCloseLogin}  />
+      </Dialog>
     </div>
   );
 };

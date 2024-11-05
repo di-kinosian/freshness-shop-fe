@@ -2,7 +2,7 @@ import { Button as MuiButton, ButtonProps, Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 interface Props extends ButtonProps {
-  q?: string;
+  className?: string;
 }
 
 export const Button: React.FC<Props> = ({
@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme: Theme) => {
     root: {
       "&.MuiButtonBase-root": {
         boxShadow: "none",
-        width: "fit-content",
         borderRadius: theme.button.borderRadius,
         fontWeight: 700,
         fontSize: "15px",

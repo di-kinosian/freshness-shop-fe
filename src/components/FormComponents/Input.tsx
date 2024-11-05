@@ -1,5 +1,6 @@
 import { InputBase, InputBaseProps, Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { forwardRef } from "react";
 
 const useStyles = makeStyles((theme: Theme) => {
   return {
@@ -14,8 +15,10 @@ const useStyles = makeStyles((theme: Theme) => {
   };
 });
 
-export default function Input(props: InputBaseProps) {
+const Input = forwardRef<HTMLInputElement, InputBaseProps>((props, ref) => {
   const classes = useStyles(props);
 
-  return <InputBase classes={{ root: classes.root }} {...props} />;
-}
+  return <InputBase ref={ref} classes={{ root: classes.root }} {...props} />;
+});
+
+export default Input;

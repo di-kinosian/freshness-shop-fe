@@ -1,30 +1,28 @@
 import { FormLabel } from "@mui/material";
-// import { makeStyles } from "@mui/styles";
+import { makeStyles } from "@mui/styles";
+import { ComponentProps } from "react";
 
-interface LabelProps {
-  htmlFor: string;
-  children: React.ReactNode;
-  required?: boolean;
-  error?: boolean;
-}
-
-export default function Label(props: LabelProps) {
-  // const classes = useStyles(props);
+export default function Label(props: ComponentProps<typeof FormLabel>) {
+  const classes = useStyles(props);
 
   return (
     <FormLabel
       {...props}
-      sx={{
-        color: props.error ? "red" : "black",
-      }}
+      classes={{ root: classes.root }}
+      className="mb-1 font-bold"
     />
   );
 }
 
-// const useStyles = makeStyles(() => {
-//   return {
-//     root: {
-//       color: "green",
-//     },
-//   };
-// });
+const useStyles = makeStyles(() => {
+  return {
+    root: {
+      "&.MuiFormLabel-colorPrimary": {
+        color: "black",
+      },
+      "&.Mui-error": {
+        color: "#d32f2f;",
+      },
+    },
+  };
+});

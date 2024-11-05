@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
-import { MainHeader } from "../MainHeader/MainHeader";
-import { Categories } from "../Categories/Categories";
-import { Breadcrumbs } from "../Breadcrumbs/Breadcrumbs";
+import { MainHeader } from "./MainHeader/MainHeader";
+import { Categories } from "./Categories/Categories";
+import { Breadcrumbs } from "./Breadcrumbs/Breadcrumbs";
 
 interface Props {
   children: ReactNode;

@@ -1,11 +1,10 @@
 import { Button } from "../../components/Button/Button";
-
 import FormField from "../../components/FormComponents/FormField";
 import Input from "../../components/FormComponents/Input";
 
 export const Main = () => {
   return (
-    <div className=" flex flex-col gap-[34px]">
+    <div className="flex flex-col gap-[34px]">
       Size small
       <Button size="small">Buy now</Button>
       medium

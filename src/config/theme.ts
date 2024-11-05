@@ -84,6 +84,18 @@ declare module "@mui/material/styles" {
 }
 
 export const theme = createTheme({
+  components: {
+    MuiDialog: {
+      defaultProps: {
+        container: document.getElementById('root'),
+      },
+    },
+    MuiModal: {
+      defaultProps: {
+        container: document.getElementById('root'),
+      },
+    },
+  },
   input: {
     background: {
       default: "rgba(249, 249, 249, 1)",

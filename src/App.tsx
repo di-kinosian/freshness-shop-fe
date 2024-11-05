@@ -6,11 +6,12 @@ import { ThemeProvider } from "@mui/styles";
 import { theme } from "./config/theme";
 import { ProductDetails } from "./pages/ProductDetails/product-details-page";
 import { ROUTES } from "./constants/routes-constants";
+import { StyledEngineProvider } from "@mui/material";
 import "./App.css";
 
 function App() {
   return (
-    <>
+    <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <Layout>
           <Router>
@@ -25,7 +26,7 @@ function App() {
           </Router>
         </Layout>
       </ThemeProvider>
-    </>
+    </StyledEngineProvider>
   );
 }
 
