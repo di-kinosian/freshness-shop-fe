@@ -1,5 +1,6 @@
 import { Dialog as MuiDialog, DialogContent, DialogTitle } from "@mui/material";
 import { PropsWithChildren } from "react";
+
 interface Props extends PropsWithChildren {
   title?: string;
   isOpen: boolean;

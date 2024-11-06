@@ -1,4 +1,6 @@
 import * as yup from "yup";
+import { MESSAGES } from "../../constants/messages";
+import { REGEX } from "../../constants/regex";
 
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.com$/i;
 const passwordRegex =
@@ -7,26 +9,20 @@ const passwordRegex =
 export const loginValidationSchema = yup.object().shape({
   email: yup
     .string()
-    .email("Invalid email format")
-    .matches(emailRegex, "Email must be a valid .com address")
-    .required("Email is required"),
+    .email(MESSAGES.VALIDATION.EMAIL_FORMAT)
+    .matches(REGEX.EMAIL_DOMAIN, MESSAGES.VALIDATION.EMAIL_DOMAIN)
+    .required(MESSAGES.VALIDATION.EMAIL_REQUIRED),
 
   password: yup
     .string()
-    .required("Password is required")
-    .min(8, "Password must be at least 8 characters")
+    .required(MESSAGES.VALIDATION.PASSWORD_REQUIRED)
+    .min(8, MESSAGES.VALIDATION.PASSWORD_MIN_LENGTH)
+    .matches(REGEX.PASSWORD_LOWERCASE, MESSAGES.VALIDATION.PASSWORD_LOWERCASE)
+    .matches(REGEX.PASSWORD_UPPERCASE, MESSAGES.VALIDATION.PASSWORD_UPPERCASE)
+    .matches(REGEX.PASSWORD_DIGITS, MESSAGES.VALIDATION.PASSWORD_DIGITS)
     .matches(
-      /(?=.*[a-z].*[a-z])/,
-      "Password must contain at least 2 lowercase letters",
-    )
-    .matches(
-      /(?=.*[A-Z].*[A-Z])/,
-      "Password must contain at least 2 uppercase letters",
-    )
-    .matches(/(?=.*\d.*\d)/, "Password must contain at least 2 digits")
-    .matches(
-      passwordRegex,
-      "Password must contain at least 2 special characters",
+      REGEX.PASSWORD_SPECIAL_CHARACTERS,
+      MESSAGES.VALIDATION.PASSWORD_SPECIAL_CHARACTERS,
     ),
 });
 
@@ -57,11 +53,11 @@ export const signupValidationSchema = yup.object().shape({
       /(?=.*[A-Z].*[A-Z])/,
       "Password must contain at least 2 uppercase letters",
     )
-    .matches(/(?=.*\d.*\d)/, "Password must contain at least 2 digits"),
-    // .matches(
-    //   passwordRegex,
-    //   "Password must contain at least 2 special characters",
-    // ),
+    .matches(/(?=.*\d.*\d)/, "Password must contain at least 2 digits")
+    .matches(
+      passwordRegex,
+      "Password must contain at least 2 special characters",
+    ),
 
   phoneNumber: yup
     .string()

@@ -6,8 +6,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginValidationSchema } from "./validation";
 import { useState } from "react";
+import { MESSAGES } from "../../constants/messages";
 
 const url = import.meta.env.VITE_APP_BE_URL;
+
 interface Props {
   onClose: () => void;
   onOpenSignup: () => void;
@@ -24,7 +26,7 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
     resolver: yupResolver(loginValidationSchema),
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onSubmit = async () => {
     const formData = getValues();
@@ -41,8 +43,8 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
       const axiosError = error as AxiosError;
       setErrorMessage(
         axiosError.response && axiosError.status === 401
-          ? "Account not found. Please sign up."
-          : "Login failed. Please try again later.",
+          ? MESSAGES.ERROR.ACCOUNT_NOT_FOUND
+          : MESSAGES.ERROR.LOGIN_FAILED,
       );
     }
     reset();
@@ -80,7 +82,7 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
         )}
         <span>If you don’t have an account, </span>
         <a
-          href="/signup"
+          href=""
           className="text-link underline"
           onClick={(event) => {
             event.preventDefault();
