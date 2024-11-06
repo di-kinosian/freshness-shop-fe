@@ -6,8 +6,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "./validation";
 import { useState } from "react";
+import { MESSAGES } from "../../constants/messages";
 
 const url = import.meta.env.VITE_APP_BE_URL;
+
 interface Props {
   onClose: () => void;
 }
@@ -23,7 +25,7 @@ export const Login: React.FC<Props> = ({ onClose }) => {
     resolver: yupResolver(validationSchema),
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onSubmit = async () => {
     const formData = getValues();
@@ -32,17 +34,17 @@ export const Login: React.FC<Props> = ({ onClose }) => {
         email: formData.email,
         password: formData.password,
       });
-      const { access_token } = response.data;
-      localStorage.setItem("access_token", access_token);
+      const { accessToken } = response.data;
+      localStorage.setItem("accessToken", accessToken);
       setErrorMessage("");
       onClose();
     } catch (error) {
       const axiosError = error as AxiosError;
-      if (axiosError.response && axiosError.status === 401) {
-        setErrorMessage("Account not found. Please sign up.");
-      } else {
-        setErrorMessage("Login failed. Please try again later.");
-      }
+      setErrorMessage(
+        axiosError.response && axiosError.status === 401
+          ? MESSAGES.ERROR.ACCOUNT_NOT_FOUND
+          : MESSAGES.ERROR.LOGIN_FAILED,
+      );
     }
     reset();
   };
@@ -79,8 +81,8 @@ export const Login: React.FC<Props> = ({ onClose }) => {
         )}
         <span>If you don’t have an account, </span>
         <a
-          href="/signup"
-          className="text-linkColor underline"
+          href=""
+          className="text-link underline"
           onClick={(event) => {
             event.preventDefault();
           }}

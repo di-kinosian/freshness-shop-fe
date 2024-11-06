@@ -3,7 +3,7 @@ import { Login } from "../../Auth/Login";
 import { Dialog } from "../../Dialog/Dialog";
 
 export const MainHeader = () => {
-  const [loginOpen, setLoginOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState<boolean>(false);
 
   const handleOpenDialog = () => {
     setLoginOpen(true);
@@ -28,7 +28,7 @@ export const MainHeader = () => {
         isOpen={loginOpen}
         className="w-[400px]"
       >
-        <Login onClose={onCloseLogin}  />
+        <Login onClose={onCloseLogin} />
       </Dialog>
     </div>
   );
