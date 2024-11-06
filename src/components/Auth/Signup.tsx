@@ -6,8 +6,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signupValidationSchema } from "./validation";
 import { useState } from "react";
+import { MESSAGES } from "../../constants/messages";
 
 const url = import.meta.env.VITE_APP_BE_URL;
+
 interface Props {
   onClose: () => void;
   onOpenLogin: () => void;
@@ -44,11 +46,11 @@ export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
     if (axios.isAxiosError(error) && error.response) {
       setErrorMessage(
         error.response.status === 400
-          ? "An account with this email already exists."
-          : "Signup failed. Please try again later.",
+          ? MESSAGES.ERROR.ACCOUNT_ALREADY_EXISTS
+          : MESSAGES.ERROR.SIGNUP_FAILED,
       );
     } else {
-      setErrorMessage("Network error. Please check your connection.");
+      setErrorMessage(MESSAGES.ERROR.NETWORK_ERROR);
     }
     console.error("Signup error:", error);
   };
@@ -99,7 +101,7 @@ export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
         <span className="text-errorText font-bold">{errorMessage}</span>
         <span>If you have an account, </span>
         <a
-          href="/signup"
+          href=""
           className="text-link underline"
           onClick={(event) => {
             event.preventDefault();
