@@ -39,11 +39,11 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
       onClose();
     } catch (error) {
       const axiosError = error as AxiosError;
-      if (axiosError.response && axiosError.status === 401) {
-        setErrorMessage("Account not found. Please sign up.");
-      } else {
-        setErrorMessage("Login failed. Please try again later.");
-      }
+      setErrorMessage(
+        axiosError.response && axiosError.status === 401
+          ? "Account not found. Please sign up."
+          : "Login failed. Please try again later.",
+      );
     }
     reset();
   };
@@ -85,7 +85,6 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
           onClick={(event) => {
             event.preventDefault();
             onOpenSignup();
-            onClose();
           }}
         >
           sign up

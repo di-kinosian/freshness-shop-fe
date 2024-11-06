@@ -8,13 +8,12 @@ import { signupValidationSchema } from "./validation";
 import { useState } from "react";
 
 const url = import.meta.env.VITE_APP_BE_URL;
-
 interface Props {
   onClose: () => void;
   onOpenLogin: () => void;
 }
 
-export const Singup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
+export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
   const {
     handleSubmit,
     register,
@@ -43,11 +42,11 @@ export const Singup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
 
   const handleErrorMessage = (error: AxiosError) => {
     if (axios.isAxiosError(error) && error.response) {
-      if (error.response.status === 400) {
-        setErrorMessage("An account with this email already exists.");
-      } else {
-        setErrorMessage("Signup failed. Please try again later.");
-      }
+      setErrorMessage(
+        error.response.status === 400
+          ? "An account with this email already exists."
+          : "Signup failed. Please try again later.",
+      );
     } else {
       setErrorMessage("Network error. Please check your connection.");
     }
@@ -94,7 +93,7 @@ export const Singup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
         color={ButtonVariant.PRIMARY}
         size={ButtonSize.MEDIUM}
       >
-        Singup
+        Signup
       </Button>
       <div className="flex flex-col items-center">
         <span className="text-errorText font-bold">{errorMessage}</span>
@@ -105,7 +104,6 @@ export const Singup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
           onClick={(event) => {
             event.preventDefault();
             onOpenLogin();
-            onClose();
           }}
         >
           login
