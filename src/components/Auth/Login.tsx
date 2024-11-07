@@ -4,7 +4,7 @@ import { Button } from "../Button/Button";
 import { ButtonSize, ButtonVariant } from "../../types/enums";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginValidationSchema } from "./validation";
+import { validationSchema } from "./validation";
 import { useState } from "react";
 import { MESSAGES } from "../../constants/messages";
 
@@ -12,10 +12,9 @@ const url = import.meta.env.VITE_APP_BE_URL;
 
 interface Props {
   onClose: () => void;
-  onOpenSignup: () => void;
 }
 
-export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
+export const Login: React.FC<Props> = ({ onClose }) => {
   const {
     handleSubmit,
     register,
@@ -23,7 +22,7 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
     getValues,
     reset,
   } = useForm({
-    resolver: yupResolver(loginValidationSchema),
+    resolver: yupResolver(validationSchema),
   });
 
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -86,7 +85,6 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
           className="text-link underline"
           onClick={(event) => {
             event.preventDefault();
-            onOpenSignup();
           }}
         >
           sign up
