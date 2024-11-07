@@ -1,10 +1,10 @@
-import axios, { AxiosError } from "axios";
 import FormField from "../FormComponents/FormField";
+import axios, { AxiosError } from "axios";
 import { Button } from "../Button/Button";
 import { ButtonSize, ButtonVariant } from "../../types/enums";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginValidationSchema } from "./validation";
+import { signupValidationSchema } from "./validation";
 import { useState } from "react";
 import { MESSAGES } from "../../constants/messages";
 
@@ -12,10 +12,10 @@ const url = import.meta.env.VITE_APP_BE_URL;
 
 interface Props {
   onClose: () => void;
-  onOpenSignup: () => void;
+  onOpenLogin: () => void;
 }
 
-export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
+export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
   const {
     handleSubmit,
     register,
@@ -23,36 +23,53 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
     getValues,
     reset,
   } = useForm({
-    resolver: yupResolver(loginValidationSchema),
+    resolver: yupResolver(signupValidationSchema),
   });
 
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onSubmit = async () => {
     const formData = getValues();
     try {
-      const response = await axios.post(`${url}/auth/login`, {
-        email: formData.email,
-        password: formData.password,
-      });
+      const response = await axios.post(`${url}/users/signup`, formData);
       const { accessToken } = response.data;
-      localStorage.setItem("accessToken", accessToken);
-      setErrorMessage("");
+      localStorage.setItem("token", accessToken);
       onClose();
     } catch (error) {
       const axiosError = error as AxiosError;
-      setErrorMessage(
-        axiosError.response && axiosError.status === 401
-          ? MESSAGES.ERROR.ACCOUNT_NOT_FOUND
-          : MESSAGES.ERROR.LOGIN_FAILED,
-      );
+      handleErrorMessage(axiosError);
     }
     reset();
+  };
+
+  const handleErrorMessage = (error: AxiosError) => {
+    if (axios.isAxiosError(error) && error.response) {
+      setErrorMessage(
+        error.response.status === 400
+          ? MESSAGES.ERROR.ACCOUNT_ALREADY_EXISTS
+          : MESSAGES.ERROR.SIGNUP_FAILED,
+      );
+    } else {
+      setErrorMessage(MESSAGES.ERROR.NETWORK_ERROR);
+    }
+    console.error("Signup error:", error);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7">
       <div className="flex flex-col gap-4">
+        <FormField
+          label="firstName"
+          placeholder="firstName"
+          {...register("firstName")}
+          error={errors.firstName && errors.firstName.message}
+        />
+        <FormField
+          label="lastName"
+          placeholder="lastName"
+          {...register("lastName")}
+          error={errors.lastName && errors.lastName.message}
+        />
         <FormField
           label="email"
           placeholder="email"
@@ -65,6 +82,12 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
           {...register("password")}
           error={errors.password && errors.password.message}
         />
+        <FormField
+          label="phoneNumber"
+          placeholder="phoneNumber"
+          {...register("phoneNumber")}
+          error={errors.phoneNumber && errors.phoneNumber.message}
+        />
       </div>
       <Button
         type="submit"
@@ -72,24 +95,20 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
         color={ButtonVariant.PRIMARY}
         size={ButtonSize.MEDIUM}
       >
-        Login
+        Signup
       </Button>
       <div className="flex flex-col items-center">
-        {errorMessage && (
-          <span className="m-auto text-errorText font-bold">
-            Account not found. Please sign up.
-          </span>
-        )}
-        <span>If you don’t have an account, </span>
+        <span className="text-errorText font-bold">{errorMessage}</span>
+        <span>If you have an account, </span>
         <a
           href=""
           className="text-link underline"
           onClick={(event) => {
             event.preventDefault();
-            onOpenSignup();
+            onOpenLogin();
           }}
         >
-          sign up
+          login
         </a>
       </div>
     </form>
