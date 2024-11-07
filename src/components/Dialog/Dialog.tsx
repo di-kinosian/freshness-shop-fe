@@ -17,7 +17,7 @@ export const Dialog: React.FC<Props> = ({
 }) => {
   return (
     <MuiDialog open={openDialog} onClose={onClose}>
-      <DialogTitle>{title}</DialogTitle>
+      <DialogTitle className="font-bold m-auto">{title}</DialogTitle>
       <DialogContent className={className}>{children}</DialogContent>
     </MuiDialog>
   );
