@@ -1,14 +1,17 @@
-import axios, { AxiosError } from "axios";
 import FormField from "../FormComponents/FormField";
 import { Button } from "../Button/Button";
-import { ButtonSize, ButtonVariant } from "../../types/enums";
+import { ButtonSize, ButtonVariant } from "../../main/types/enums";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginValidationSchema } from "./validation";
-import { useState } from "react";
-import { MESSAGES } from "../../constants/messages";
-
-const url = import.meta.env.VITE_APP_BE_URL;
+import { useDispatch } from "react-redux";
+import {
+  clearLoginError,
+  loginUser,
+} from "../../redux/features/auth/authSlise";
+import { AppDispatch } from "../../redux/app/store";
+import { useAppSelector } from "../../main/hooks";
+import { useEffect } from "react";
 
 interface Props {
   onClose: () => void;
@@ -26,28 +29,20 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
     resolver: yupResolver(loginValidationSchema),
   });
 
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const dispatch: AppDispatch = useDispatch();
+  const { loginError } = useAppSelector((state) => state.auth);
+  useEffect(() => {
+    dispatch(clearLoginError());
+  }, [dispatch, onClose]);
 
   const onSubmit = async () => {
     const formData = getValues();
-    try {
-      const response = await axios.post(`${url}/auth/login`, {
-        email: formData.email,
-        password: formData.password,
+    dispatch(loginUser(formData))
+      .unwrap()
+      .then(() => {
+        reset();
+        onClose();
       });
-      const { accessToken } = response.data;
-      localStorage.setItem("accessToken", accessToken);
-      setErrorMessage("");
-      onClose();
-    } catch (error) {
-      const axiosError = error as AxiosError;
-      setErrorMessage(
-        axiosError.response && axiosError.status === 401
-          ? MESSAGES.ERROR.ACCOUNT_NOT_FOUND
-          : MESSAGES.ERROR.LOGIN_FAILED,
-      );
-    }
-    reset();
   };
 
   return (
@@ -75,11 +70,7 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
         Login
       </Button>
       <div className="flex flex-col items-center">
-        {errorMessage && (
-          <span className="m-auto text-errorText font-bold">
-            Account not found. Please sign up.
-          </span>
-        )}
+        <span className="text-errorText font-bold">{loginError || null}</span>
         <span>If you don’t have an account, </span>
         <a
           href=""

@@ -1,14 +1,17 @@
 import FormField from "../FormComponents/FormField";
-import axios, { AxiosError } from "axios";
 import { Button } from "../Button/Button";
-import { ButtonSize, ButtonVariant } from "../../types/enums";
+import { ButtonSize, ButtonVariant } from "../../main/types/enums";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signupValidationSchema } from "./validation";
-import { useState } from "react";
-import { MESSAGES } from "../../constants/messages";
-
-const url = import.meta.env.VITE_APP_BE_URL;
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/app/store";
+import { useAppSelector } from "../../main/hooks";
+import { useEffect } from "react";
+import {
+  clearSignupError,
+  signupUser,
+} from "../../redux/features/auth/authSlise";
 
 interface Props {
   onClose: () => void;
@@ -26,33 +29,22 @@ export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
     resolver: yupResolver(signupValidationSchema),
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const dispatch: AppDispatch = useDispatch();
+  const { signupError } = useAppSelector((state) => state.auth);
+  useEffect(() => {
+    dispatch(clearSignupError());
+  }, [dispatch, onClose]);
 
   const onSubmit = async () => {
     const formData = getValues();
-    try {
-      const response = await axios.post(`${url}/users/signup`, formData);
-      const { accessToken } = response.data;
-      localStorage.setItem("token", accessToken);
-      onClose();
-    } catch (error) {
-      const axiosError = error as AxiosError;
-      handleErrorMessage(axiosError);
-    }
-    reset();
-  };
 
-  const handleErrorMessage = (error: AxiosError) => {
-    if (axios.isAxiosError(error) && error.response) {
-      setErrorMessage(
-        error.response.status === 400
-          ? MESSAGES.ERROR.ACCOUNT_ALREADY_EXISTS
-          : MESSAGES.ERROR.SIGNUP_FAILED,
-      );
-    } else {
-      setErrorMessage(MESSAGES.ERROR.NETWORK_ERROR);
-    }
-    console.error("Signup error:", error);
+    dispatch(signupUser(formData))
+      .unwrap()
+      .then(() => {
+        onClose();
+      });
+
+    reset();
   };
 
   return (
@@ -98,7 +90,7 @@ export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
         Signup
       </Button>
       <div className="flex flex-col items-center">
-        <span className="text-errorText font-bold">{errorMessage}</span>
+        <span className="text-errorText font-bold">{signupError}</span>
         <span>If you have an account, </span>
         <a
           href=""
