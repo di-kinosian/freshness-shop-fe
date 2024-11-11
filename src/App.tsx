@@ -11,26 +11,29 @@ import { DialogProvider } from "./components/Dialog/DialogContext";
 import "./App.css";
 import { Provider } from "react-redux";
 import store from "./redux/app/store";
+import { ToastProvider } from "./components/Toast/ToastContext";
 
 function App() {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <DialogProvider>
-            <Layout>
-              <Router>
-                <Routes>
-                  <Route path={ROUTES.HOME} element={<Main />} />
-                  <Route
-                    path={ROUTES.PRODUCT_DETAILS}
-                    element={<ProductDetails />}
-                  />
-                  <Route path={ROUTES.CHECKOUT} element={<Checkout />} />
-                </Routes>
-              </Router>
-            </Layout>
-          </DialogProvider>
+          <ToastProvider>
+            <DialogProvider>
+              <Layout>
+                <Router>
+                  <Routes>
+                    <Route path={ROUTES.HOME} element={<Main />} />
+                    <Route
+                      path={ROUTES.PRODUCT_DETAILS}
+                      element={<ProductDetails />}
+                    />
+                    <Route path={ROUTES.CHECKOUT} element={<Checkout />} />
+                  </Routes>
+                </Router>
+              </Layout>
+            </DialogProvider>
+          </ToastProvider>
         </Provider>
       </ThemeProvider>
     </StyledEngineProvider>

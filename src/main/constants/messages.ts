@@ -28,4 +28,7 @@ export const MESSAGES = {
     SIGNUP_FAILED: "Signup failed. Please try again later.",
     NETWORK_ERROR: "Network error. Please check your connection.",
   },
+  SIGNUP: {
+    SUCCESS: "Account was successfully created",
+  },
 };

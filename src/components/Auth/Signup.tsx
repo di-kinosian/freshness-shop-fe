@@ -12,6 +12,8 @@ import {
   clearSignupError,
   signupUser,
 } from "../../redux/features/auth/authSlise";
+import { useToast } from "../Toast/ToastContext";
+import { MESSAGES } from "../../main/constants/messages";
 
 interface Props {
   onClose: () => void;
@@ -24,13 +26,15 @@ export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
     register,
     formState: { errors },
     getValues,
-    reset,
   } = useForm({
     resolver: yupResolver(signupValidationSchema),
   });
 
+  const { openToast } = useToast();
+
   const dispatch: AppDispatch = useDispatch();
   const { signupError } = useAppSelector((state) => state.auth);
+
   useEffect(() => {
     dispatch(clearSignupError());
   }, [dispatch, onClose]);
@@ -41,10 +45,18 @@ export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
     dispatch(signupUser(formData))
       .unwrap()
       .then(() => {
-        onClose();
+        openToast({
+          content: MESSAGES.SIGNUP.SUCCESS,
+          variant: "success",
+        });
+        onOpenLogin();
+      })
+      .catch((error: string) => {
+        openToast({
+          content: error,
+          variant: "error",
+        });
       });
-
-    reset();
   };
 
   return (
@@ -81,16 +93,22 @@ export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
           error={errors.phoneNumber && errors.phoneNumber.message}
         />
       </div>
-      <Button
-        type="submit"
-        className="w-full"
-        color={ButtonVariant.PRIMARY}
-        size={ButtonSize.MEDIUM}
-      >
-        Signup
-      </Button>
+      <div className="flex flex-col gap-2">
+        <Button
+          type="submit"
+          className="w-full"
+          color={ButtonVariant.PRIMARY}
+          size={ButtonSize.MEDIUM}
+        >
+          Signup
+        </Button>
+        {signupError && (
+          <span className="text-errorText text-center font-bold">
+            {signupError}
+          </span>
+        )}
+      </div>
       <div className="flex flex-col items-center">
-        <span className="text-errorText font-bold">{signupError}</span>
         <span>If you have an account, </span>
         <a
           href=""
