@@ -19,15 +19,15 @@ const DialogContext = createContext<DialogContextType | undefined>(undefined);
 export const DialogProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [dialogData, setDialogData] = useState<DialogDataType | null>(null);
 
-  const openDialog = (data: DialogDataType) => {
+  const openDialog = (data: DialogDataType): void => {
     setDialogData(data);
     setIsOpen(true);
   };
 
-  const closeDialog = () => {
+  const closeDialog = (): void => {
     setIsOpen(false);
     setDialogData(null);
   };
