@@ -8,32 +8,35 @@ import { ProductDetails } from "./pages/ProductDetails/product-details-page";
 import { ROUTES } from "./main/constants/routes-constants";
 import { StyledEngineProvider } from "@mui/material";
 import { DialogProvider } from "./components/Dialog/DialogContext";
-import "./App.css";
 import { Provider } from "react-redux";
-import store from "./redux/app/store";
 import { ToastProvider } from "./components/Toast/ToastContext";
+import { store, persistor } from "./redux/app/store";
+import { PersistGate } from "redux-persist/integration/react";
+import "./App.css";
 
 function App() {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <ToastProvider>
-            <DialogProvider>
-              <Layout>
-                <Router>
-                  <Routes>
-                    <Route path={ROUTES.HOME} element={<Main />} />
-                    <Route
-                      path={ROUTES.PRODUCT_DETAILS}
-                      element={<ProductDetails />}
-                    />
-                    <Route path={ROUTES.CHECKOUT} element={<Checkout />} />
-                  </Routes>
-                </Router>
-              </Layout>
-            </DialogProvider>
-          </ToastProvider>
+          <PersistGate loading={null} persistor={persistor}>
+            <ToastProvider>
+              <DialogProvider>
+                <Layout>
+                  <Router>
+                    <Routes>
+                      <Route path={ROUTES.HOME} element={<Main />} />
+                      <Route
+                        path={ROUTES.PRODUCT_DETAILS}
+                        element={<ProductDetails />}
+                      />
+                      <Route path={ROUTES.CHECKOUT} element={<Checkout />} />
+                    </Routes>
+                  </Router>
+                </Layout>
+              </DialogProvider>
+            </ToastProvider>
+          </PersistGate>
         </Provider>
       </ThemeProvider>
     </StyledEngineProvider>

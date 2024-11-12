@@ -32,8 +32,6 @@ export const loginUser = createAsyncThunk<
     });
 
     const { accessToken, user } = response.data;
-    localStorage.setItem("accessToken", accessToken);
-    localStorage.setItem("user", user);
 
     return {
       accessToken,
@@ -41,6 +39,7 @@ export const loginUser = createAsyncThunk<
     };
   } catch (error) {
     const axiosError = error as AxiosError;
+
     return thunkAPI.rejectWithValue(
       axiosError.response && axiosError.status === 404
         ? MESSAGES.ERROR.ACCOUNT_NOT_FOUND
