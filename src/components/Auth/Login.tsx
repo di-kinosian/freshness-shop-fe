@@ -31,6 +31,7 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
 
   const dispatch: AppDispatch = useDispatch();
   const { loginError } = useAppSelector((state) => state.auth);
+
   useEffect(() => {
     dispatch(clearLoginError());
   }, [dispatch, onClose]);

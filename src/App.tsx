@@ -10,27 +10,30 @@ import { StyledEngineProvider } from "@mui/material";
 import { DialogProvider } from "./components/Dialog/DialogContext";
 import "./App.css";
 import { Provider } from "react-redux";
-import store from "./redux/app/store";
+import { store, persistor } from "./redux/app/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 function App() {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <DialogProvider>
-            <Layout>
-              <Router>
-                <Routes>
-                  <Route path={ROUTES.HOME} element={<Main />} />
-                  <Route
-                    path={ROUTES.PRODUCT_DETAILS}
-                    element={<ProductDetails />}
-                  />
-                  <Route path={ROUTES.CHECKOUT} element={<Checkout />} />
-                </Routes>
-              </Router>
-            </Layout>
-          </DialogProvider>
+          <PersistGate loading={null} persistor={persistor}>
+            <DialogProvider>
+              <Layout>
+                <Router>
+                  <Routes>
+                    <Route path={ROUTES.HOME} element={<Main />} />
+                    <Route
+                      path={ROUTES.PRODUCT_DETAILS}
+                      element={<ProductDetails />}
+                    />
+                    <Route path={ROUTES.CHECKOUT} element={<Checkout />} />
+                  </Routes>
+                </Router>
+              </Layout>
+            </DialogProvider>
+          </PersistGate>
         </Provider>
       </ThemeProvider>
     </StyledEngineProvider>
