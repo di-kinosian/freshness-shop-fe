@@ -8,7 +8,6 @@ export const loginValidationSchema = yup.object().shape({
     .email(MESSAGES.VALIDATION.EMAIL_FORMAT)
     .matches(REGEX.EMAIL_DOMAIN, MESSAGES.VALIDATION.EMAIL_DOMAIN)
     .required(MESSAGES.VALIDATION.EMAIL_REQUIRED),
-
   password: yup
     .string()
     .required(MESSAGES.VALIDATION.PASSWORD_REQUIRED)
@@ -27,17 +26,14 @@ export const signupValidationSchema = yup.object().shape({
     .string()
     .required(MESSAGES.VALIDATION.FIRST_NAME_REQUIRED)
     .min(2, MESSAGES.VALIDATION.FIRST_NAME_MIN_LENGTH),
-
   lastName: yup
     .string()
     .required(MESSAGES.VALIDATION.LAST_NAME_REQUIRED)
     .min(2, MESSAGES.VALIDATION.LAST_NAME_MIN_LENGTH),
-
   email: yup
     .string()
     .required(MESSAGES.VALIDATION.EMAIL_REQUIRED)
     .matches(REGEX.EMAIL_DOMAIN, MESSAGES.VALIDATION.EMAIL_DOMAIN),
-
   password: yup
     .string()
     .required(MESSAGES.VALIDATION.PASSWORD_REQUIRED)
@@ -48,7 +44,6 @@ export const signupValidationSchema = yup.object().shape({
       REGEX.PASSWORD.SPECIAL_CHARACTERS,
       MESSAGES.VALIDATION.PASSWORD_SPECIAL_CHARACTERS,
     ),
-
   phoneNumber: yup
     .string()
     .required(MESSAGES.VALIDATION.PHONE_NUMBER_REQUIRED)

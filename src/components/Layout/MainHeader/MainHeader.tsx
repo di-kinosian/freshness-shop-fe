@@ -5,7 +5,7 @@ import { useDialog } from "../../Dialog/DialogContext";
 export const MainHeader = () => {
   const { openDialog, closeDialog } = useDialog();
 
-  const handleOpenLogin = () => {
+  const handleOpenLogin = (): void => {
     openDialog({
       title: "Login",
       content: <Login onClose={closeDialog} onOpenSignup={handleOpenSignup} />,
@@ -13,7 +13,7 @@ export const MainHeader = () => {
     });
   };
 
-  const handleOpenSignup = () => {
+  const handleOpenSignup = (): void => {
     openDialog({
       title: "Sign up",
       content: <Signup onClose={closeDialog} onOpenLogin={handleOpenLogin} />,

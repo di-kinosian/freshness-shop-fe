@@ -54,13 +54,13 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7">
       <div className="flex flex-col gap-4">
         <FormField
-          label="email"
+          label="Email"
           placeholder="email"
           {...register("email")}
           error={errors.email && errors.email.message}
         />
         <FormField
-          label="password"
+          label="Password"
           placeholder="password"
           {...register("password")}
           error={errors.password && errors.password.message}
@@ -81,16 +81,12 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
           </span>
         )}
         <span>If you don’t have an account, </span>
-        <a
-          href=""
-          className="text-link underline"
-          onClick={(event) => {
-            event.preventDefault();
-            onOpenSignup();
-          }}
+        <div
+          className="text-link underline color-link cursor-pointer"
+          onClick={() => onOpenSignup()}
         >
           sign up
-        </a>
+        </div>
       </div>
     </form>
   );
