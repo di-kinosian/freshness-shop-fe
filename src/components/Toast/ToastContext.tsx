@@ -1,18 +1,19 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { Toast, ToastVariant } from "./Toast";
-
+import { Toast } from "./Toast";
+import { ToastVariant } from "../../main/types/enums";
 
 type ToastDataType = {
   content: string | null;
-  duration?: number;
   variant: ToastVariant;
+  duration?: number;
 };
 
 interface ToastContextType {
   isOpen: boolean;
   toastData: ToastDataType | null;
-  openToast: (data: ToastDataType) => void;
   closeToast: () => void;
+  openSuccessToast: (content: string) => void;
+  openErrorToast: (content: string) => void;
 }
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
@@ -20,21 +21,40 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined);
 export const ToastProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [toastData, setToastData] = useState<ToastDataType | null>(null);
 
-  const openToast = (data: ToastDataType) => {
-    setToastData(data);
+  const openSuccessToast = (content: string): void => {
+    setToastData({
+      variant: ToastVariant.SUCCESS,
+      content,
+    });
     setIsOpen(true);
   };
 
-  const closeToast = () => {
+  const openErrorToast = (content: string): void => {
+    setToastData({
+      variant: ToastVariant.ERROR,
+      content,
+    });
+    setIsOpen(true);
+  };
+
+  const closeToast = (): void => {
     setIsOpen(false);
     setToastData(null);
   };
 
   return (
-    <ToastContext.Provider value={{ isOpen, openToast, closeToast, toastData }}>
+    <ToastContext.Provider
+      value={{
+        isOpen,
+        openSuccessToast,
+        openErrorToast,
+        closeToast,
+        toastData,
+      }}
+    >
       {children}
       {isOpen && toastData?.content && (
         <Toast

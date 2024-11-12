@@ -8,3 +8,8 @@ export enum ButtonVariant {
   PRIMARY = "primary",
   SECONDARY = "secondary",
 }
+
+export enum ToastVariant {
+  SUCCESS = "success",
+  ERROR = "error",
+}

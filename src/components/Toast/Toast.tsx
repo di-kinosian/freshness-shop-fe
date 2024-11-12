@@ -1,7 +1,6 @@
 import { Snackbar, SnackbarProps } from "@mui/material";
-import cn from "clsx";
-
-export type ToastVariant = "success" | "error";
+import { twMerge } from "tailwind-merge";
+import { ToastVariant } from "../../main/types/enums";
 
 interface IProps extends SnackbarProps {
   variant: ToastVariant;
@@ -18,12 +17,10 @@ export const Toast: React.FC<IProps> = ({
     onClose={onClose}
     open={open}
     anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-    className={cn(
+    className={twMerge(
       "px-6 py-4 border rounded-2xl right-9 bottom-9 text-white font-bold",
-      {
-        "bg-green-400 border-green-600": variant === "success",
-        "bg-red-400 border-red-700": variant === "error",
-      },
+      variant === "success" ? "bg-green-400 border-green-600" : "",
+      variant === "error" ? "bg-red-400 border-red-700" : "",
     )}
     {...props}
   >

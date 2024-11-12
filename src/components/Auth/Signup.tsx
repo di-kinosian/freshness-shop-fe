@@ -30,8 +30,7 @@ export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
     resolver: yupResolver(signupValidationSchema),
   });
 
-  const { openToast } = useToast();
-
+  const { openSuccessToast, openErrorToast } = useToast();
   const dispatch: AppDispatch = useDispatch();
   const { signupError } = useAppSelector((state) => state.auth);
 
@@ -45,17 +44,11 @@ export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
     dispatch(signupUser(formData))
       .unwrap()
       .then(() => {
-        openToast({
-          content: MESSAGES.SIGNUP.SUCCESS,
-          variant: "success",
-        });
+        openSuccessToast(MESSAGES.SIGNUP.SUCCESS);
         onOpenLogin();
       })
       .catch((error: string) => {
-        openToast({
-          content: error,
-          variant: "error",
-        });
+        openErrorToast(error);
       });
   };
 
@@ -112,7 +105,7 @@ export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
         <span>If you have an account, </span>
         <div
           className="text-link underline color-link cursor-pointer"
-          onClick={() => onOpenLogin()}
+          onClick={onOpenLogin}
         >
           login
         </div>
