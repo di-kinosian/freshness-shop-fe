@@ -1,35 +1,36 @@
-import { useState } from "react";
 import { Login } from "../../Auth/Login";
-import { Dialog } from "../../Dialog/Dialog";
+import { Signup } from "../../Auth/Signup";
+import { useDialog } from "../../Dialog/DialogContext";
 
 export const MainHeader = () => {
-  const [loginOpen, setLoginOpen] = useState<boolean>(false);
+  const { openDialog, closeDialog } = useDialog();
 
-  const handleOpenDialog = () => {
-    setLoginOpen(true);
+  const handleOpenLogin = (): void => {
+    openDialog({
+      title: "Login",
+      content: <Login onClose={closeDialog} onOpenSignup={handleOpenSignup} />,
+      className: "w-[400px]",
+    });
   };
 
-  const onCloseLogin = () => {
-    setLoginOpen(false);
+  const handleOpenSignup = (): void => {
+    openDialog({
+      title: "Sign up",
+      content: <Signup onClose={closeDialog} onOpenLogin={handleOpenLogin} />,
+      className: "w-[400px]",
+    });
   };
+
   return (
     <div className="px-[45px] h-[64px] flex justify-between items-center">
       <div>Freedom</div>
       <div>Search component</div>
       <div className="flex gap-[16px]">
-        <div onClick={handleOpenDialog} className="cursor-pointer">
+        <div onClick={handleOpenLogin} className="cursor-pointer">
           icon
         </div>
         <div>icon</div>
       </div>
-      <Dialog
-        title="Login"
-        onClose={onCloseLogin}
-        isOpen={loginOpen}
-        className="w-[400px]"
-      >
-        <Login onClose={onCloseLogin} />
-      </Dialog>
     </div>
   );
 };
