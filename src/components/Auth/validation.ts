@@ -1,6 +1,6 @@
 import * as yup from "yup";
-import { MESSAGES } from "../../constants/messages";
-import { REGEX } from "../../constants/regex";
+import { MESSAGES } from "../../main/constants/messages";
+import { REGEX } from "../../main/constants/regex";
 
 export const loginValidationSchema = yup.object().shape({
   email: yup

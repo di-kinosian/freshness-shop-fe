@@ -1,7 +1,7 @@
 import { FormLabel } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { ComponentProps } from "react";
-import { PALETTE } from "../../constants/palette";
+import { PALETTE } from "../../main/constants/palette";
 
 export default function Label(props: ComponentProps<typeof FormLabel>) {
   const classes = useStyles(props);
