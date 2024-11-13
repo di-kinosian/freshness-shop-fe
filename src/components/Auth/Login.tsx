@@ -75,7 +75,7 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
         <span>If you don’t have an account, </span>
         <div
           className="text-link underline color-link cursor-pointer"
-          onClick={() => onOpenSignup()}
+          onClick={onOpenSignup}
         >
           sign up
         </div>

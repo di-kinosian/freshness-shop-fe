@@ -8,6 +8,7 @@ import {
   LoginCredentials,
   SignupCredentials,
 } from "../../../main/types/types";
+import { loginRequest } from "./api";
 
 const initialState: AuthState = {
   accessToken: null,
@@ -26,12 +27,7 @@ export const loginUser = createAsyncThunk<
   { rejectValue: string }
 >("auth/loginUser", async (payload, thunkAPI) => {
   try {
-    const response = await axios.post(`${url}/auth/login`, {
-      email: payload.email,
-      password: payload.password,
-    });
-
-    const { accessToken, user } = response.data;
+    const { accessToken, user } = await loginRequest(payload);
 
     return {
       accessToken,
