@@ -1,7 +1,5 @@
 export const Categories = () => {
   return (
-    <div className="px-[65px] h-[64px] flex items-center">
-      <div className="px-[16px] h-[55px] bg-neutralGrayBg w-full"></div>
-    </div>
+    <div className="h-14 flex items-center bg-neutralGrayBg w-full max-w-[1200px] mx-auto "></div>
   );
 };

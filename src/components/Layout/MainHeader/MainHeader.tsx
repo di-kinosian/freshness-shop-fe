@@ -22,10 +22,10 @@ export const MainHeader = () => {
   };
 
   return (
-    <div className="px-[45px] h-[64px] flex justify-between items-center">
+    <div className="h-16 flex justify-between items-center max-w-[1200px] w-full mx-auto bg-white sticky top-0 z-10">
       <div>Freedom</div>
       <div>Search component</div>
-      <div className="flex gap-[16px]">
+      <div className="flex gap-4">
         <div onClick={handleOpenLogin} className="cursor-pointer">
           icon
         </div>

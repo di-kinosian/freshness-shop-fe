@@ -12,7 +12,6 @@ import { Provider } from "react-redux";
 import { ToastProvider } from "./components/Toast/ToastContext";
 import { store, persistor } from "./redux/app/store";
 import { PersistGate } from "redux-persist/integration/react";
-import "./App.css";
 
 function App() {
   return (
