@@ -68,3 +68,8 @@ export interface ProductState {
   limit: number;
   productError: string | null;
 }
+
+export interface AdditionalInfoType {
+  key: string;
+  value: string | number;
+}
