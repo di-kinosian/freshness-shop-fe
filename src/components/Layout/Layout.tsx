@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import { MainHeader } from "./MainHeader/MainHeader";
 import { Categories } from "./Categories/Categories";
 import { Breadcrumbs } from "./Breadcrumbs/Breadcrumbs";
+import { Footer } from "./Footer/Footer";
 
 interface IProps {
   children: ReactNode;
@@ -29,8 +30,12 @@ export const Layout: React.FC<IProps> = ({ children }) => {
       <MainHeader />
       <Categories />
       <Breadcrumbs />
-      <div className="flex-grow w-full max-w-[1200px] mx-auto">{children}</div>
-      <div className="flex-col gap-8 w-full max-w-[1200px] mx-auto">Footer</div>
+      <div className="flex flex-col gap-16">
+        <div className="flex-grow w-full max-w-[1200px] mx-auto">
+          {children}
+        </div>
+        <Footer />
+      </div>
     </div>
   );
 };

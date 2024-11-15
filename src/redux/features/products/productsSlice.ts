@@ -1,13 +1,9 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { url } from "../../../main/constants/common";
-import {
-  Product,
-  ProductCredentials,
-  ProductState,
-} from "../../../main/types/types";
+import { GetAllProductsPayload, Product, ProductsState } from "./types";
 
-const initialState: ProductState = {
+const initialState: ProductsState = {
   products: null,
   total: 0,
   page: 1,
@@ -17,7 +13,7 @@ const initialState: ProductState = {
 
 export const getAllProducts = createAsyncThunk<
   { products: Product[]; total: number; page: number; limit: number },
-  ProductCredentials,
+  GetAllProductsPayload,
   { rejectValue: string }
 >("product/getAllProducts", async (payload, thunkAPI) => {
   try {
@@ -37,7 +33,7 @@ export const getAllProducts = createAsyncThunk<
   }
 });
 
-const productSlice = createSlice({
+const productsSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
@@ -60,5 +56,5 @@ const productSlice = createSlice({
   },
 });
 
-export const { saveProductList } = productSlice.actions;
-export default productSlice.reducer;
+export const { saveProductList } = productsSlice.actions;
+export default productsSlice.reducer;

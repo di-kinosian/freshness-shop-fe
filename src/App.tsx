@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Main } from "./pages/Main/main-page";
-import { Checkout } from "./pages/Checkout/checkout-page";
+import { Main } from "./pages/Main/main.page";
+import { Checkout } from "./pages/Checkout/checkout.page";
 import { Layout } from "./components/Layout/Layout";
 import { ThemeProvider } from "@mui/styles";
 import { theme } from "./config/theme";
-import { ProductDetails } from "./pages/ProductDetails/product-details-page";
+import { ProductDetails } from "./pages/ProductDetails/product.details.page";
 import { ROUTES } from "./main/constants/routes-constants";
 import { StyledEngineProvider } from "@mui/material";
 import { DialogProvider } from "./components/Dialog/DialogContext";

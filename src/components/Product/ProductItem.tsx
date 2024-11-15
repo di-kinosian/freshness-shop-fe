@@ -17,7 +17,7 @@ export const ProductItem: React.FC<Props> = ({
   price,
 }) => {
   return (
-    <div className="border border-basicGray rounded-lg grid grid-cols-[220px_250px_200px] gap-[26px] h-[220px]">
+    <div className="border border-basicGray rounded-lg grid grid-cols-[220px,2fr,1fr] gap-[26px] h-[220px]">
       <div className="bg-basicGray rounded-lg"></div>
       <div className="flex flex-col justify-between py-6">
         <div className="flex flex-col items-start">
@@ -26,7 +26,10 @@ export const ProductItem: React.FC<Props> = ({
         </div>
         <div className="flex flex-col items-start gap-[6px]">
           {additionalInformation?.map((item) => (
-            <div className="text-sm flex justify-between w-[170px]">
+            <div
+              className="text-sm flex justify-between w-[170px]"
+              key={item.key}
+            >
               <div>{item.key}</div>
               <div>{item.value}</div>
             </div>

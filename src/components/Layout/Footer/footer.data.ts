@@ -1,0 +1,45 @@
+export const footerData = {
+  getInTouch: {
+    title: "Get in touch",
+    links: ["About Us", "Careers", "Press Releases", "Blog"],
+  },
+  connections: {
+    title: "Connections",
+    links: ["Facebook", "Twitter", "Instagram", "Youtube", "LinkedIn"],
+  },
+  earnings: {
+    title: "Earnings",
+    links: ["Become an Affiliate", "Advertise your product", "Sell on Market"],
+  },
+  account: {
+    title: "Account",
+    links: [
+      "Your account",
+      "Returns Centre",
+      "100% purchase protection",
+      "Chat with us",
+      "Help",
+    ],
+  },
+  productTags: [
+    "Beans",
+    "Carrots",
+    "Apples",
+    "Garlic",
+    "Mushrooms",
+    "Tomatoes",
+    "Chilli peppers",
+    "Broccoli",
+    "Watermelons",
+    "Oranges",
+    "Bananas",
+    "Grapes",
+    "Cherries",
+    "Meat",
+    "Seo tag",
+    "Fish",
+    "Fresh food",
+    "Lemons",
+  ],
+  copyright: "Copyright © 2020 petrbilek.com",
+};
