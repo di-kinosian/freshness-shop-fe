@@ -6,13 +6,15 @@ export const RatingFilter = () => {
   const ratings = [5, 4, 3, 2, 1];
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
 
-  const handleCheckboxChange = (rating: number): void => {
-    setSelectedRatings((prev) =>
-      prev?.includes(rating)
-        ? prev.filter((r) => r !== rating)
-        : [...prev, rating],
-    );
-  };
+  const handleCheckboxChange =
+    (rating: number) =>
+    (_: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+      setSelectedRatings((prev) =>
+        !checked
+          ? prev.filter((r) => r !== Number(rating))
+          : [...prev, Number(rating)],
+      );
+    };
 
   return (
     <div className="flex flex-col gap-2">
@@ -21,9 +23,8 @@ export const RatingFilter = () => {
         {ratings.map((rating) => (
           <div key={rating} className="flex items-center gap-1">
             <Checkbox
-              onChange={handleCheckboxChange}
-              value={rating}
-              selectedData={selectedRatings}
+              checked={selectedRatings.includes(rating)}
+              onChange={handleCheckboxChange(rating)}
             />
             <Rating
               name={`rating-${rating}`}
