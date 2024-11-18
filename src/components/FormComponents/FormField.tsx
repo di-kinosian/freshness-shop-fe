@@ -9,16 +9,19 @@ interface IProps {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   error?: string;
-  name?: string
+  name?: string;
+  width?: string;
 }
 
 const FormField = forwardRef<HTMLInputElement, IProps>(
-  ({ label, value, onChange, placeholder, error, name }, ref) => {
+  ({ label, value, onChange, placeholder, error, name, width }, ref) => {
     return (
-      <FormControl variant="standard" error={!!error} className="items-start">
-        <Label htmlFor={name}>
-          {label}
-        </Label>
+      <FormControl
+        variant="standard"
+        error={!!error}
+        className={`items-start ${width}`}
+      >
+        <Label htmlFor={name}>{label}</Label>
         <Input
           name={name}
           id={name}
@@ -30,7 +33,7 @@ const FormField = forwardRef<HTMLInputElement, IProps>(
         {error && <FormHelperText>{error}</FormHelperText>}
       </FormControl>
     );
-  }
+  },
 );
 
 export default FormField;
