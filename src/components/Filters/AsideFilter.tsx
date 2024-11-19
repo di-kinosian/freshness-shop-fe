@@ -56,7 +56,10 @@ export const AsideFilter = () => {
         value={selectedFilters.price}
         availableRange={availableFilters?.price}
       />
-      <button onClick={handleReset}>Reset Filters</button>;
+      <button onClick={handleReset} className="text-grayText font-bold">
+        Reset
+      </button>
+      ;
     </div>
   );
 };
