@@ -6,16 +6,13 @@ import { RatingFilter } from "./RatingFilter";
 import { PriceRange } from "./types";
 import axios from "axios";
 import { url } from "../../main/constants/common";
+import { initialRange } from "../../main/constants/filters.constants";
 
 export const AsideFilter = () => {
-  const [priceRange, setPriceRange] = useState<PriceRange>({
-    min: 0,
-    max: 1000,
-  });
-  const [availableRange, setAvailableRange] = useState<PriceRange>({
-    min: 0,
-    max: 1000,
-  });
+  const [priceRange, setPriceRange] = useState<PriceRange>(initialRange);
+  const [availableRange, setAvailableRange] =
+    useState<PriceRange>(initialRange);
+
   const [brands, setBrands] = useState<string[]>([]);
 
   useEffect(() => {

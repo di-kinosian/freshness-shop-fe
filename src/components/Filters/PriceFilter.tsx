@@ -31,7 +31,7 @@ export const PriceFilter = ({ availableRange, onChange, value }: Props) => {
     setMaxInputValue(max.toString());
   };
 
-  const onMaxInputBlur = (e: FocusEvent<HTMLInputElement>) => {
+  const onMaxInputBlur = (e: FocusEvent<HTMLInputElement>): void => {
     let max = Number(e.target.value);
 
     if (max > availableRange.max) {
@@ -44,7 +44,7 @@ export const PriceFilter = ({ availableRange, onChange, value }: Props) => {
     onChange({ min: value.min, max });
   };
 
-  const onMinInputBlur = (e: FocusEvent<HTMLInputElement>) => {
+  const onMinInputBlur = (e: FocusEvent<HTMLInputElement>): void => {
     let min = Number(e.target.value);
 
     if (min < availableRange.min) {

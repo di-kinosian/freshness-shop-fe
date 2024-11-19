@@ -1,9 +1,9 @@
 import { Rating } from "@mui/material";
 import { useState } from "react";
 import { Checkbox } from "../Checkbox/Checkbox";
+import { ratings } from "../../main/constants/filters.constants";
 
 export const RatingFilter = () => {
-  const ratings = [5, 4, 3, 2, 1];
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
 
   const handleCheckboxChange =
