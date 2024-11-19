@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { BrandFilter } from "./BrandFilter";
-import { CategoryFilter } from "./CategoryFilter";
+import { CategoryFilter } from "./Categories/CategoryFilter";
 import { PriceFilter } from "./PriceFilter";
 import { RatingFilter } from "./RatingFilter";
 import { FilterKey, SelectedFilters } from "./types";
@@ -25,13 +25,14 @@ export const AsideFilter = () => {
   }, []);
 
   const handleFilterChange = useCallback(
-    (key: FilterKey) => (value: SelectedFilters[FilterKey]) => {
-      dispatch(setSelectedFilters({ [key]: value }));
-    },
+    (key: FilterKey) =>
+      (value: SelectedFilters[FilterKey]): void => {
+        dispatch(setSelectedFilters({ [key]: value }));
+      },
     [dispatch],
   );
 
-  const handleReset = () => {
+  const handleReset = (): void => {
     dispatch(removeSelectedFilters());
   };
 

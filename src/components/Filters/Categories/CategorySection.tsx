@@ -1,24 +1,22 @@
 import { twMerge } from "tailwind-merge";
-import { FiltersCategories, SelectedFilters } from "./types";
+import { FiltersCategories, SelectedFilters } from "../types";
 
 interface Props {
+  categories: FiltersCategories[];
   value: SelectedFilters["category"];
   onChange: (value: SelectedFilters["category"]) => void;
-  categories: FiltersCategories[];
 }
 
-export const CategoryFilter: React.FC<Props> = ({
+export const CategorySection: React.FC<Props> = ({
   categories,
-  onChange,
   value,
+  onChange,
 }) => {
   const handleSelectCategory = (id: string): void => {
     onChange(value === id ? "" : id);
   };
-
   return (
-    <div className="flex flex-col gap-4">
-      <span className="font-bold text-lg">Categories</span>
+    <>
       {categories?.map((category) => (
         <div
           key={category.id}
@@ -36,6 +34,6 @@ export const CategoryFilter: React.FC<Props> = ({
           </div>
         </div>
       ))}
-    </div>
+    </>
   );
 };
