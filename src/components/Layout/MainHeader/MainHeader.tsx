@@ -1,9 +1,20 @@
+import { useEffect, useState } from "react";
 import { Login } from "../../Auth/Login";
 import { Signup } from "../../Auth/Signup";
 import { useDialog } from "../../Dialog/DialogContext";
+import { twMerge } from "tailwind-merge";
 
 export const MainHeader = () => {
   const { openDialog, closeDialog } = useDialog();
+  const [hasShadow, setHasShadow] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleScroll = () => setHasShadow(window.scrollY > 48);
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleOpenLogin = (): void => {
     openDialog({
@@ -22,14 +33,35 @@ export const MainHeader = () => {
   };
 
   return (
-    <div className="px-[45px] h-[64px] flex justify-between items-center">
-      <div>Freedom</div>
-      <div>Search component</div>
-      <div className="flex gap-[16px]">
-        <div onClick={handleOpenLogin} className="cursor-pointer">
-          icon
+    <div
+      className={twMerge(
+        "bg-white sticky top-0 z-10",
+        hasShadow ? "border-b border-gray-300" : "",
+      )}
+    >
+      <div className="h-16 flex justify-between items-center max-w-[1200px] w-full mx-auto">
+        <img src="/freshnesecom.svg" alt="" />
+        <div>Search component</div>
+        <div className="flex gap-10">
+          <img
+            src="/ic-actions-user.svg"
+            alt=""
+            onClick={handleOpenLogin}
+            className="cursor-pointer"
+          />
+          <div className="relative">
+            <img
+              src="/ic-ecommerce-basket.svg"
+              alt=""
+              className="cursor-pointer"
+            />
+            <img
+              src="/group.svg"
+              alt=""
+              className="cursor-pointer absolute top-[12px] right-[9px]"
+            />
+          </div>
         </div>
-        <div>icon</div>
       </div>
     </div>
   );

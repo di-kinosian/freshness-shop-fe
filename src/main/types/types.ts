@@ -34,3 +34,8 @@ export interface LoginCredentials {
   email: string;
   password: string;
 }
+
+export interface AdditionalInfoType {
+  key: string;
+  value: string | number;
+}
