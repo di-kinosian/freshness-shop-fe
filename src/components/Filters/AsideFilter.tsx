@@ -1,44 +1,62 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { BrandFilter } from "./BrandFilter";
 import { CategoryFilter } from "./CategoryFilter";
 import { PriceFilter } from "./PriceFilter";
 import { RatingFilter } from "./RatingFilter";
-import { PriceRange } from "./types";
-import axios from "axios";
-import { url } from "../../main/constants/common";
-import { initialRange } from "../../main/constants/filters.constants";
+import { FilterKey, SelectedFilters } from "./types";
+import { AppDispatch } from "../../redux/app/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../main/hooks";
+import {
+  setSelectedFilters,
+  fetchFilters,
+  removeSelectedFilters,
+} from "../../redux/features/filters/filtersSlice";
+import { FiltersCategories } from "../../redux/features/filters/types";
 
 export const AsideFilter = () => {
-  const [priceRange, setPriceRange] = useState<PriceRange>(initialRange);
-  const [availableRange, setAvailableRange] =
-    useState<PriceRange>(initialRange);
-
-  const [brands, setBrands] = useState<string[]>([]);
+  const dispatch: AppDispatch = useDispatch();
+  const { availableFilters, selectedFilters } = useAppSelector(
+    (state) => state.filters,
+  );
 
   useEffect(() => {
-    const getFilters = async () => {
-      try {
-        const response = await axios.get(`${url}/products/filters`);
-        setAvailableRange(response.data.price);
-        setPriceRange(response.data.price);
-        setBrands(response.data.brands);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getFilters();
+    dispatch(fetchFilters());
   }, []);
+
+  const handleFilterChange = useCallback(
+    (key: FilterKey) => (value: SelectedFilters[FilterKey]) => {
+      dispatch(setSelectedFilters({ [key]: value }));
+    },
+    [dispatch],
+  );
+
+  const handleReset = () => {
+    dispatch(removeSelectedFilters());
+  };
 
   return (
     <div className="flex flex-col gap-8">
-      <CategoryFilter />
-      <BrandFilter brands={brands} />
-      <RatingFilter />
-      <PriceFilter
-        onChange={setPriceRange}
-        value={priceRange}
-        availableRange={availableRange}
+      <CategoryFilter
+        onChange={handleFilterChange("category")}
+        value={selectedFilters.category || ""}
+        categories={availableFilters?.categories as FiltersCategories[]}
       />
+      <BrandFilter
+        brands={availableFilters?.brands}
+        onChange={handleFilterChange("brands")}
+        value={selectedFilters.brands || []}
+      />
+      <RatingFilter
+        onChange={handleFilterChange("rating")}
+        value={selectedFilters.rating || []}
+      />
+      <PriceFilter
+        onChange={handleFilterChange("price")}
+        value={selectedFilters.price}
+        availableRange={availableFilters?.price}
+      />
+      <button onClick={handleReset}>Reset Filters</button>;
     </div>
   );
 };
