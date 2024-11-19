@@ -35,30 +35,32 @@ export const MainHeader = () => {
   return (
     <div
       className={twMerge(
-        "h-16 flex justify-between items-center max-w-[1200px] w-full mx-auto bg-white sticky top-0 z-10",
+        "bg-white sticky top-0 z-10",
         hasShadow ? "border-b border-gray-300" : "",
       )}
     >
-      <img src="/freshnesecom.svg" alt="" />
-      <div>Search component</div>
-      <div className="flex gap-10">
-        <img
-          src="/ic-actions-user.svg"
-          alt=""
-          onClick={handleOpenLogin}
-          className="cursor-pointer"
-        />
-        <div className="relative">
+      <div className="h-16 flex justify-between items-center max-w-[1200px] w-full mx-auto">
+        <img src="/freshnesecom.svg" alt="" />
+        <div>Search component</div>
+        <div className="flex gap-10">
           <img
-            src="/ic-ecommerce-basket.svg"
+            src="/ic-actions-user.svg"
             alt=""
+            onClick={handleOpenLogin}
             className="cursor-pointer"
           />
-          <img
-            src="/group.svg"
-            alt=""
-            className="cursor-pointer absolute top-[12px] right-[9px]"
-          />
+          <div className="relative">
+            <img
+              src="/ic-ecommerce-basket.svg"
+              alt=""
+              className="cursor-pointer"
+            />
+            <img
+              src="/group.svg"
+              alt=""
+              className="cursor-pointer absolute top-[12px] right-[9px]"
+            />
+          </div>
         </div>
       </div>
     </div>

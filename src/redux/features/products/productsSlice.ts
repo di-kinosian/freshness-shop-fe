@@ -4,7 +4,7 @@ import { url } from "../../../main/constants/common";
 import { GetAllProductsPayload, Product, ProductsState } from "./types";
 
 const initialState: ProductsState = {
-  products: null,
+  products: [],
   total: 0,
   page: 1,
   limit: 6,
@@ -29,6 +29,7 @@ export const getAllProducts = createAsyncThunk<
     };
   } catch (error) {
     const axiosError = error as AxiosError;
+
     return thunkAPI.rejectWithValue(axiosError.message);
   }
 });

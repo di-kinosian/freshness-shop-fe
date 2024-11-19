@@ -12,6 +12,6 @@ export interface Category {
 }
 
 export interface CategoryState {
-  categories: Category[] | null;
+  categories: Category[];
   categoriesError: string | null;
 }

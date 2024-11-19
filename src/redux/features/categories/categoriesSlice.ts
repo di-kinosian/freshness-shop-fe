@@ -15,9 +15,11 @@ export const getAllCategories = createAsyncThunk<
 >("categories/getAllCategories", async (_, thunkAPI) => {
   try {
     const response = await axios.get<Category[]>(`${url}/categories`);
+
     return response.data;
   } catch (error) {
     const axiosError = error as AxiosError;
+
     return thunkAPI.rejectWithValue(axiosError.message);
   }
 });

@@ -25,7 +25,7 @@ export interface GetAllProductsPayload {
 }
 
 export interface ProductsState {
-  products: Product[] | null;
+  products: Product[];
   total: number;
   page: number;
   limit: number;
