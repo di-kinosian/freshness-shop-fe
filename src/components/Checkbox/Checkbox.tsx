@@ -1,25 +1,14 @@
-import { Checkbox as CheckboxMUI } from "@mui/material";
+import { Checkbox as CheckboxMUI, CheckboxProps } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { PALETTE } from "../../main/constants/palette";
 
-interface Props {
-  selectedData: number[];
-  value: number;
-  onChange: (item: number) => void;
-}
-
-export const Checkbox: React.FC<Props> = ({
-  selectedData,
-  value,
-  onChange: handleCheckboxChange,
-}) => {
+export const Checkbox: React.FC<CheckboxProps> = (props) => {
   const classes = useStyles();
   return (
     <CheckboxMUI
       color="primary"
-      checked={selectedData.includes(value)}
-      onChange={() => handleCheckboxChange(value)}
       classes={{ root: classes.root }}
+      {...props}
     />
   );
 };

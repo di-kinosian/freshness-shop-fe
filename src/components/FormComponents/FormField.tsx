@@ -2,24 +2,27 @@ import React, { forwardRef } from "react";
 import { FormControl, FormHelperText } from "@mui/material";
 import Input from "./Input";
 import Label from "./Label";
+import { twMerge } from "tailwind-merge";
 
 interface IProps {
   label: string;
-  value?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string | number;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
   placeholder?: string;
   error?: string;
   name?: string;
-  width?: string;
+  className?: string;
+  type?: string;
 }
 
 const FormField = forwardRef<HTMLInputElement, IProps>(
-  ({ label, value, onChange, placeholder, error, name, width }, ref) => {
+  ({ label, value, onChange, placeholder, error, name, className, type, onBlur }, ref) => {
     return (
       <FormControl
         variant="standard"
         error={!!error}
-        className={`items-start ${width}`}
+        className={twMerge("items-start", className)}
       >
         <Label htmlFor={name}>{label}</Label>
         <Input
@@ -29,6 +32,8 @@ const FormField = forwardRef<HTMLInputElement, IProps>(
           value={value}
           onChange={onChange}
           placeholder={placeholder}
+          type={type}
+          onBlur={onBlur}
         />
         {error && <FormHelperText>{error}</FormHelperText>}
       </FormControl>

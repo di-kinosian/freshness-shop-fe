@@ -5,7 +5,7 @@ import { Layout } from "./components/Layout/Layout";
 import { ThemeProvider } from "@mui/styles";
 import { theme } from "./config/theme";
 import { ProductDetails } from "./pages/ProductDetails/product.details.page";
-import { ROUTES } from "./main/constants/routes-constants";
+import { ROUTES } from "./main/constants/routes.constants";
 import { StyledEngineProvider } from "@mui/material";
 import { DialogProvider } from "./components/Dialog/DialogContext";
 import { Provider } from "react-redux";

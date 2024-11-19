@@ -1,27 +1,59 @@
-import { useState } from "react";
+import { FocusEvent, useEffect, useState } from "react";
 import { Slider } from "@mui/material";
 import FormField from "../FormComponents/FormField";
 import { makeStyles } from "@mui/styles";
+import { PriceRange } from "./types";
 
-export const PriceFilter = () => {
-  const [priceRange, setPriceRange] = useState<number[]>([300, 600]);
+interface Props {
+  availableRange: PriceRange;
+  value: PriceRange;
+  onChange: (range: PriceRange) => void;
+}
 
+export const PriceFilter = ({ availableRange, onChange, value }: Props) => {
+  const [minInputValue, setMinInputValue] = useState<string>(
+    value.min.toString(),
+  );
+  const [maxInputValue, setMaxInputValue] = useState<string>(
+    value.max.toString(),
+  );
   const classes = useStyles();
 
-  const handleSliderChange = (
-    event: Event,
-    newValue: number | number[],
-  ): void => {
-    setPriceRange(newValue as number[]);
+  useEffect(() => {
+    setMinInputValue(value.min.toString());
+    setMaxInputValue(value.max.toString());
+  }, [value]);
+
+  const handleSliderChange = (_: Event, newValue: number | number[]): void => {
+    const [min, max] = newValue as number[];
+    onChange({ min, max });
+    setMinInputValue(min.toString());
+    setMaxInputValue(max.toString());
   };
 
-  const handleInputChange = (type: "min" | "max", value: string): void => {
-    const numericValue = parseInt(value, 10) || 0;
-    setPriceRange((prev) =>
-      type === "min"
-        ? [Math.min(numericValue, prev[1]), prev[1]]
-        : [prev[0], Math.max(numericValue, prev[0])],
-    );
+  const onMaxInputBlur = (e: FocusEvent<HTMLInputElement>): void => {
+    let max = Number(e.target.value);
+
+    if (max > availableRange.max) {
+      max = availableRange.max;
+    } else if (max < value.min) {
+      max = value.min;
+    }
+
+    setMaxInputValue(max.toString());
+    onChange({ min: value.min, max });
+  };
+
+  const onMinInputBlur = (e: FocusEvent<HTMLInputElement>): void => {
+    let min = Number(e.target.value);
+
+    if (min < availableRange.min) {
+      min = availableRange.min;
+    } else if (min > value.max) {
+      min = value.max;
+    }
+    setMinInputValue(min.toString());
+    onChange({ max: value.max, min });
   };
 
   return (
@@ -29,11 +61,11 @@ export const PriceFilter = () => {
       <span className="font-bold text-lg">Price</span>
       <div className="px-3">
         <Slider
-          value={priceRange}
+          value={[value.min, value.max]}
           onChange={handleSliderChange}
           valueLabelDisplay="auto"
-          min={0}
-          max={1000}
+          min={availableRange.min}
+          max={availableRange.max}
           className="text-neutralGreenBg h-[6px]"
           classes={{ root: classes.root }}
         />
@@ -41,16 +73,20 @@ export const PriceFilter = () => {
       <div className="flex gap-4 items-center">
         <FormField
           label="Min"
-          value={priceRange[0].toString()}
-          onChange={(e) => handleInputChange("min", e.target.value)}
-          width="w-[109px]"
+          value={minInputValue}
+          onChange={(e) => setMinInputValue(e.target.value)}
+          onBlur={onMinInputBlur}
+          className="w-[109px]"
+          type="number"
         />
         <span className="mt-[23px]">-</span>
         <FormField
           label="Max"
-          value={priceRange[1].toString()}
-          onChange={(e) => handleInputChange("max", e.target.value)}
-          width="w-[109px]"
+          value={maxInputValue}
+          onBlur={onMaxInputBlur}
+          onChange={(e) => setMaxInputValue(e.target.value)}
+          className="w-[109px]"
+          type="number"
         />
       </div>
     </div>
