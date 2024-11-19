@@ -5,7 +5,7 @@ import { Button } from "../Button/Button";
 interface Props {
   title: string;
   description: string;
-  raiting?: number;
+  rating?: number;
   price: number;
   additionalInformation?: AdditionalInfoType[] | null;
 }
