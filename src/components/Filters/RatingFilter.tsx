@@ -1,18 +1,21 @@
 import { Rating } from "@mui/material";
-import { useState } from "react";
 import { Checkbox } from "../Checkbox/Checkbox";
 import { ratings } from "../../main/constants/filters.constants";
+import { SelectedFilters } from "./types";
 
-export const RatingFilter = () => {
-  const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
+interface Props {
+  value: SelectedFilters["rating"];
+  onChange: (value: SelectedFilters["rating"]) => void;
+}
 
+export const RatingFilter: React.FC<Props> = ({ onChange, value }) => {
   const handleCheckboxChange =
     (rating: number) =>
     (_: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-      setSelectedRatings((prev) =>
+      onChange(
         !checked
-          ? prev.filter((r) => r !== Number(rating))
-          : [...prev, Number(rating)],
+          ? value.filter((r) => r !== Number(rating))
+          : [...value, Number(rating)],
       );
     };
 
@@ -23,7 +26,7 @@ export const RatingFilter = () => {
         {ratings.map((rating) => (
           <div key={rating} className="flex items-center gap-1">
             <Checkbox
-              checked={selectedRatings.includes(rating)}
+              checked={value.includes(rating)}
               onChange={handleCheckboxChange(rating)}
             />
             <Rating

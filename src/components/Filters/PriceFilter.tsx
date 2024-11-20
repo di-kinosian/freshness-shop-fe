@@ -2,12 +2,12 @@ import { FocusEvent, useEffect, useState } from "react";
 import { Slider } from "@mui/material";
 import FormField from "../FormComponents/FormField";
 import { makeStyles } from "@mui/styles";
-import { PriceRange } from "./types";
+import { PriceRange, SelectedFilters } from "./types";
 
 interface Props {
-  availableRange: PriceRange;
-  value: PriceRange;
-  onChange: (range: PriceRange) => void;
+  availableRange?: PriceRange;
+  value: SelectedFilters["price"];
+  onChange: (range: SelectedFilters["price"]) => void;
 }
 
 export const PriceFilter = ({ availableRange, onChange, value }: Props) => {
@@ -30,6 +30,8 @@ export const PriceFilter = ({ availableRange, onChange, value }: Props) => {
     setMinInputValue(min.toString());
     setMaxInputValue(max.toString());
   };
+
+  if (!availableRange) return null;
 
   const onMaxInputBlur = (e: FocusEvent<HTMLInputElement>): void => {
     let max = Number(e.target.value);
