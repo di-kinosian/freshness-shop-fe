@@ -13,6 +13,7 @@ import {
   removeSelectedFilters,
 } from "../../redux/features/filters/filtersSlice";
 import { FiltersCategories } from "../../redux/features/filters/types";
+import { getAllProducts } from "../../redux/features/products/productsSlice";
 
 export const AsideFilter = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -23,6 +24,23 @@ export const AsideFilter = () => {
   useEffect(() => {
     dispatch(fetchFilters());
   }, []);
+
+  useEffect(() => {
+    dispatch(
+      getAllProducts({
+        page: 1,
+        limit: 5,
+        brands: selectedFilters.brands || availableFilters?.brands,
+        priceMax: selectedFilters.price.max || availableFilters?.price.max,
+        priceMin: selectedFilters.price.min || availableFilters?.price.min,
+        rating: selectedFilters.rating || 5,
+      }),
+    );
+  }, [
+    selectedFilters,
+    availableFilters,
+    dispatch,
+  ]);
 
   const handleFilterChange = useCallback(
     (key: FilterKey) =>
@@ -60,7 +78,6 @@ export const AsideFilter = () => {
       <button onClick={handleReset} className="text-grayText font-bold">
         Reset
       </button>
-      ;
     </div>
   );
 };

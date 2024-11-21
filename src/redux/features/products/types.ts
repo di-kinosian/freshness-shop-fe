@@ -22,6 +22,10 @@ export interface Product {
 export interface GetAllProductsPayload {
   page: number;
   limit: number;
+  brands?: string[];
+  priceMin?: number;
+  priceMax?: number;
+  rating?: number[];
 }
 
 export interface ProductsState {

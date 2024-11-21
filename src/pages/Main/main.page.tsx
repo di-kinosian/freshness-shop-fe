@@ -9,9 +9,19 @@ import { AsideFilter } from "../../components/Filters/AsideFilter";
 export const Main = () => {
   const dispatch: AppDispatch = useDispatch();
   const { products } = useAppSelector((state) => state.product);
+  const { availableFilters } = useAppSelector((state) => state.filters);
 
   useEffect(() => {
-    dispatch(getAllProducts({ page: 1, limit: 5 }));
+    dispatch(
+      getAllProducts({
+        page: 1,
+        limit: 5,
+        brands: availableFilters?.brands,
+        priceMax: availableFilters?.price.max,
+        priceMin: availableFilters?.price.min,
+        rating: [5],
+      }),
+    );
   }, []);
 
   return (

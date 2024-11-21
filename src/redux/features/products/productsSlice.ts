@@ -17,19 +17,27 @@ export const getAllProducts = createAsyncThunk<
   { rejectValue: string }
 >("product/getAllProducts", async (payload, thunkAPI) => {
   try {
+    const { page, limit, brands, priceMin, priceMax, rating } = payload;
+
     const { data } = await axios.get(`${url}/products`, {
-      params: { page: payload.page, limit: payload.limit },
+      params: {
+        page,
+        limit,
+        ...(brands?.length && { brands }),
+        ...(priceMin !== undefined && { priceMin }),
+        ...(priceMax !== undefined && { priceMax }),
+        ...(rating?.length && { rating }),
+      },
     });
 
     return {
       products: data.items,
       total: data.total,
       page: data.page,
-      limit: payload.limit,
+      limit,
     };
   } catch (error) {
     const axiosError = error as AxiosError;
-
     return thunkAPI.rejectWithValue(axiosError.message);
   }
 });
