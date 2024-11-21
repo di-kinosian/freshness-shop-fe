@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { ButtonSize, ButtonVariant } from "../../main/types/enums";
 import { AdditionalInfoType } from "../../main/types/types";
 import { Button } from "../Button/Button";
@@ -8,6 +9,7 @@ interface Props {
   rating?: number;
   price: number;
   additionalInformation?: AdditionalInfoType[] | null;
+  id: string;
 }
 
 export const ProductItem: React.FC<Props> = ({
@@ -15,7 +17,14 @@ export const ProductItem: React.FC<Props> = ({
   description,
   additionalInformation,
   price,
+  id,
 }) => {
+  const navigate = useNavigate();
+
+  const goToPDP = (productId: string): void => {
+    navigate(`/productDetails/${productId}`);
+  };
+
   return (
     <div className="border border-basicGray rounded-lg grid grid-cols-[220px,2fr,1fr] gap-[26px] h-[220px]">
       <div className="bg-basicGray rounded-lg"></div>
@@ -43,6 +52,7 @@ export const ProductItem: React.FC<Props> = ({
             color={ButtonVariant.PRIMARY}
             size={ButtonSize.MEDIUM}
             className="w-[164px]"
+            onClick={() => goToPDP(id)}
           >
             Product Detail
           </Button>

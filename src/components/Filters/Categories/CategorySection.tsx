@@ -1,5 +1,6 @@
 import { twMerge } from "tailwind-merge";
 import { FiltersCategories, SelectedFilters } from "../types";
+import { Bage } from "../../Bage/Bage";
 
 interface Props {
   categories: FiltersCategories[];
@@ -29,9 +30,7 @@ export const CategorySection: React.FC<Props> = ({
           onClick={() => handleSelectCategory(category.id)}
         >
           <div>{category.name}</div>
-          <div className="text-neutralGreenBg font-semibold px-4 bg-lightGreen rounded-full">
-            {category.productCount}
-          </div>
+          <Bage>{category.productCount}</Bage>
         </div>
       ))}
     </>

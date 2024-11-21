@@ -6,10 +6,10 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useThrottle = <T extends (...args: any[]) => void>(
   func: T,
-  delay: number
+  delay: number,
 ): ((...args: Parameters<T>) => void) => {
-  let timeout: number| null = null;
-  
+  let timeout: number | null = null;
+
   return (...args: Parameters<T>): void => {
     if (timeout) {
       return;
