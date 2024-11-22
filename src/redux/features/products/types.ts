@@ -28,10 +28,16 @@ export interface GetAllProductsPayload {
   rating?: number[];
 }
 
+export interface GetProductPayload {
+  _id: string;
+}
+
 export interface ProductsState {
   products: Product[];
   total: number;
   page: number;
   limit: number;
   productError: string | null;
+  product: Product | null;
+  productsError: string | null;
 }
