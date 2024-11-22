@@ -7,11 +7,12 @@ import { theme } from "./config/theme";
 import { ProductDetails } from "./pages/ProductDetails/product.details.page";
 import { ROUTES } from "./main/constants/routes.constants";
 import { StyledEngineProvider } from "@mui/material";
-import { DialogProvider } from "./components/Dialog/DialogContext";
+import { DialogProvider } from "./components/Dialog/context/DialogContext";
 import { Provider } from "react-redux";
 import { ToastProvider } from "./components/Toast/ToastContext";
 import { store, persistor } from "./redux/app/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { ConfirmationDialogProvider } from "./components/Dialog/context/ConfirmationDialogContext";
 
 function App() {
   return (
@@ -20,20 +21,22 @@ function App() {
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <ToastProvider>
-              <DialogProvider>
-                <Router>
-                  <Layout>
-                    <Routes>
-                      <Route path={ROUTES.HOME} element={<Main />} />
-                      <Route
-                        path={ROUTES.PRODUCT_DETAILS}
-                        element={<ProductDetails />}
-                      />
-                      <Route path={ROUTES.CHECKOUT} element={<Checkout />} />
-                    </Routes>
-                  </Layout>
-                </Router>
-              </DialogProvider>
+              <ConfirmationDialogProvider>
+                <DialogProvider>
+                  <Router>
+                    <Layout>
+                      <Routes>
+                        <Route path={ROUTES.HOME} element={<Main />} />
+                        <Route
+                          path={ROUTES.PRODUCT_DETAILS}
+                          element={<ProductDetails />}
+                        />
+                        <Route path={ROUTES.CHECKOUT} element={<Checkout />} />
+                      </Routes>
+                    </Layout>
+                  </Router>
+                </DialogProvider>
+              </ConfirmationDialogProvider>
             </ToastProvider>
           </PersistGate>
         </Provider>

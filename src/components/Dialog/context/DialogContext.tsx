@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { Dialog } from "./Dialog";
+import { Dialog } from "../Dialog";
 
 type DialogDataType = {
   title: string;
