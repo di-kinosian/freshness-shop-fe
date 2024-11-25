@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ButtonSize, ButtonVariant } from "../../main/types/enums";
 import { AdditionalInfoType } from "../../main/types/types";
 import { Button } from "../Button/Button";
+import { getProductDetailsRoute } from "../../main/constants/routes.constants";
 
 interface Props {
   title: string;
@@ -22,7 +23,7 @@ export const ProductItem: React.FC<Props> = ({
   const navigate = useNavigate();
 
   const goToPDP = (productId: string): void => {
-    navigate(`/productDetails/${productId}`);
+    navigate(getProductDetailsRoute(productId));
   };
 
   return (

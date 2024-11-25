@@ -33,21 +33,20 @@ export const ProductDetails = () => {
   return (
     <div className="grid grid-cols-[1fr,1fr] gap-10">
       <div>
-        <img src="/frame.svg" alt="" />
+        <img
+          src="https://a.allegroimg.com/s128/11202a/4c8e1b80411faf988eab7315e46a/Svtlododnij-proektor-HY320-1080P-FullHD-Mn-proektor-z-pdtrimkoyu-4K-z-Android-WiFi-6"
+          alt=""
+        />
       </div>
       <div className="flex flex-col gap-12 items-start">
         <div className="flex flex-col gap-4 h-[50px]">
-          <h1 className="text-3xl font-bold text-black">
-            {product?.title}
-          </h1>
+          <h1 className="text-3xl font-bold text-black">{product?.title}</h1>
           <div className="flex item-center gap-4">
             <ProductRating value={product?.rating ?? 0} />
             <span className="text-grayText">{`(10 customers reviewed)`}</span>
           </div>
         </div>
         <div>{product?.description}</div>
-
-        {/*Info ection with grid*/}
         <div className="grid grid-cols-[1fr,1fr] gap-x-16 gap-y-4 w-full">
           <div className="grid grid-cols-[1fr,2fr] gap-8">
             <span className="text-grayText">Country</span>
@@ -68,7 +67,6 @@ export const ProductDetails = () => {
             </div>
           ))}
         </div>
-        {/*Section with price*/}
         <div className="h-[89px] border border-grayBorder rounded-2xl flex items-center justify-between px-[24px] w-full">
           <div>
             <div className="text-2xl font-bold text-black">{`${product?.price} USD`}</div>
@@ -78,17 +76,12 @@ export const ProductDetails = () => {
             <Button>+ Add to card</Button>
           </div>
         </div>
-
-        {/*Ghost button*/}
         <Button variant="text">
           <div className="font-bold flex gap-1 items-center">
             <img src="/like.svg" />
             <span>Add to my wish list</span>
           </div>
         </Button>
-
-        {/*Description section*/}
-
         <div className="w-full p-2 flex justify-between border-b border-grayBorder">
           {["Description", "Reviews", "Questions"].map((tab) => (
             <span
@@ -106,7 +99,6 @@ export const ProductDetails = () => {
             </span>
           ))}
         </div>
-
         <div>
           <div>Hard text for the full description</div>
           <br></br>
