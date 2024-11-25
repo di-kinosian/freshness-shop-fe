@@ -49,7 +49,7 @@ export const MainHeader = () => {
         <img
           src="/freshnesecom.svg"
           alt=""
-          onClick={() => goToMainPage()}
+          onClick={goToMainPage}
           className="cursor-pointer"
         />
         <div>Search component</div>
