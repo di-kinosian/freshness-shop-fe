@@ -7,6 +7,7 @@ export enum ButtonSize {
 export enum ButtonVariant {
   PRIMARY = "primary",
   SECONDARY = "secondary",
+  GHOST = "ghost",
 }
 
 export enum ToastVariant {

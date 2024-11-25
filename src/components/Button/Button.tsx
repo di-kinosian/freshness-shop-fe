@@ -1,21 +1,28 @@
-import { Button as MuiButton, ButtonProps, Theme } from "@mui/material";
+import {
+  Button as MuiButton,
+  ButtonProps,
+  Theme,
+  ButtonBase,
+} from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 interface Props extends ButtonProps {
   className?: string;
 }
 
-export const Button: React.FC<Props> = ({
-  children,
-  variant = "contained",
-  ...props
-}) => {
-  const classes = useStyles(props.color);
+export const Button: React.FC<Props> = ({ children, variant, ...props }) => {
+  const classes = useStyles();
 
   return (
-    <MuiButton classes={classes} variant={variant} {...props}>
-      {children}
-    </MuiButton>
+    <>
+      {variant === "text" ? (
+        <ButtonBase>{children}</ButtonBase>
+      ) : (
+        <MuiButton classes={classes} variant={variant} {...props}>
+          {children}
+        </MuiButton>
+      )}
+    </>
   );
 };
 

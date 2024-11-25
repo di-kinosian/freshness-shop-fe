@@ -60,7 +60,6 @@ export const AsideFilter = () => {
       <button onClick={handleReset} className="text-grayText font-bold">
         Reset
       </button>
-      ;
     </div>
   );
 };

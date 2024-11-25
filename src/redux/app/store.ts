@@ -12,13 +12,21 @@ const persistConfig = {
 };
 
 const persisteAuthReducer = persistReducer(persistConfig, authReducer);
+const persisteFiltersReducer = persistReducer({
+  key: 'filters',
+  storage
+}, filtersReducer);
+const persisteCategoriesReducer = persistReducer({
+  key: 'categories',
+  storage
+}, categoriesReducer);
 
 const store = configureStore({
   reducer: {
     auth: persisteAuthReducer,
     product: productsReducer,
-    categories: categoriesReducer,
-    filters: filtersReducer,
+    categories: persisteCategoriesReducer,
+    filters: persisteFiltersReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -21,8 +21,8 @@ function App() {
           <PersistGate loading={null} persistor={persistor}>
             <ToastProvider>
               <DialogProvider>
-                <Layout>
-                  <Router>
+                <Router>
+                  <Layout>
                     <Routes>
                       <Route path={ROUTES.HOME} element={<Main />} />
                       <Route
@@ -31,8 +31,8 @@ function App() {
                       />
                       <Route path={ROUTES.CHECKOUT} element={<Checkout />} />
                     </Routes>
-                  </Router>
-                </Layout>
+                  </Layout>
+                </Router>
               </DialogProvider>
             </ToastProvider>
           </PersistGate>
