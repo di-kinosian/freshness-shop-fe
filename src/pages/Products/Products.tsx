@@ -6,7 +6,7 @@ import { getAllProducts } from "../../redux/features/products/productsSlice";
 import { ProductItem } from "../../components/Product/ProductItem";
 import { AsideFilter } from "../../components/Filters/AsideFilter";
 
-export const Main = () => {
+export const Products = () => {
   const dispatch: AppDispatch = useDispatch();
   const { products } = useAppSelector((state) => state.product);
   const { selectedFilters } = useAppSelector((state) => state.filters);

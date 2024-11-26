@@ -30,6 +30,7 @@ export const getProduct = createAsyncThunk<
     return response.data;
   } catch (error) {
     const axiosError = error as AxiosError;
+
     return thunkAPI.rejectWithValue(axiosError.message);
   }
 });
