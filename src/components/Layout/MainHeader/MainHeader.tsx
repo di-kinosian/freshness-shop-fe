@@ -4,6 +4,7 @@ import { Signup } from "../../Auth/Signup";
 import { useDialog } from "../../Dialog/DialogContext";
 import { twMerge } from "tailwind-merge";
 import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../../main/constants/routes.constants";
 
 export const MainHeader = () => {
   const { openDialog, closeDialog } = useDialog();
@@ -12,7 +13,6 @@ export const MainHeader = () => {
 
   useEffect(() => {
     const handleScroll = () => setHasShadow(window.scrollY > 48);
-
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
@@ -35,7 +35,7 @@ export const MainHeader = () => {
   };
 
   const goToMainPage = (): void => {
-    navigate("/");
+    navigate(ROUTES.HOME.path);
   };
 
   return (

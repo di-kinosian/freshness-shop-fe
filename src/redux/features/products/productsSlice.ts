@@ -10,12 +10,14 @@ import {
 
 const initialState: ProductsState = {
   products: [],
+  product: null,
+  relatedProducts: [],
   total: 0,
   page: 1,
   limit: 6,
   productError: null,
   productsError: null,
-  product: null,
+  relatedProductsError: null,
 };
 
 export const getProduct = createAsyncThunk<
@@ -62,6 +64,28 @@ export const getAllProducts = createAsyncThunk<
     };
   } catch (error) {
     const axiosError = error as AxiosError;
+
+    return thunkAPI.rejectWithValue(axiosError.message);
+  }
+});
+
+export const fetchRelatedProducts = createAsyncThunk<
+  Product[],
+  void,
+  { rejectValue: string }
+>("product/getRelatedProducts", async (_, thunkAPI) => {
+  try {
+    const { data } = await axios.get(`${url}/products`, {
+      params: {
+        page: 1,
+        limit: 10,
+      },
+    });
+
+    return data.items;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+
     return thunkAPI.rejectWithValue(axiosError.message);
   }
 });
@@ -92,6 +116,14 @@ const productsSlice = createSlice({
       })
       .addCase(getProduct.rejected, (state, action) => {
         state.productError = action.payload || "Failed to fetch product";
+      })
+      .addCase(fetchRelatedProducts.fulfilled, (state, action) => {
+        state.relatedProducts = action.payload;
+        state.relatedProductsError = null;
+      })
+      .addCase(fetchRelatedProducts.rejected, (state, action) => {
+        state.relatedProductsError =
+          action.payload || "Failed to fetch related products";
       });
   },
 });
