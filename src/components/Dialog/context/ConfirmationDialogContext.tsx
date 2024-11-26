@@ -64,5 +64,6 @@ export const useConfirmationDialog = (): ConfirmationDialogContextType => {
   if (!context) {
     throw new Error("useDialog must be used within a DialogProvider");
   }
+
   return context;
 };

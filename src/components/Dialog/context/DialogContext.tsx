@@ -54,5 +54,6 @@ export const useDialog = (): DialogContextType => {
   if (!context) {
     throw new Error("useDialog must be used within a DialogProvider");
   }
+
   return context;
 };
