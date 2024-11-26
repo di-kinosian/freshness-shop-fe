@@ -29,11 +29,11 @@ export const ImageGallery = ({ images, noProductImg }: Props) => {
   return (
     <div className="overflow-hidden">
       {images ? (
-        <div>
+        <div className="flex flex-col gap-2">
           <div ref={sliderRef} className="keen-slider h-full">
             {images.map((i) => (
-              <div className="keen-slider__slide flex justify-center">
-                <img src={i} alt="" className="h-80" />
+              <div className="keen-slider__slide flex justify-center ">
+                <img src={i} alt="" className="h-80 rounded-xl" />
               </div>
             ))}
           </div>
@@ -42,7 +42,7 @@ export const ImageGallery = ({ images, noProductImg }: Props) => {
             <div ref={thumbnailRef} className="keen-slider thumbnail">
               {images.map((i) => (
                 <div className="keen-slider__slide flex justify-center">
-                  <img src={i} alt="" className="h-32" />
+                  <img src={i} alt="" className="h-32 rounded-xl" />
                 </div>
               ))}
             </div>
