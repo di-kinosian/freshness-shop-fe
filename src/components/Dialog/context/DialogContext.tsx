@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { Dialog } from "./Dialog";
+import { Dialog } from "../Dialog";
 
 type DialogDataType = {
   title: string;
@@ -54,5 +54,6 @@ export const useDialog = (): DialogContextType => {
   if (!context) {
     throw new Error("useDialog must be used within a DialogProvider");
   }
+
   return context;
 };
