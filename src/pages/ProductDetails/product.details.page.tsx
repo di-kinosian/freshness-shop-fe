@@ -1,30 +1,34 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Product } from "../../redux/features/products/types";
 import { ProductRating } from "../../components/Product/ProductRating";
 import { Button } from "../../components/Button/Button";
 import { twMerge } from "tailwind-merge";
-import { url } from "../../main/constants/common";
-import axios, { AxiosError } from "axios";
+import {
+  clearProduct,
+  getProduct,
+} from "../../redux/features/products/productsSlice";
+import { AppDispatch } from "../../redux/app/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../main/hooks";
 
 export const ProductDetails = () => {
   const { productId } = useParams();
-  const [currentProduct, setCurrentProduct] = useState<Product>();
   const [activeTab, setActiveTab] = useState<string>("Description");
+  const dispatch: AppDispatch = useDispatch();
+  const { product } = useAppSelector((state) => state.product);
 
-  // !!TODO will move to redux
   useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const response = await axios.get(`${url}/products/${productId}`);
-        setCurrentProduct(response.data);
-      } catch (error) {
-        const AxiousError = error as AxiosError;
-        console.log(AxiousError);
-      }
+    if (productId) {
+      dispatch(getProduct({ _id: productId }));
+    }
+    return () => {
+      dispatch(clearProduct());
     };
-    getProduct();
   }, []);
+
+  if (!product) {
+    return "Loading...";
+  }
 
   return (
     <div className="grid grid-cols-[1fr,1fr] gap-10">
@@ -34,30 +38,30 @@ export const ProductDetails = () => {
       <div className="flex flex-col gap-12 items-start">
         <div className="flex flex-col gap-4 h-[50px]">
           <h1 className="text-3xl font-bold text-black">
-            {currentProduct?.title}
+            {product?.title}
           </h1>
           <div className="flex item-center gap-4">
-            <ProductRating value={currentProduct?.rating ?? 0} />
+            <ProductRating value={product?.rating ?? 0} />
             <span className="text-grayText">{`(10 customers reviewed)`}</span>
           </div>
         </div>
-        <div>{currentProduct?.description}</div>
+        <div>{product?.description}</div>
 
         {/*Info ection with grid*/}
         <div className="grid grid-cols-[1fr,1fr] gap-x-16 gap-y-4 w-full">
           <div className="grid grid-cols-[1fr,2fr] gap-8">
             <span className="text-grayText">Country</span>
-            <span>{currentProduct?.country}</span>
+            <span>{product?.country}</span>
           </div>
           <div className="grid grid-cols-[1fr,2fr] gap-8">
             <span className="text-grayText">Category</span>
-            <span>{currentProduct?.country}</span>
+            <span>{product?.country}</span>
           </div>
           <div className="grid grid-cols-[1fr,2fr] gap-8">
             <span className="text-grayText">Brand</span>
-            <span>{currentProduct?.brand}</span>
+            <span>{product?.brand}</span>
           </div>
-          {currentProduct?.additionalInformation?.map((item) => (
+          {product?.additionalInformation?.map((item) => (
             <div className="grid grid-cols-[1fr,2fr] gap-8" key={item.key}>
               <div className="text-grayText">{item.key}</div>
               <div className="">{item.value}</div>
@@ -67,7 +71,7 @@ export const ProductDetails = () => {
         {/*Section with price*/}
         <div className="h-[89px] border border-grayBorder rounded-2xl flex items-center justify-between px-[24px] w-full">
           <div>
-            <div className="text-2xl font-bold text-black">{`${currentProduct?.price} USD`}</div>
+            <div className="text-2xl font-bold text-black">{`${product?.price} USD`}</div>
             <div>800 USD</div>
           </div>
           <div className="flex">
