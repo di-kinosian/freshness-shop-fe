@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme: Theme) => {
         fontWeight: 700,
         fontSize: "15px",
         fontFamily: "Poppins",
+        textTransform: "none",
       },
       "&.MuiButton-colorSecondary": {
         backgroundColor: theme.button.background.secondary,
@@ -46,15 +47,15 @@ const useStyles = makeStyles((theme: Theme) => {
         color: theme.button.color.primary,
         border: theme.button.border?.primary,
       },
-      "&.MuiButton-containedSizeSmall": {
+      "&.MuiButton-sizeSmall": {
         height: theme.button.sizes.small.height,
         padding: theme.button.sizes.small.padding,
       },
-      "&.MuiButton-containedSizeMedium": {
+      "&.MuiButton-sizeMedium": {
         height: theme.button.sizes.medium.height,
         padding: theme.button.sizes.medium.padding,
       },
-      "&.MuiButton-containedSizeLarge": {
+      "&.MuiButton-sizeLarge": {
         height: theme.button.sizes.large.height,
         padding: theme.button.sizes.large.padding,
       },

@@ -3,14 +3,15 @@ import { makeStyles } from "@mui/styles";
 
 interface Props {
   value: number;
+  size?: "medium" | "large" | "small";
 }
 
-export const ProductRating: React.FC<Props> = ({ value }) => {
+export const ProductRating: React.FC<Props> = ({ value, size = "medium" }) => {
   const classes = useStyles();
   return (
     <Rating
       value={value}
-      size="medium"
+      size={size}
       readOnly={true}
       classes={{ root: classes.root }}
     />

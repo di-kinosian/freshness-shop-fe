@@ -6,7 +6,7 @@ interface Props {
   imageURL: string;
   title: string;
   description: string;
-  price: number;
+  price: string;
 }
 
 export const RelatedProductCard = ({
@@ -22,7 +22,7 @@ export const RelatedProductCard = ({
       <span className="text-sm text-gray-500">{description}</span>
     </div>
     <div className="flex justify-between items-center">
-      <span className="font-bold text-xl">{`${price} USD`}</span>
+      <span className="font-bold text-xl">{price}</span>
       <Button size={ButtonSize.SMALL}>Buy now</Button>
     </div>
   </div>

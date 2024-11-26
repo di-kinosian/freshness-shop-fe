@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { fetchRelatedProducts } from "../../redux/features/products/productsSlice";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../main/constants/routes.constants";
+import { formatMoney } from "../../main/helpers";
 
 export const RelatedProducts = () => {
   const [ref] = useKeenSlider<HTMLDivElement>({
@@ -58,7 +59,7 @@ export const RelatedProducts = () => {
               imageURL="https://a.allegroimg.com/s180/11742c/2598a0204fea9692397b52f0e75c/GROVIJ-KOMP-YuTER-I7-64GB-DDR4-RAM-512SSD-WIN10"
               title={product.title}
               description={product.description}
-              price={product.price}
+              price={formatMoney(product.price)}
             />
           ))}
         </div>

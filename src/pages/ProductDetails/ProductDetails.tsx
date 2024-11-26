@@ -17,6 +17,7 @@ import {
 } from "../../main/constants/images.constants";
 import { ProductParameters } from "./ProductParameters";
 import { ProductTabs } from "./ProductTabs";
+import { formatMoney } from "../../main/helpers";
 
 export const ProductDetails = () => {
   const { productId } = useParams();
@@ -48,10 +49,13 @@ export const ProductDetails = () => {
               <span className="text-grayText">{`(10 customers reviewed)`}</span>
             </div>
           </div>
+          <div>{product?.description}</div>
           <ProductParameters product={product} />
           <div className="h-[89px] border border-grayBorder rounded-2xl flex items-center justify-between px-[24px] w-full">
             <div>
-              <div className="text-2xl font-bold text-black">{`${product?.price} USD`}</div>
+              <div className="text-2xl font-bold text-black">
+                {formatMoney(product?.price)}
+              </div>
               <div>800 USD</div>
             </div>
             <div className="flex">
