@@ -2,10 +2,11 @@ import { useKeenSlider } from "keen-slider/react";
 import ThumbnailPlugin from "./ThumbnailPlugin";
 
 interface Props {
-  images: string[];
+  images?: string[];
+  noProductImg?: string;
 }
 
-export const ImageGallery = ({ images }: Props) => {
+export const ImageGallery = ({ images, noProductImg }: Props) => {
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     initial: 0,
     slides: {
@@ -27,25 +28,31 @@ export const ImageGallery = ({ images }: Props) => {
 
   return (
     <div className="overflow-hidden">
-      <div>
-        <div ref={sliderRef} className="keen-slider h-full">
-          {images.map((i) => (
-            <div className="keen-slider__slide flex justify-center ">
-              <img src={i} alt="" className="h-80" />
-            </div>
-          ))}
-        </div>
-
-        {images.length > 1 && (
-          <div ref={thumbnailRef} className="keen-slider thumbnail">
+      {images ? (
+        <div>
+          <div ref={sliderRef} className="keen-slider h-full">
             {images.map((i) => (
               <div className="keen-slider__slide flex justify-center">
-                <img src={i} alt="" className="h-32" />
+                <img src={i} alt="" className="h-80" />
               </div>
             ))}
           </div>
-        )}
-      </div>
+
+          {images.length > 1 && (
+            <div ref={thumbnailRef} className="keen-slider thumbnail">
+              {images.map((i) => (
+                <div className="keen-slider__slide flex justify-center">
+                  <img src={i} alt="" className="h-32" />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="flex justify-center h-full">
+          <img src={noProductImg} alt="" className="h-80" />
+        </div>
+      )}
     </div>
   );
 };
