@@ -26,6 +26,8 @@ export interface GetAllProductsPayload {
   priceMin?: number;
   priceMax?: number;
   rating?: number[];
+  sortField?: string | null;
+  sortDirection?: string | null;
 }
 
 export interface GetProductPayload {

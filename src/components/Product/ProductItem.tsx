@@ -21,7 +21,7 @@ export const ProductItem: React.FC<Props> = ({ product }) => {
     <div className="border border-basicGray rounded-lg grid grid-cols-[220px,2fr,1fr] gap-[26px]">
       <img
         src="https://tse3.mm.bing.net/th?id=OIP.5cV6Bxiey16ZNKucbF2r0QHaHa&pid=Api"
-        alt=""
+        alt="Product image"
         className="rounded-lg h-[220px]"
       />
       <div className="flex flex-col justify-between py-6">
@@ -62,7 +62,7 @@ export const ProductItem: React.FC<Props> = ({ product }) => {
             onClick={() => goToPDP(product._id)}
           >
             <span>Product Detail</span>
-            <img src="/vector-button.svg" alt="" />
+            <img src="/vector-button.svg" alt="Vector right for button" />
           </Button>
           <Button
             color={ButtonVariant.SECONDARY}

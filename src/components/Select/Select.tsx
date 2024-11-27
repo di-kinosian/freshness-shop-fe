@@ -10,13 +10,16 @@ import { Options } from "./types";
 interface Props {
   width?: number;
   options: Options[];
+  getParams?: (value: string) => void;
 }
 
-export const Select = ({ width, options }: Props) => {
-  const [selectValue, setSelectValue] = useState("Select");
+export const Select = ({ width, options, getParams }: Props) => {
+  const [selectValue, setSelectValue] = useState("");
 
   const handleChange = (event: SelectChangeEvent): void => {
-    setSelectValue(event.target.value as string);
+    const value = event.target.value as string;
+    setSelectValue(value);
+    getParams?.(value);
   };
 
   return (
@@ -27,10 +30,11 @@ export const Select = ({ width, options }: Props) => {
         value={selectValue}
         onChange={handleChange}
         disableUnderline={true}
-        defaultValue="Select"
       >
         {options.map((option) => (
-          <MenuItem value={option.value}>{option.label}</MenuItem>
+          <MenuItem value={option.value} key={option.value}>
+            {option.label}
+          </MenuItem>
         ))}
       </SelectMUI>
     </FormControl>

@@ -18,6 +18,10 @@ import {
 import { ProductParameters } from "./ProductParameters";
 import { ProductTabs } from "./ProductTabs";
 import { formatMoney } from "../../main/helpers";
+import { ControlContainer } from "../../components/ControlContainer/ControlContainer";
+import { Select } from "../../components/Select/Select";
+import { ControlSize } from "../../main/types/enums";
+import { unitOptions } from "../../main/constants/filter.sort.data";
 
 export const ProductDetails = () => {
   const { productId } = useParams();
@@ -58,7 +62,23 @@ export const ProductDetails = () => {
               </div>
               <div>800 USD</div>
             </div>
-            <div className="flex">
+            <div className="flex gap-3">
+              <div className="w-[130px]">
+                <ControlContainer
+                  size={ControlSize.LARGE}
+                  leftElement={
+                    <input
+                      className="bg-neutralGrayBg outline-0 w-[30px]"
+                      placeholder="1"
+                    />
+                  }
+                  rightElement={
+                    <div className="flex gap-1 items-center">
+                      <Select options={unitOptions} />
+                    </div>
+                  }
+                />
+              </div>
               <Button>+ Add to card</Button>
             </div>
           </div>

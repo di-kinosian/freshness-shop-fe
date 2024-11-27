@@ -31,8 +31,11 @@ export const ImageGallery = ({ images, noProductImg }: Props) => {
       {images ? (
         <div className="flex flex-col gap-2">
           <div ref={sliderRef} className="keen-slider h-full">
-            {images.map((image) => (
-              <div className="keen-slider__slide flex justify-center ">
+            {images.map((image, index) => (
+              <div
+                className="keen-slider__slide flex justify-center"
+                key={index}
+              >
                 <img
                   src={image}
                   alt="Gallery image"
@@ -43,8 +46,11 @@ export const ImageGallery = ({ images, noProductImg }: Props) => {
           </div>
           {images.length > 1 && (
             <div ref={thumbnailRef} className="keen-slider thumbnail">
-              {images.map((image) => (
-                <div className="keen-slider__slide flex justify-center">
+              {images.map((image, index) => (
+                <div
+                  className="keen-slider__slide flex justify-center"
+                  key={index}
+                >
                   <img
                     src={image}
                     alt="Gallery image"

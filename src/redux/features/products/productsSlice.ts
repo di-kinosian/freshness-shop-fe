@@ -14,7 +14,7 @@ const initialState: ProductsState = {
   relatedProducts: [],
   total: 0,
   page: 1,
-  limit: 6,
+  limit: 5,
   productError: null,
   productsError: null,
   relatedProductsError: null,
@@ -38,17 +38,33 @@ export const getProduct = createAsyncThunk<
 });
 
 export const getAllProducts = createAsyncThunk<
-  { products: Product[]; total: number; page: number; limit: number },
+  {
+    products: Product[];
+    total: number;
+    page: number;
+    limit: number;
+  },
   GetAllProductsPayload,
   { rejectValue: string }
 >("product/getAllProducts", async (payload, thunkAPI) => {
   try {
-    const { page, limit, brands, priceMin, priceMax, rating } = payload;
+    const {
+      page,
+      limit,
+      brands,
+      priceMin,
+      priceMax,
+      rating,
+      sortField,
+      sortDirection,
+    } = payload;
 
     const { data } = await axios.get(`${url}/products`, {
       params: {
         page,
         limit,
+        sortField,
+        sortDirection,
         ...(brands?.length && { brands }),
         ...(priceMin !== undefined && { priceMin }),
         ...(priceMax !== undefined && { priceMax }),
@@ -61,6 +77,8 @@ export const getAllProducts = createAsyncThunk<
       total: data.total,
       page: data.page,
       limit,
+      sortField,
+      sortDirection,
     };
   } catch (error) {
     const axiosError = error as AxiosError;
@@ -78,7 +96,7 @@ export const fetchRelatedProducts = createAsyncThunk<
     const { data } = await axios.get(`${url}/products`, {
       params: {
         page: 1,
-        limit: 10,
+        limit: 5,
       },
     });
 

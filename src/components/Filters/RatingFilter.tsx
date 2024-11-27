@@ -1,6 +1,6 @@
 import { Rating } from "@mui/material";
 import { Checkbox } from "../Checkbox/Checkbox";
-import { ratings } from "../../main/constants/filters.constants";
+import { ratings } from "../../main/constants/filter.sort.data";
 import { SelectedFilters } from "./types";
 
 interface Props {

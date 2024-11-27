@@ -1,32 +1,31 @@
 import { ReactNode } from "react";
 import { ControlSize } from "../../main/types/enums";
 import { twMerge } from "tailwind-merge";
+import { controlContainerSizeClass } from "../../main/constants/classes.constants";
 
 interface Props {
   size?: ControlSize;
-  leftElement?: ReactNode;
-  rightElement?: ReactNode;
+  leftElement: ReactNode;
+  rightElement: ReactNode;
   className?: string;
 }
 
 export const ControlContainer = ({
-  size,
+  size = ControlSize.MEDIUM,
   leftElement,
   rightElement,
   className,
 }: Props) => (
   <div
     className={twMerge(
-      "border border-basicGray rounded-xl bg-neutralGrayBg px-4 flex items-center gap-4",
+      "border border-basicGray rounded-xl bg-neutralGrayBg px-4 flex items-center justify-between",
       className,
-      size === "small" && "h-[38px]",
-      size === "medium" && "h-[42px]",
-      size === "large" && "h-[48px]",
+      controlContainerSizeClass(size as ControlSize),
     )}
   >
-    <div className="flex gap-[24px]">
+    <div className="flex gap-2">
       {leftElement}
-      <img src="/separator.svg" alt="" />
+      <img src="/separator.svg" alt="Separator for controller" />
     </div>
     {rightElement}
   </div>
