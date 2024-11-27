@@ -16,7 +16,11 @@ export const RelatedProductCard = ({
   price,
 }: Props) => (
   <div className="grid grid-col-[2fr,1fr,1fr] gap-6 keen-slider__slide">
-    <img src={imageURL} alt="" className="h-[180px] rounded-2xl" />
+    <img
+      src={imageURL}
+      alt="Related img for product"
+      className="h-[180px] rounded-2xl"
+    />
     <div className="flex flex-col gap-2.5">
       <span className="font-semibold text-base">{title}</span>
       <span className="text-sm text-gray-500">{description}</span>
