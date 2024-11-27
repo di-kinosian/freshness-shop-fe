@@ -37,15 +37,18 @@ export const Breadcrumbs = () => {
   return (
     <div className="h-12 flex items-center w-full max-w-[1200px] mx-auto">
       <BreadcrumbsMUI aria-label="breadcrumb">
-        {breadcrumbs.map((b, index) => {
+        {breadcrumbs.map((breadcrumb, index) => {
           const isLast = breadcrumbs.length === index + 1;
 
           return isLast ? (
-            <Typography sx={{ color: "text.primary" }} key={b.pathname}>
-              {b.breadcrumbText}
+            <Typography
+              sx={{ color: "text.primary" }}
+              key={breadcrumb.pathname}
+            >
+              {breadcrumb.breadcrumbText}
             </Typography>
           ) : (
-            <BreadcrumbLink key={b.pathname} {...b} />
+            <BreadcrumbLink key={breadcrumb.pathname} {...breadcrumb} />
           );
         })}
       </BreadcrumbsMUI>

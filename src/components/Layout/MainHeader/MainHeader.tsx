@@ -4,6 +4,7 @@ import { Signup } from "../../Auth/Signup";
 import { useDialog } from "../../Dialog/context/DialogContext";
 import { twMerge } from "tailwind-merge";
 import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../../main/constants/routes.constants";
 
 export const MainHeader = () => {
   const { openDialog, closeDialog } = useDialog();
@@ -12,7 +13,6 @@ export const MainHeader = () => {
 
   useEffect(() => {
     const handleScroll = () => setHasShadow(window.scrollY > 48);
-
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
@@ -35,7 +35,7 @@ export const MainHeader = () => {
   };
 
   const goToMainPage = (): void => {
-    navigate("/");
+    navigate(ROUTES.HOME.path);
   };
 
   return (
@@ -48,7 +48,7 @@ export const MainHeader = () => {
       <div className="h-16 flex justify-between items-center max-w-[1200px] w-full mx-auto">
         <img
           src="/freshnesecom.svg"
-          alt=""
+          alt="Logo freshnesecom"
           onClick={goToMainPage}
           className="cursor-pointer"
         />
@@ -56,19 +56,19 @@ export const MainHeader = () => {
         <div className="flex gap-10">
           <img
             src="/ic-actions-user.svg"
-            alt=""
+            alt="User icon"
             onClick={handleOpenLogin}
             className="cursor-pointer"
           />
           <div className="relative">
             <img
               src="/ic-ecommerce-basket.svg"
-              alt=""
+              alt="Shopping basket icon"
               className="cursor-pointer"
             />
             <img
               src="/group.svg"
-              alt=""
+              alt="Badge icon"
               className="cursor-pointer absolute top-[12px] right-[9px]"
             />
           </div>

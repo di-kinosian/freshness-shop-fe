@@ -5,7 +5,7 @@ interface Route {
   breadcrumb: string | ((state: RootState) => string);
 }
 
-export const getProductDetailsRoute = (id: string) =>
+export const getProductDetailsRoute = (id: string): string =>
   `${ROUTES.PRODUCTS.path}/${id}`;
 
 export const ROUTES: Record<string, Route> = {

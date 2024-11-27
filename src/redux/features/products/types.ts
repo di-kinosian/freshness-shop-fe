@@ -34,10 +34,12 @@ export interface GetProductPayload {
 
 export interface ProductsState {
   products: Product[];
+  relatedProducts: Product[];
   total: number;
   page: number;
   limit: number;
   productError: string | null;
   product: Product | null;
   productsError: string | null;
+  relatedProductsError: string | null;
 }
