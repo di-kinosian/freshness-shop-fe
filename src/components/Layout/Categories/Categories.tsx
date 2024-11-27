@@ -20,7 +20,7 @@ export const Categories = () => {
           key={category._id}
         >
           <div className="text-black font-medium">{category.name}</div>
-          <img src="/vector.svg" alt="" className="w-2.5 h-2.5" />
+          <img src="/vector.svg" alt="Vector icon bottom" className="w-2.5 h-2.5" />
         </div>
       ))}
     </div>

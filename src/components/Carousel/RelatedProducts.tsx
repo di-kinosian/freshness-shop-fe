@@ -7,20 +7,11 @@ import { useEffect } from "react";
 import { fetchRelatedProducts } from "../../redux/features/products/productsSlice";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../main/constants/routes.constants";
+import { sliderBreakpoints } from "../../main/constants/media.queries.constants";
 
 export const RelatedProducts = () => {
   const [ref] = useKeenSlider<HTMLDivElement>({
-    breakpoints: {
-      "(min-width: 400px)": {
-        slides: { perView: 2, spacing: 20 },
-      },
-      "(min-width: 700px)": {
-        slides: { perView: 3, spacing: 30 },
-      },
-      "(min-width: 1000px)": {
-        slides: { perView: 4, spacing: 30 },
-      },
-    },
+    breakpoints: sliderBreakpoints,
   });
 
   const { relatedProducts } = useAppSelector((state) => state.product);
@@ -45,7 +36,7 @@ export const RelatedProducts = () => {
           <span className="font-semibold">More products</span>
           <img
             src="/vector.svg"
-            alt=""
+            alt="Vector right"
             className="w-2.5 h-2.5 rotate-[270deg]"
           />
         </div>
