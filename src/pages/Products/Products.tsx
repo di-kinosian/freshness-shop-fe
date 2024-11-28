@@ -37,7 +37,7 @@ export const Products = () => {
     dispatch(
       getAllProducts({
         page: currentPage,
-        limit: 5,
+        limit,
         brands: selectedFilters.brands,
         priceMax: selectedFilters.price.max,
         priceMin: selectedFilters.price.min,
@@ -51,20 +51,21 @@ export const Products = () => {
   useEffect(() => {
     if (showMoreMode) {
       setVisibleProducts((prev) => {
-        const newProducts = products.filter(
-          (product) => !prev.some((p) => p._id === product._id),
-        );
-        return [...prev, ...newProducts];
+        const uniqueProducts = new Map();
+        const newPrev = prev.length > 5 ? prev.slice(5) : prev;
+        [...newPrev, ...products].forEach((product) => {
+          uniqueProducts.set(product._id, product);
+        });
+        return Array.from(uniqueProducts.values());
       });
     } else {
       setVisibleProducts(products);
     }
-  }, [products, showMoreMode]);
+  }, [products, showMoreMode, currentPage]);
 
   const handlePageChange = (newPage: number): void => {
     setCurrentPage(newPage);
     setShowMoreMode(false);
-    setVisibleProducts([]);
   };
 
   const handleShowMore = () => {

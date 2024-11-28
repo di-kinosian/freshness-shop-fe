@@ -15,12 +15,9 @@ export const PaginationController = ({
   onPageChange,
   totalPages,
 }: Props) => {
-  const [currentPage, setCurrentPage] = React.useState<number>(page);
-
   const classes = useStyles();
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setCurrentPage(value);
     onPageChange(value);
   };
 
@@ -29,7 +26,7 @@ export const PaginationController = ({
       <Typography>Page:</Typography>
       <Pagination
         count={totalPages}
-        page={currentPage}
+        page={page}
         onChange={handleChange}
         hidePrevButton
         hideNextButton
