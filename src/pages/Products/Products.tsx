@@ -20,13 +20,12 @@ export const Products = () => {
   const { products, total, limit, page } = useAppSelector(
     (state) => state.product,
   );
+  const totalPages = Math.ceil(total / limit);
 
   const [sortData, setSortData] = useState<{ field: string; order: string }>();
   const [currentPage, setCurrentPage] = useState<number>(page);
   const [visibleProducts, setVisibleProducts] = useState<Product[]>([]);
   const [showMoreMode, setShowMoreMode] = useState<boolean>(false);
-
-  const totalPages = Math.ceil(total / limit);
 
   const getSortParams = useCallback((value: string): void => {
     const [field, order] = value.split("_");
@@ -52,8 +51,7 @@ export const Products = () => {
     if (showMoreMode) {
       setVisibleProducts((prev) => {
         const uniqueProducts = new Map();
-        const newPrev = prev.length > 5 ? prev.slice(5) : prev;
-        [...newPrev, ...products].forEach((product) => {
+        [...prev, ...products].forEach((product) => {
           uniqueProducts.set(product._id, product);
         });
         return Array.from(uniqueProducts.values());
@@ -68,7 +66,7 @@ export const Products = () => {
     setShowMoreMode(false);
   };
 
-  const handleShowMore = () => {
+  const handleShowMore = (): void => {
     if (currentPage < totalPages) {
       setCurrentPage((prev) => prev + 1);
       setShowMoreMode(true);
