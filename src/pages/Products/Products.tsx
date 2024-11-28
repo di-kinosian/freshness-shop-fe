@@ -38,6 +38,7 @@ export const Products = () => {
       getAllProducts({
         page: currentPage,
         limit,
+        categoryId: selectedFilters.category,
         brands: selectedFilters.brands,
         priceMax: selectedFilters.price.max,
         priceMin: selectedFilters.price.min,
@@ -52,8 +53,7 @@ export const Products = () => {
     if (showMoreMode) {
       setVisibleProducts((prev) => {
         const uniqueProducts = new Map();
-        const newPrev = prev.length > 5 ? prev.slice(5) : prev;
-        [...newPrev, ...products].forEach((product) => {
+        [...prev, ...products].forEach((product) => {
           uniqueProducts.set(product._id, product);
         });
         return Array.from(uniqueProducts.values());
