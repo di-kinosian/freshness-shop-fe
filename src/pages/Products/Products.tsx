@@ -68,7 +68,7 @@ export const Products = () => {
     setShowMoreMode(false);
   };
 
-  const handleShowMore = () => {
+  const handleShowMore = (): void => {
     if (currentPage < totalPages) {
       setCurrentPage((prev) => prev + 1);
       setShowMoreMode(true);
