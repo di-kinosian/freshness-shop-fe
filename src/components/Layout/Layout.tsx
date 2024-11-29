@@ -1,14 +1,32 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { MainHeader } from "./MainHeader/MainHeader";
 import { Categories } from "./Categories/Categories";
 import { Breadcrumbs } from "./Breadcrumbs/Breadcrumbs";
 import { Footer } from "./Footer/Footer";
+import { AppDispatch } from "../../redux/app/store";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../main/hooks";
+import { refreshToken } from "../../redux/features/auth/authSlise";
 
 interface IProps {
   children: ReactNode;
 }
 
 export const Layout: React.FC<IProps> = ({ children }) => {
+  const dispatch: AppDispatch = useDispatch();
+  const token = useAppSelector(state => state.auth.accessToken)
+
+  useEffect(() => {
+    let interval = 0
+    if (token) {
+      interval = setTimeout(() => {
+        dispatch(refreshToken());
+      }, 1.9 * 60 * 1000);
+    }
+    
+    return () => clearTimeout(interval);
+  }, [token]);
+
   return (
     <div className="mx-auto flex flex-col min-h-screen">
       <div className="h-12 border-b border-gray-200">

@@ -2,16 +2,19 @@ import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { url } from "../../../main/constants/common";
 import { MESSAGES } from "../../../main/constants/messages";
+import { loginRequest } from "./api";
 import {
   AuthState,
   IUserLogin,
   LoginCredentials,
   SignupCredentials,
-} from "../../../main/types/types";
-import { loginRequest } from "./api";
+} from "./types";
+import { RootState } from "../../app/store";
+import api from "../../../config/axios";
 
 const initialState: AuthState = {
   accessToken: null,
+  refreshToken: null,
   user: null,
   isLoginOpen: false,
   isLoginLoading: false,
@@ -27,10 +30,11 @@ export const loginUser = createAsyncThunk<
   { rejectValue: string }
 >("auth/loginUser", async (payload, thunkAPI) => {
   try {
-    const { accessToken, user } = await loginRequest(payload);
+    const { accessToken, refreshToken, user } = await loginRequest(payload);
 
     return {
       accessToken,
+      refreshToken,
       user,
     };
   } catch (error) {
@@ -65,6 +69,29 @@ export const signupUser = createAsyncThunk<
   }
 });
 
+export const refreshToken = createAsyncThunk<
+  { accessToken: string },
+  void,
+  { rejectValue: string }
+>("auth/refreshToken", async (_, thunkAPI) => {
+  const state = thunkAPI.getState() as RootState;
+  const { refreshToken } = state.auth;
+
+  try {
+    const response = await api.post(`/auth/refresh-token`, {
+      refreshToken,
+    });
+
+    return {
+      accessToken: response.data.accessToken,
+    };
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    thunkAPI.dispatch(clearAccessToken());
+    return thunkAPI.rejectWithValue(axiosError.message);
+  }
+});
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -89,6 +116,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.accessToken = action.payload.accessToken;
+        state.refreshToken = action.payload.refreshToken;
         state.user = action.payload.user;
         state.isLoginLoading = false;
       })
@@ -105,6 +133,9 @@ const authSlice = createSlice({
       .addCase(signupUser.rejected, (state, action) => {
         state.signupError = action.payload || "";
         state.isSignupLoading = false;
+      })
+      .addCase(refreshToken.fulfilled, (state, action) => {
+        state.accessToken = action.payload.accessToken || "";
       });
   },
 });

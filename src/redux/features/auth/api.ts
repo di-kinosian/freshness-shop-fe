@@ -1,6 +1,6 @@
 import axios from "axios";
-import { LoginCredentials } from "../../../main/types/types";
 import { url } from "../../../main/constants/common";
+import { LoginCredentials } from "./types";
 
 export const loginRequest = async (payload: LoginCredentials) => {
   const response = await axios.post(`${url}/auth/login`, {
