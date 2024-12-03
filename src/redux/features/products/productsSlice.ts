@@ -24,7 +24,7 @@ const initialState: ProductsState = {
   isWishListLoading: false,
   wishListError: null,
   showMorePage: null,
-  sortValue: 'rating_desc',
+  sortValue: "rating_desc",
 };
 
 export const getProduct = createAsyncThunk<
@@ -112,6 +112,7 @@ export const showMoreProducts = createAsyncThunk<
   const page = (state.product.showMorePage || state.product.page) + 1;
   const limit = state.product.limit;
   const categoryId = state.filters.selectedFilters.category;
+  const [sortField, sortDirection] = state.product.sortValue.split("_");
   try {
     const { data } = await axios.get(`${url}/products`, {
       params: {
@@ -122,6 +123,8 @@ export const showMoreProducts = createAsyncThunk<
         ...(priceMin !== undefined && { priceMin }),
         ...(priceMax !== undefined && { priceMax }),
         ...(rating?.length && { rating }),
+        sortField,
+        sortDirection,
       },
     });
 

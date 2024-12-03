@@ -57,17 +57,18 @@ export const Products = () => {
     <div className="flex flex-col gap-12">
       <div className="flex flex-col gap-6">
         <AllProductsHeader />
-        <div className="w-[170px]">
+        <div className="w-[250px]">
           <ControlContainer
             leftElement={
               <span className="bg-neutralGrayBg w-[50px] text-sm">Sort by</span>
             }
             rightElement={
-              <div className="flex gap-1 items-center">
+              <div className="flex gap-2 items-center">
                 <Select
+                  width={150}
                   options={sortOptions}
                   onChange={(value: string) => dispatch(setSortValue(value))}
-                  value={sortValue as string}
+                  value={sortValue}
                 />
               </div>
             }
