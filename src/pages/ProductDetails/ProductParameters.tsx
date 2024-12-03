@@ -6,7 +6,6 @@ interface Props {
 
 export const ProductParameters = ({ product }: Props) => (
   <>
-    <div>{product?.description}</div>
     <div className="grid grid-cols-[1fr,1fr] gap-x-16 gap-y-4 w-full">
       <div className="grid grid-cols-[1fr,2fr] gap-8">
         <span className="text-grayText">Country</span>

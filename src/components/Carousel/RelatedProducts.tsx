@@ -6,23 +6,31 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchRelatedProducts } from "../../redux/features/products/productsSlice";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../main/constants/routes.constants";
+import {
+  getProductDetailsRoute,
+  ROUTES,
+} from "../../main/constants/routes.constants";
+import { formatMoney } from "../../main/helpers";
 import { sliderBreakpoints } from "../../main/constants/media.queries.constants";
 
 export const RelatedProducts = () => {
+  const navigate = useNavigate();
   const [ref] = useKeenSlider<HTMLDivElement>({
     breakpoints: sliderBreakpoints,
   });
-
   const { relatedProducts } = useAppSelector((state) => state.product);
   const dispatch: AppDispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchRelatedProducts());
   }, []);
 
-  const navigate = useNavigate();
   const goToMainPage = (): void => {
     navigate(ROUTES.PRODUCTS.path);
+  };
+
+  const goToPDP = (productId: string): void => {
+    navigate(getProductDetailsRoute(productId));
   };
 
   return (
@@ -49,7 +57,8 @@ export const RelatedProducts = () => {
               imageURL="https://a.allegroimg.com/s180/11742c/2598a0204fea9692397b52f0e75c/GROVIJ-KOMP-YuTER-I7-64GB-DDR4-RAM-512SSD-WIN10"
               title={product.title}
               description={product.description}
-              price={product.price}
+              price={formatMoney(product.price)}
+              onClick={() => goToPDP(product._id)}
             />
           ))}
         </div>

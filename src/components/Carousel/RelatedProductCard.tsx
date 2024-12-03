@@ -6,7 +6,8 @@ interface Props {
   imageURL: string;
   title: string;
   description: string;
-  price: number;
+  price: string;
+  onClick: () => void;
 }
 
 export const RelatedProductCard = ({
@@ -14,8 +15,12 @@ export const RelatedProductCard = ({
   title,
   description,
   price,
+  onClick,
 }: Props) => (
-  <div className="grid grid-col-[2fr,1fr,1fr] gap-6 keen-slider__slide">
+  <div
+    className="grid grid-col-[2fr,1fr,1fr] gap-6 keen-slider__slide cursor-pointer"
+    style={{ pointerEvents: "all" }}
+  >
     <img
       src={imageURL}
       alt="Related img for product"
@@ -26,8 +31,10 @@ export const RelatedProductCard = ({
       <span className="text-sm text-gray-500">{description}</span>
     </div>
     <div className="flex justify-between items-center">
-      <span className="font-bold text-xl">{`${price} USD`}</span>
-      <Button size={ButtonSize.SMALL}>Buy now</Button>
+      <span className="font-bold text-xl">{price}</span>
+      <Button size={ButtonSize.SMALL} onClick={onClick}>
+        Buy now
+      </Button>
     </div>
   </div>
 );
