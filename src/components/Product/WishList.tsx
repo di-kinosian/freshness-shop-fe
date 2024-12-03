@@ -7,6 +7,7 @@ import { Button } from "../Button/Button";
 import { ButtonVariant } from "../../main/types/enums";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteFromWishList } from "../../redux/features/auth/authSlise";
+import { formatMoney } from "../../main/helpers";
 
 interface Props {
   onClose: () => void;
@@ -47,14 +48,17 @@ export const WishList = ({ onClose }: Props) => {
             <img
               src="https://cdn.pixabay.com/photo/2017/06/14/17/41/galaxy-s8-2402805_1280.jpg"
               alt="Product image"
-              className="rounded-lg w-[80px] h-[73px]"
+              className="rounded-lg w-[100px]"
             />
             <div className="p-3 flex items-center w-full">
-              <div className="flex flex-col content-center">
-                <div className="font-semibold">{product.title}</div>
-                <div className="text-sm text-grayText">
-                  {product.description}
+              <div className="flex flex-col content-center gap-2">
+                <div>
+                  <div className="font-semibold">{product.title}</div>
+                  <div className="text-sm text-grayText">
+                    {product.description}
+                  </div>
                 </div>
+                <div>{formatMoney(product.price)}</div>
               </div>
               <DeleteIcon
                 fontSize="small"

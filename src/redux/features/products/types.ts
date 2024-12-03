@@ -40,6 +40,8 @@ export interface ProductsState {
   relatedProducts: Product[];
   total: number;
   page: number;
+  showMorePage: number | null;
+  sortValue: string;
   limit: number;
   productError: string | null;
   product: Product | null;

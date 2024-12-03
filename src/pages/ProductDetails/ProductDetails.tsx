@@ -22,20 +22,39 @@ import { ControlContainer } from "../../components/ControlContainer/ControlConta
 import { Select } from "../../components/Select/Select";
 import { ControlSize } from "../../main/types/enums";
 import { unitOptions } from "../../main/constants/filter.sort.data";
+import {
+  addToWishList,
+  deleteFromWishList,
+} from "../../redux/features/auth/authSlise";
+import WishListIcon from "../../components/Product/WishListIcon";
 
 export const ProductDetails = () => {
   const { productId } = useParams();
   const dispatch: AppDispatch = useDispatch();
   const { product } = useAppSelector((state) => state.product);
+  const wishList = useAppSelector((state) => state.auth.user?.wishList);
+
+  const isInWishList = wishList?.includes(productId as string);
 
   useEffect(() => {
     if (productId) {
       dispatch(getProduct({ _id: productId }));
     }
+
     return () => {
       dispatch(clearProduct());
     };
-  }, [productId]);
+  }, [productId, dispatch]);
+
+  const updateWishList = (): void => {
+    if (!productId) return;
+
+    if (isInWishList) {
+      dispatch(deleteFromWishList({ productId: productId }));
+    } else {
+      dispatch(addToWishList({ productId: productId }));
+    }
+  };
 
   if (!product) {
     return "Loading...";
@@ -82,12 +101,13 @@ export const ProductDetails = () => {
               <Button>+ Add to card</Button>
             </div>
           </div>
-          <Button variant="text">
+          <Button variant="text" onClick={updateWishList}>
             <div className="font-bold flex gap-1 items-center">
-              <img src="/like.svg" />
-              <span>Add to my wish list</span>
+              <WishListIcon isInWishList={isInWishList as boolean} />
+              <span>{isInWishList ? "Product added" : "Add to wish list"}</span>
             </div>
           </Button>
+
           <ProductTabs />
         </div>
       </div>

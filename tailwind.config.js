@@ -5,6 +5,9 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Open Sans", "Poppins"],
+      },
       colors: {
         neutralGreenBg: "rgba(106, 152, 60, 1)",
         lightGreen: "rgba(244, 248, 236, 1)",

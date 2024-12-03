@@ -16,7 +16,7 @@ export const Button: React.FC<Props> = ({ children, variant, ...props }) => {
   return (
     <>
       {variant === "text" ? (
-        <ButtonBase>{children}</ButtonBase>
+        <ButtonBase {...props}>{children}</ButtonBase>
       ) : (
         <MuiButton classes={classes} variant={variant} {...props}>
           {children}

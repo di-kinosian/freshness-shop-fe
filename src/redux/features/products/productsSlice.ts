@@ -8,6 +8,7 @@ import {
   ProductsState,
 } from "./types";
 import api from "../../../config/axios";
+import { RootState } from "../../app/store";
 
 const initialState: ProductsState = {
   products: [],
@@ -22,6 +23,8 @@ const initialState: ProductsState = {
   wishList: [],
   isWishListLoading: false,
   wishListError: null,
+  showMorePage: null,
+  sortValue: 'rating_desc',
 };
 
 export const getProduct = createAsyncThunk<
@@ -83,8 +86,50 @@ export const getAllProducts = createAsyncThunk<
       total: data.total,
       page: data.page,
       limit,
-      sortField,
-      sortDirection,
+    };
+  } catch (error) {
+    const axiosError = error as AxiosError;
+
+    return thunkAPI.rejectWithValue(axiosError.message);
+  }
+});
+
+export const showMoreProducts = createAsyncThunk<
+  {
+    products: Product[];
+    total: number;
+    page: number;
+    limit: number;
+  },
+  void,
+  { rejectValue: string }
+>("product/showMoreProducts", async (_, thunkAPI) => {
+  const state: RootState = thunkAPI.getState() as RootState;
+  const priceMin = state.filters.selectedFilters.price.min;
+  const priceMax = state.filters.selectedFilters.price.max;
+  const brands = state.filters.selectedFilters.brands;
+  const rating = state.filters.selectedFilters.rating;
+  const page = (state.product.showMorePage || state.product.page) + 1;
+  const limit = state.product.limit;
+  const categoryId = state.filters.selectedFilters.category;
+  try {
+    const { data } = await axios.get(`${url}/products`, {
+      params: {
+        page,
+        limit,
+        categoryId,
+        ...(brands?.length && { brands }),
+        ...(priceMin !== undefined && { priceMin }),
+        ...(priceMax !== undefined && { priceMax }),
+        ...(rating?.length && { rating }),
+      },
+    });
+
+    return {
+      products: data.items,
+      total: data.total,
+      page: data.page,
+      limit,
     };
   } catch (error) {
     const axiosError = error as AxiosError;
@@ -137,6 +182,13 @@ const productsSlice = createSlice({
     clearProduct: (state) => {
       state.product = null;
     },
+    setPage: (state, action) => {
+      state.page = action.payload;
+      state.showMorePage = null;
+    },
+    setSortValue: (state, action) => {
+      state.sortValue = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -177,9 +229,13 @@ const productsSlice = createSlice({
       .addCase(getWishList.rejected, (state, action) => {
         state.wishListError = action.payload || "";
         state.isWishListLoading = false;
+      })
+      .addCase(showMoreProducts.fulfilled, (state, action) => {
+        state.showMorePage = action.payload.page;
+        state.products = [...state.products, ...action.payload.products];
       });
   },
 });
 
-export const { clearProduct } = productsSlice.actions;
+export const { clearProduct, setPage, setSortValue } = productsSlice.actions;
 export default productsSlice.reducer;
