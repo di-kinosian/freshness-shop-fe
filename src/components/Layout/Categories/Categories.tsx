@@ -8,11 +8,8 @@ import { Popover } from "../../Popover/Popover";
 export const Categories = () => {
   const dispatch: AppDispatch = useDispatch();
   const { categories } = useAppSelector((state) => state.categories);
-
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null,
-  );
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     dispatch(getAllCategories());

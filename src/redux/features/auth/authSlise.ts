@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { url } from "../../../main/constants/common";
 import { MESSAGES } from "../../../main/constants/messages";
@@ -8,6 +8,7 @@ import {
   IUserLogin,
   LoginCredentials,
   SignupCredentials,
+  User,
 } from "./types";
 import { RootState } from "../../app/store";
 import api from "../../../config/axios";
@@ -69,6 +70,60 @@ export const signupUser = createAsyncThunk<
   }
 });
 
+export const getUserProfile = createAsyncThunk<
+  User,
+  void,
+  { rejectValue: string }
+>("auth/getUserProfile", async (_, thunkAPI) => {
+  try {
+    const response = await api.get(`${url}/users/profile`);
+
+    return response.data;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+
+    return thunkAPI.rejectWithValue(axiosError.message);
+  }
+});
+
+export const addToWishList = createAsyncThunk<
+  { wishList: string[] },
+  { productId: string },
+  { rejectValue: string }
+>("product/addToWishList", async (payload, thunkAPI) => {
+  try {
+    const response = await api.patch<{ wishList: string[] }>(
+      `${url}/users/wish-list/add`,
+      payload,
+    );
+
+    return response.data;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+
+    return thunkAPI.rejectWithValue(axiosError.message);
+  }
+});
+
+export const deleteFromWishList = createAsyncThunk<
+  { wishList: string[] },
+  { productId: string },
+  { rejectValue: string }
+>("product/deleteFromWishList", async (payload, thunkAPI) => {
+  try {
+    const response = await api.patch<{ wishList: string[] }>(
+      `${url}/users/wish-list/remove`,
+      payload,
+    );
+
+    return response.data;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+
+    return thunkAPI.rejectWithValue(axiosError.message);
+  }
+});
+
 export const refreshToken = createAsyncThunk<
   { accessToken: string },
   void,
@@ -87,7 +142,7 @@ export const refreshToken = createAsyncThunk<
     };
   } catch (error) {
     const axiosError = error as AxiosError;
-    thunkAPI.dispatch(clearAccessToken());
+
     return thunkAPI.rejectWithValue(axiosError.message);
   }
 });
@@ -96,12 +151,6 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setAccessToken: (state, action: PayloadAction<string>) => {
-      state.accessToken = action.payload;
-    },
-    clearAccessToken: (state) => {
-      state.accessToken = null;
-    },
     clearLoginError: (state) => {
       state.loginError = null;
     },
@@ -136,14 +185,25 @@ const authSlice = createSlice({
       })
       .addCase(refreshToken.fulfilled, (state, action) => {
         state.accessToken = action.payload.accessToken || "";
-      });
+      })
+      .addCase(getUserProfile.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(deleteFromWishList.fulfilled, (state, action) => {
+        if (state.user) {
+          state.user.wishList = action.payload.wishList;
+        }
+      })
+      .addCase(addToWishList.fulfilled, (state, action) => {
+        if (state.user) {
+          state.user.wishList = action.payload.wishList;
+        }
+      })
+      .addCase("auth/logout", () => initialState);
   },
 });
 
-export const {
-  setAccessToken,
-  clearAccessToken,
-  clearLoginError,
-  clearSignupError,
-} = authSlice.actions;
+export const logout = { type: "auth/logout" };
+
+export const { clearLoginError, clearSignupError } = authSlice.actions;
 export default authSlice.reducer;

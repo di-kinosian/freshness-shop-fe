@@ -6,7 +6,10 @@ import { Footer } from "./Footer/Footer";
 import { AppDispatch } from "../../redux/app/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../main/hooks";
-import { refreshToken } from "../../redux/features/auth/authSlise";
+import {
+  getUserProfile,
+  refreshToken,
+} from "../../redux/features/auth/authSlise";
 
 interface IProps {
   children: ReactNode;
@@ -14,16 +17,24 @@ interface IProps {
 
 export const Layout: React.FC<IProps> = ({ children }) => {
   const dispatch: AppDispatch = useDispatch();
-  const token = useAppSelector(state => state.auth.accessToken)
+  const token = useAppSelector((state) => state.auth.accessToken);
+
+  const isLogin = !!token;
 
   useEffect(() => {
-    let interval = 0
+    if (isLogin) {
+      dispatch(getUserProfile());
+    }
+  }, [isLogin]);
+
+  useEffect(() => {
+    let interval = 0;
     if (token) {
       interval = setTimeout(() => {
         dispatch(refreshToken());
       }, 1.9 * 60 * 1000);
     }
-    
+
     return () => clearTimeout(interval);
   }, [token]);
 

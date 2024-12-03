@@ -1,7 +1,7 @@
 import axios from "axios";
 import {} from "../redux/app/store";
 import { url } from "../main/constants/common";
-import { refreshToken } from "../redux/features/auth/authSlise";
+import { logout, refreshToken } from "../redux/features/auth/authSlise";
 
 let store: any;
 
@@ -30,8 +30,14 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-
+    
     if (error.response?.status === 401 && !originalRequest._retry) {
+
+      if (originalRequest.url === "/auth/refresh-token") {
+        store.dispatch(logout);
+        return Promise.reject(error);
+      }
+
       originalRequest._retry = true;
       await store.dispatch(refreshToken());
       const state = store.getState();

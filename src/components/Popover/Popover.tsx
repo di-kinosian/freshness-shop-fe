@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 import { ReactNode } from "react";
 
 interface Props {
-  anchorEl: HTMLButtonElement | null;
+  anchorEl: HTMLButtonElement | SVGSVGElement | null;
   onClose: () => void;
   children: ReactNode;
   top?: number;

@@ -7,6 +7,7 @@ import {
   Product,
   ProductsState,
 } from "./types";
+import api from "../../../config/axios";
 
 const initialState: ProductsState = {
   products: [],
@@ -18,6 +19,9 @@ const initialState: ProductsState = {
   productError: null,
   productsError: null,
   relatedProductsError: null,
+  wishList: [],
+  isWishListLoading: false,
+  wishListError: null,
 };
 
 export const getProduct = createAsyncThunk<
@@ -110,6 +114,22 @@ export const fetchRelatedProducts = createAsyncThunk<
   }
 });
 
+export const getWishList = createAsyncThunk<
+  Product[],
+  void,
+  { rejectValue: string }
+>("product/getWishList", async (_, thunkAPI) => {
+  try {
+    const response = await api.get(`/users/wish-list`);
+
+    return response.data;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+
+    return thunkAPI.rejectWithValue(axiosError.message);
+  }
+});
+
 const productsSlice = createSlice({
   name: "product",
   initialState,
@@ -144,6 +164,19 @@ const productsSlice = createSlice({
       .addCase(fetchRelatedProducts.rejected, (state, action) => {
         state.relatedProductsError =
           action.payload || "Failed to fetch related products";
+      })
+      .addCase(getWishList.fulfilled, (state, action) => {
+        state.wishList = action.payload;
+        state.isWishListLoading = false;
+        state.wishListError = null;
+      })
+      .addCase(getWishList.pending, (state) => {
+        state.isWishListLoading = true;
+        state.wishListError = null;
+      })
+      .addCase(getWishList.rejected, (state, action) => {
+        state.wishListError = action.payload || "";
+        state.isWishListLoading = false;
       });
   },
 });

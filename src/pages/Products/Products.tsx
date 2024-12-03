@@ -17,6 +17,7 @@ import { Product } from "../../redux/features/products/types";
 export const Products = () => {
   const dispatch: AppDispatch = useDispatch();
   const { selectedFilters } = useAppSelector((state) => state.filters);
+  const wishList = useAppSelector((state) => state.auth.user?.wishList);
   const { products, total, limit, page } = useAppSelector(
     (state) => state.product,
   );
@@ -56,6 +57,7 @@ export const Products = () => {
         [...prev, ...products].forEach((product) => {
           uniqueProducts.set(product._id, product);
         });
+
         return Array.from(uniqueProducts.values());
       });
     } else {
@@ -96,7 +98,11 @@ export const Products = () => {
         <AsideFilter />
         <div className="flex flex-col gap-[34px] items-end">
           {visibleProducts?.map((product) => (
-            <ProductItem key={product._id} product={product} />
+            <ProductItem
+              key={product._id}
+              product={product}
+              wishList={wishList}
+            />
           ))}
         </div>
       </div>
@@ -108,14 +114,16 @@ export const Products = () => {
             onPageChange={handlePageChange}
           />
         </div>
-        <Button className="flex gap-2 mx-auto" onClick={handleShowMore}>
-          <span>Show more products</span>
-          <img
-            src="/vector-button.svg"
-            alt="Vector right for button"
-            className="rotate-90"
-          />
-        </Button>
+        {page !== totalPages ? (
+          <Button className="flex gap-2 mx-auto" onClick={handleShowMore}>
+            <span>Show more products</span>
+            <img
+              src="/vector-button.svg"
+              alt="Vector right for button"
+              className="rotate-90"
+            />
+          </Button>
+        ) : null}
         <div className="flex gap-2 flex-1 justify-end">
           <Bage>{total}</Bage>
           <span className="text-grayText">Products</span>
