@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const Select = ({ width, options, getParams }: Props) => {
-  const [selectValue, setSelectValue] = useState("");
+  const [selectValue, setSelectValue] = useState<string>("");
 
   const handleChange = (event: SelectChangeEvent): void => {
     const value = event.target.value as string;
