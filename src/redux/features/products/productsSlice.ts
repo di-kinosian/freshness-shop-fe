@@ -51,6 +51,7 @@ export const getAllProducts = createAsyncThunk<
     const {
       page,
       limit,
+      categoryId,
       brands,
       priceMin,
       priceMax,
@@ -65,6 +66,7 @@ export const getAllProducts = createAsyncThunk<
         limit,
         sortField,
         sortDirection,
+        categoryId,
         ...(brands?.length && { brands }),
         ...(priceMin !== undefined && { priceMin }),
         ...(priceMax !== undefined && { priceMax }),

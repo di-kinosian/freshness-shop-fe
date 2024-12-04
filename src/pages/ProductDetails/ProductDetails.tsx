@@ -35,7 +35,7 @@ export const ProductDetails = () => {
     return () => {
       dispatch(clearProduct());
     };
-  }, []);
+  }, [productId]);
 
   if (!product) {
     return "Loading...";

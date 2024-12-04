@@ -37,6 +37,7 @@ export const Products = () => {
       getAllProducts({
         page: currentPage,
         limit,
+        categoryId: selectedFilters.category,
         brands: selectedFilters.brands,
         priceMax: selectedFilters.price.max,
         priceMin: selectedFilters.price.min,
