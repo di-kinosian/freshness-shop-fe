@@ -13,8 +13,13 @@ import {
   removeSelectedFilters,
 } from "../../redux/features/filters/filtersSlice";
 import { FiltersCategories } from "../../redux/features/filters/types";
+import { twMerge } from "tailwind-merge";
 
-export const AsideFilter = () => {
+interface Props {
+  className?: string;
+}
+
+export const AsideFilter = ({ className }: Props) => {
   const dispatch: AppDispatch = useDispatch();
   const { availableFilters, selectedFilters } = useAppSelector(
     (state) => state.filters,
@@ -37,7 +42,7 @@ export const AsideFilter = () => {
   };
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className={twMerge("flex flex-col gap-8", className)}>
       <CategoryFilter
         onChange={handleFilterChange("category")}
         value={selectedFilters.category || ""}

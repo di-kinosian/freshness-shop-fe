@@ -92,7 +92,7 @@ export const MainHeader = () => {
             src="/freshnesecom.svg"
             alt="Logo freshnesecom"
             onClick={goToMainPage}
-            className="cursor-pointer"
+            className="cursor-pointer hidden md:block"
           />
           <div>Search component</div>
           <div className="flex gap-10">

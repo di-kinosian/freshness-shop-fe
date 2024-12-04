@@ -46,8 +46,8 @@ export const Layout: React.FC<IProps> = ({ children }) => {
             <div className="text-neutralGreenBg cursor-pointer">
               Chat with us
             </div>
-            <div>+380932016730</div>
-            <div>info@freshness.com</div>
+            <div className="hidden md:block">+380932016730</div>
+            <div className="hidden md:block">info@freshness.com</div>
           </div>
           <div className="flex gap-5">
             <div className="text-neutralGreenBg cursor-pointer">Blog</div>

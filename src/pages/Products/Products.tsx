@@ -75,8 +75,8 @@ export const Products = () => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-[270px,2fr] gap-8 max-w-[1200px] mx-auto w-full">
-        <AsideFilter />
+      <div className="grid xl:grid-cols-[270px,1fr] lg:grid-cols-[200px,1fr] custom:grid-cols-1 md:grid-cols-1 gap-8 max-w-[1200px] mx-auto w-full">
+        <AsideFilter className="hidden custom:hidden md:hidden lg:block" />
         <div className="flex flex-col gap-[34px] items-end">
           {products?.map((product) => (
             <ProductItem

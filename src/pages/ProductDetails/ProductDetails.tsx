@@ -62,7 +62,7 @@ export const ProductDetails = () => {
 
   return (
     <div className="flex flex-col gap-16">
-      <div className="grid grid-cols-[1fr,1fr] gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr,1fr] gap-10">
         <ImageGallery images={galleryImages} noProductImg={noProductImg} />
         <div className="flex flex-col gap-12 items-start">
           <div className="flex flex-col gap-4 h-[50px]">
