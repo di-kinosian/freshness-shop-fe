@@ -4,15 +4,13 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../main/hooks";
 import { getAllCategories } from "../../../redux/features/categories/categoriesSlice";
 import { Popover } from "../../Popover/Popover";
+import { CategoryItem } from "./CategoryItem";
 
 export const Categories = () => {
   const dispatch: AppDispatch = useDispatch();
   const { categories } = useAppSelector((state) => state.categories);
-
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null,
-  );
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     dispatch(getAllCategories());
@@ -38,20 +36,7 @@ export const Categories = () => {
     <>
       <div className="h-14 flex justify-around items-center bg-neutralGrayBg w-full max-w-[1200px] mx-auto">
         {categories?.map((category) => (
-          <button
-            onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
-              handleClick(event, category._id)
-            }
-            className="flex gap-1 items-center cursor-pointer"
-            key={category._id}
-          >
-            <div className="text-black font-medium">{category.name}</div>
-            <img
-              src="/vector.svg"
-              alt="Vector icon bottom"
-              className="w-2.5 h-2.5"
-            />
-          </button>
+          <CategoryItem category={category} handleClick={handleClick} />
         ))}
       </div>
       <Popover onClose={handleClose} anchorEl={anchorEl} left={-24}>
