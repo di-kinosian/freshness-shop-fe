@@ -77,7 +77,7 @@ const productsSlice = createSlice({
         state.wishListError = null;
       })
       .addCase(getWishList.rejected, (state, action) => {
-        state.wishListError = action.payload || "";
+        state.wishListError = action.payload || null;
         state.isWishListLoading = false;
       })
       .addCase(showMoreProducts.fulfilled, (state, action) => {

@@ -14,7 +14,7 @@ export const getAllCategories = createAsyncThunk<
   { rejectValue: string }
 >("categories/getAllCategories", async (_, thunkAPI) => {
   try {
-    const response = await api.get<Category[]>(`/categories`);
+    const response = await api.get<Category[]>("/categories");
 
     return response.data;
   } catch (error) {

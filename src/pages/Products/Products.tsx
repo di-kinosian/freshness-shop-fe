@@ -19,10 +19,11 @@ import {
   getAllProducts,
   showMoreProducts,
 } from "../../redux/features/products/productThunks";
+import { selectWishList } from "../../redux/features/auth/selectors";
 
 export const Products = () => {
   const dispatch: AppDispatch = useDispatch();
-  const wishList = useAppSelector((state) => state.auth.user?.wishList);
+  const wishList = useAppSelector(selectWishList);
   const { products, total, limit, page, showMorePage, sortValue } =
     useAppSelector((state) => state.product);
   const totalPages = Math.ceil(total / limit);
@@ -30,7 +31,6 @@ export const Products = () => {
   useEffect(() => {
     dispatch(getAllProducts());
   }, [sortValue, page]);
-
 
   const handlePageChange = (newPage: number): void => {
     dispatch(setPage(newPage));

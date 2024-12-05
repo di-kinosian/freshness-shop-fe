@@ -11,7 +11,7 @@ interface Props {
 export const Logout: React.FC<Props> = ({ onClose }) => {
   const dispatch: AppDispatch = useDispatch();
 
-  const handleLogOut = () => {
+  const handleLogOut = (): void => {
     dispatch(logout);
     onClose();
   };
