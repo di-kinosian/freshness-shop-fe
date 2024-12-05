@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Filters, FiltersState, SelectedFilters } from "./types";
 import axios, { AxiosError } from "axios";
 import { url } from "../../../main/constants/common";
+import { searchProducts } from "../products/productThunks";
 
 const initialFilters = {
   brands: [],
@@ -17,6 +18,8 @@ const initialState: FiltersState = {
   availableFilters: null,
   selectedFilters: initialFilters,
   filtersError: null,
+  searchValue: null,
+  searchCategory: null,
 };
 
 export const fetchFilters = createAsyncThunk<
@@ -48,11 +51,20 @@ const filtersSlice = createSlice({
         ...action.payload,
       };
     },
-    removeSelectedFilters: (state) => {
+    resetFilters: (state) => {
       state.selectedFilters = {
         ...initialFilters,
         price: state.availableFilters?.price || initialFilters.price,
       };
+    },
+    setSearchValue: (state, action) => {
+      state.searchValue = action.payload;
+    },
+    clearSearchValue: (state) => {
+      state.searchValue = "";
+    },
+    setSearchCategory: (state, action) => {
+      state.searchCategory = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -64,10 +76,21 @@ const filtersSlice = createSlice({
       })
       .addCase(fetchFilters.rejected, (state, action) => {
         state.filtersError = action.payload || "Failed to fetch filters";
+      })
+      .addCase(searchProducts.pending, (state) => {
+        state.selectedFilters = {
+          ...initialFilters,
+          price: state.availableFilters?.price || initialFilters.price,
+        };
       });
   },
 });
 
-export const { setSelectedFilters, removeSelectedFilters } =
-  filtersSlice.actions;
+export const {
+  setSelectedFilters,
+  resetFilters,
+  setSearchValue,
+  setSearchCategory,
+  clearSearchValue,
+} = filtersSlice.actions;
 export default filtersSlice.reducer;

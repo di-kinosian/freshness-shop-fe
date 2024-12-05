@@ -38,7 +38,7 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
   };
 
   return (
-    <div className="border border-basicGray rounded-lg grid grid-cols-[260px,2fr,1fr] customSm:grid-cols-[260px,2fr,1fr] grid-cols-[1fr,1fr,1fr] gap-[26px]">
+    <div className="border border-basicGray rounded-lg grid grid-cols-[1fr,1fr,1fr] customSm:grid-cols-[240px,2fr,1fr] gap-[26px]">
       <img
         src="https://cdn.pixabay.com/photo/2017/06/14/17/41/galaxy-s8-2402805_1280.jpg"
         alt="Product image"

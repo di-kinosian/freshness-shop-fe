@@ -1,13 +1,13 @@
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/app/store";
 import { useAppSelector } from "../../main/hooks";
-import { getWishList } from "../../redux/features/products/productsSlice";
 import { useEffect } from "react";
 import { Button } from "../Button/Button";
 import { ButtonVariant } from "../../main/types/enums";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteFromWishList } from "../../redux/features/auth/authSlise";
 import { formatMoney } from "../../main/helpers";
+import { getWishList } from "../../redux/features/products/productThunks";
 
 interface Props {
   onClose: () => void;

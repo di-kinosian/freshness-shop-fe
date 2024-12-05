@@ -14,8 +14,13 @@ interface Props {
   onChange?: (value: string) => void;
 }
 
-export const Select = ({ width, options, onChange: onChange, value }: Props) => {
-  const [selectValue, setSelectValue] = useState<string>(value || '');
+export const Select = ({
+  width,
+  options,
+  onChange: onChange,
+  value,
+}: Props) => {
+  const [selectValue, setSelectValue] = useState<string>(value || "");
 
   const handleChange = (event: SelectChangeEvent): void => {
     const value = event.target.value as string;

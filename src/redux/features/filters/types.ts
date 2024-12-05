@@ -21,4 +21,6 @@ export interface FiltersState {
   availableFilters: Filters | null;
   selectedFilters: SelectedFilters;
   filtersError: string | null;
+  searchValue: string | null;
+  searchCategory: string | null;
 }

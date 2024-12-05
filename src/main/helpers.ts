@@ -1,3 +1,5 @@
+import { Category } from "../redux/features/categories/types";
+
 export const formatMoney = (amount: number): string => {
   if (typeof amount !== "number" || isNaN(amount)) {
     throw new Error("Input must be a valid number");
@@ -26,4 +28,13 @@ export const calculateOriginalPrice = (
   });
 
   return formattedAmount;
+};
+
+export const transformCategoriesToOptions = (
+  categories: Category[],
+): { value: string; label: string }[] => {
+  return categories.map((category) => ({
+    value: category._id,
+    label: category.name,
+  }));
 };

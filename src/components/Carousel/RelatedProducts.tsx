@@ -4,7 +4,6 @@ import { useAppSelector } from "../../main/hooks";
 import { AppDispatch } from "../../redux/app/store";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchRelatedProducts } from "../../redux/features/products/productsSlice";
 import { useNavigate } from "react-router-dom";
 import {
   getProductDetailsRoute,
@@ -12,6 +11,7 @@ import {
 } from "../../main/constants/routes.constants";
 import { formatMoney } from "../../main/helpers";
 import { sliderBreakpoints } from "../../main/constants/media.queries.constants";
+import { fetchRelatedProducts } from "../../redux/features/products/productThunks";
 
 export const RelatedProducts = () => {
   const navigate = useNavigate();

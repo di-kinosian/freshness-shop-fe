@@ -13,6 +13,7 @@ import ChecklistIcon from "@mui/icons-material/Checklist";
 import PersonIcon from "@mui/icons-material/Person";
 import { Logout } from "../../Auth/Logout";
 import { WishList } from "../../Product/WishList";
+import { Search } from "../../Search/Search";
 
 export const MainHeader = () => {
   const { openDialog, closeDialog } = useDialog();
@@ -94,7 +95,7 @@ export const MainHeader = () => {
             onClick={goToMainPage}
             className="cursor-pointer hidden md:block"
           />
-          <div>Search component</div>
+          <Search />
           <div className="flex gap-10">
             <UserIcon
               isLogin={isLogin}

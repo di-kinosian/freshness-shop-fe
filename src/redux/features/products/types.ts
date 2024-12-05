@@ -19,18 +19,6 @@ export interface Product {
   additionalInformation?: AdditionalInformation[];
 }
 
-export interface GetAllProductsPayload {
-  page: number;
-  limit: number;
-  categoryId: string;
-  brands?: string[];
-  priceMin?: number;
-  priceMax?: number;
-  rating?: number[];
-  sortField?: string | null;
-  sortDirection?: string | null;
-}
-
 export interface GetProductPayload {
   _id: string;
 }
