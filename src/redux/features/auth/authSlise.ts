@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
-import { url } from "../../../main/constants/common";
 import { MESSAGES } from "../../../main/constants/messages";
 import { loginRequest } from "./api";
 import {
@@ -55,9 +54,10 @@ export const signupUser = createAsyncThunk<
   { rejectValue: string }
 >("auth/signupUser", async (payload, thunkAPI) => {
   try {
-    await axios.post(`${url}/users/signup`, payload);
+    await api.post("/users/signup", payload);
   } catch (error) {
     const axiosError = error as AxiosError;
+
     if (axios.isAxiosError(axiosError) && axiosError.response) {
       return thunkAPI.rejectWithValue(
         axiosError.response.status === 400
@@ -76,7 +76,7 @@ export const getUserProfile = createAsyncThunk<
   { rejectValue: string }
 >("auth/getUserProfile", async (_, thunkAPI) => {
   try {
-    const response = await api.get(`${url}/users/profile`);
+    const response = await api.get("/users/profile");
 
     return response.data;
   } catch (error) {
@@ -93,7 +93,7 @@ export const addToWishList = createAsyncThunk<
 >("product/addToWishList", async (payload, thunkAPI) => {
   try {
     const response = await api.patch<{ wishList: string[] }>(
-      `${url}/users/wish-list/add`,
+      "/users/wish-list/add",
       payload,
     );
 
@@ -112,7 +112,7 @@ export const deleteFromWishList = createAsyncThunk<
 >("product/deleteFromWishList", async (payload, thunkAPI) => {
   try {
     const response = await api.patch<{ wishList: string[] }>(
-      `${url}/users/wish-list/remove`,
+      "/users/wish-list/remove",
       payload,
     );
 
@@ -133,7 +133,7 @@ export const refreshToken = createAsyncThunk<
   const { refreshToken } = state.auth;
 
   try {
-    const response = await api.post(`/auth/refresh-token`, {
+    const response = await api.post("/auth/refresh-token", {
       refreshToken,
     });
 
@@ -184,7 +184,7 @@ const authSlice = createSlice({
         state.isSignupLoading = false;
       })
       .addCase(refreshToken.fulfilled, (state, action) => {
-        state.accessToken = action.payload.accessToken || "";
+        state.accessToken = action.payload.accessToken || null;
       })
       .addCase(getUserProfile.fulfilled, (state, action) => {
         state.user = action.payload;

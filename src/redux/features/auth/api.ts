@@ -1,9 +1,8 @@
-import axios from "axios";
-import { url } from "../../../main/constants/common";
 import { LoginCredentials } from "./types";
+import api from "../../../config/axios";
 
 export const loginRequest = async (payload: LoginCredentials) => {
-  const response = await axios.post(`${url}/auth/login`, {
+  const response = await api.post("/auth/login", {
     email: payload.email,
     password: payload.password,
   });

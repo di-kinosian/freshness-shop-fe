@@ -13,6 +13,7 @@ import ChecklistIcon from "@mui/icons-material/Checklist";
 import PersonIcon from "@mui/icons-material/Person";
 import { Logout } from "../../Auth/Logout";
 import { WishList } from "../../Product/WishList";
+import { selectAccessToken } from "../../../redux/features/auth/selectors";
 
 export const MainHeader = () => {
   const { openDialog, closeDialog } = useDialog();
@@ -20,7 +21,7 @@ export const MainHeader = () => {
   const [anchorEl, setAnchorEl] = useState<SVGSVGElement | null>(null);
   const navigate = useNavigate();
 
-  const token = useAppSelector((state) => state.auth.accessToken);
+  const token = useAppSelector(selectAccessToken);
   const isLogin = !!token;
 
   useEffect(() => {
@@ -84,7 +85,7 @@ export const MainHeader = () => {
       <div
         className={twMerge(
           "bg-white sticky top-0 z-10",
-          hasShadow ? "border-b border-gray-300" : "",
+          hasShadow && "border-b border-gray-300",
         )}
       >
         <div className="h-16 flex justify-between items-center max-w-[1200px] w-full mx-auto">
