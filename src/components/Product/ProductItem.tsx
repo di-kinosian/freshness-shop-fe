@@ -21,7 +21,6 @@ interface Props {
 export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-
   const isInWishList = wishList?.includes(product._id);
 
   const updateWishList = (): void => {

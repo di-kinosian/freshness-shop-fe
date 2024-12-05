@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios, { AxiosError } from "axios";
-import { url } from "../../../main/constants/common";
+import { AxiosError } from "axios";
+
 import {
   GetAllProductsPayload,
   GetProductPayload,
@@ -31,7 +31,7 @@ export const getProduct = createAsyncThunk<
 >("products/product", async (payload, thunkAPI) => {
   try {
     const { _id } = payload;
-    const response = await axios.get(`${url}/products/${_id}`);
+    const response = await api.get(`/products/${_id}`);
 
     return response.data;
   } catch (error) {
@@ -64,7 +64,7 @@ export const getAllProducts = createAsyncThunk<
       sortDirection,
     } = payload;
 
-    const { data } = await axios.get(`${url}/products`, {
+    const { data } = await api.get("/products", {
       params: {
         page,
         limit,
@@ -99,7 +99,7 @@ export const fetchRelatedProducts = createAsyncThunk<
   { rejectValue: string }
 >("product/getRelatedProducts", async (_, thunkAPI) => {
   try {
-    const { data } = await axios.get(`${url}/products`, {
+    const { data } = await api.get("/products", {
       params: {
         page: 1,
         limit: 5,
@@ -120,7 +120,7 @@ export const getWishList = createAsyncThunk<
   { rejectValue: string }
 >("product/getWishList", async (_, thunkAPI) => {
   try {
-    const response = await api.get(`/users/wish-list`);
+    const response = await api.get("/users/wish-list");
 
     return response.data;
   } catch (error) {
@@ -175,7 +175,7 @@ const productsSlice = createSlice({
         state.wishListError = null;
       })
       .addCase(getWishList.rejected, (state, action) => {
-        state.wishListError = action.payload || "";
+        state.wishListError = action.payload || null;
         state.isWishListLoading = false;
       });
   },

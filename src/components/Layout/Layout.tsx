@@ -1,42 +1,16 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { MainHeader } from "./MainHeader/MainHeader";
 import { Categories } from "./Categories/Categories";
 import { Breadcrumbs } from "./Breadcrumbs/Breadcrumbs";
 import { Footer } from "./Footer/Footer";
-import { AppDispatch } from "../../redux/app/store";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../main/hooks";
-import {
-  getUserProfile,
-  refreshToken,
-} from "../../redux/features/auth/authSlise";
+import { useAuth } from "../Auth/useAuth";
 
 interface IProps {
   children: ReactNode;
 }
 
 export const Layout: React.FC<IProps> = ({ children }) => {
-  const dispatch: AppDispatch = useDispatch();
-  const token = useAppSelector((state) => state.auth.accessToken);
-
-  const isLogin = !!token;
-
-  useEffect(() => {
-    if (isLogin) {
-      dispatch(getUserProfile());
-    }
-  }, [isLogin]);
-
-  useEffect(() => {
-    let interval = 0;
-    if (token) {
-      interval = setTimeout(() => {
-        dispatch(refreshToken());
-      }, 1.9 * 60 * 1000);
-    }
-
-    return () => clearTimeout(interval);
-  }, [token]);
+  useAuth();
 
   return (
     <div className="mx-auto flex flex-col min-h-screen">

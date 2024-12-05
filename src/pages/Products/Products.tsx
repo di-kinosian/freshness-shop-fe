@@ -13,11 +13,14 @@ import { PaginationController } from "../../components/Pagination/Pagination";
 import { Button } from "../../components/Button/Button";
 import { Bage } from "../../components/Bage/Bage";
 import { Product } from "../../redux/features/products/types";
+import { selectWishList } from "../../redux/features/auth/selectors";
 
 export const Products = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { selectedFilters } = useAppSelector((state) => state.filters);
-  const wishList = useAppSelector((state) => state.auth.user?.wishList);
+  const selectedFilters = useAppSelector(
+    (state) => state.filters.selectedFilters,
+  );
+  const wishList = useAppSelector(selectWishList);
   const { products, total, limit, page } = useAppSelector(
     (state) => state.product,
   );
