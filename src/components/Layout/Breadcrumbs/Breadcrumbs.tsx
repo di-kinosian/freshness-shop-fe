@@ -1,6 +1,6 @@
 import { matchPath, useLocation } from "react-router-dom";
 import { ROUTES } from "../../../main/constants/routes.constants";
-import { useAppSelector } from "../../../main/hooks";
+import { useAppSelector } from "../../../redux/app/hooks";
 import Typography from "@mui/material/Typography";
 import BreadcrumbsMUI from "@mui/material/Breadcrumbs";
 import { useMemo } from "react";

@@ -10,7 +10,7 @@ import {
   loginUser,
 } from "../../redux/features/auth/authSlise";
 import { AppDispatch } from "../../redux/app/store";
-import { useAppSelector } from "../../main/hooks";
+import { useAppSelector } from "../../redux/app/hooks";
 import { useEffect } from "react";
 
 interface Props {

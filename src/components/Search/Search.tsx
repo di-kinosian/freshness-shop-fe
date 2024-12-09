@@ -4,7 +4,7 @@ import { AppDispatch } from "../../redux/app/store";
 import { ControlContainer } from "../ControlContainer/ControlContainer";
 import { Select } from "../Select/Select";
 import SearchIcon from "@mui/icons-material/Search";
-import { useAppSelector } from "../../main/hooks";
+import { useAppSelector } from "../../redux/app/hooks";
 import { transformCategoriesToOptions } from "../../main/helpers";
 import { useMemo } from "react";
 import {

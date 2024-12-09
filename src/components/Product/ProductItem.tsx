@@ -65,7 +65,7 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
             <span className="text-grayText">Brand</span>
             <span className="text-gray-600">{product?.brand}</span>
           </div>
-          {product?.additionalInformation?.slice(2, 3).map((item) => (
+          {product?.additionalInformation?.slice(2,3).map((item) => (
             <div className="grid grid-cols-[1fr,2fr] gap-8" key={item.key}>
               <div className="text-grayText">{item.key}</div>
               <div className="text-gray-600">{item.value}</div>
@@ -82,9 +82,8 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
               product.discount ? "line-through" : "none",
             )}
           >
-            {product.discount
-              ? calculateOriginalPrice(product.price, product.discount)
-              : ""}
+            {product.discount ?
+              calculateOriginalPrice(product.price, product.discount) : ''}
           </div>
         </div>
         <div className="text-sm text-grayText">Delivery in 1 day</div>

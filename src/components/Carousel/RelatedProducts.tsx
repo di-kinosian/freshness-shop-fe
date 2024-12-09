@@ -1,6 +1,6 @@
 import { useKeenSlider } from "keen-slider/react";
 import { RelatedProductCard } from "./RelatedProductCard";
-import { useAppSelector } from "../../main/hooks";
+import { useAppSelector } from "../../redux/app/hooks";
 import { AppDispatch } from "../../redux/app/store";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";

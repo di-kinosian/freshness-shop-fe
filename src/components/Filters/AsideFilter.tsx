@@ -6,7 +6,7 @@ import { RatingFilter } from "./RatingFilter";
 import { FilterKey, SelectedFilters } from "./types";
 import { AppDispatch } from "../../redux/app/store";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../main/hooks";
+import { useAppSelector } from "../../redux/app/hooks";
 import {
   setSelectedFilters,
   fetchFilters,
