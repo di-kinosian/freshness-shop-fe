@@ -57,6 +57,7 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
         />
         <FormField
           label="Password"
+          type="password"
           placeholder="password"
           {...register("password")}
           error={errors.password && errors.password.message}

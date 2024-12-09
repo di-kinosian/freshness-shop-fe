@@ -17,10 +17,7 @@ export const PaginationController = ({
 }: Props) => {
   const classes = useStyles();
 
-  const handleChange = (
-    event: React.ChangeEvent<unknown>,
-    value: number,
-  ): void => {
+  const handleChange = (_: React.ChangeEvent<unknown>, value: number): void => {
     onPageChange(value);
   };
 

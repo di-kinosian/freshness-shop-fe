@@ -9,6 +9,7 @@ import {
   searchProducts,
   showMoreProducts,
 } from "./productThunks";
+import { setSelectedFilters } from "../filters/filtersSlice";
 
 const initialState: ProductsState = {
   products: [],
@@ -45,7 +46,7 @@ const productsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllProducts.fulfilled, (state, action) => {
-        state.products = action.payload.products;
+        state.products = [...action.payload.products];
         state.total = action.payload.total;
         state.productsError = null;
       })
@@ -53,6 +54,7 @@ const productsSlice = createSlice({
         state.productsError = action.payload || "Failed to fetch products";
       })
       .addCase(getProduct.fulfilled, (state, action) => {
+        state.showMorePage = null;
         state.product = action.payload;
         state.productError = null;
       })
@@ -86,6 +88,9 @@ const productsSlice = createSlice({
       })
       .addCase(searchProducts.fulfilled, (state, action) => {
         state.products = action.payload.products;
+      })
+      .addCase(setSelectedFilters, (state) => {
+        state.page = 1;
       });
   },
 });

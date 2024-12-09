@@ -10,7 +10,9 @@ const getProductsParams = (state: RootState) => {
   const brands = state.filters.selectedFilters.brands;
   const rating = state.filters.selectedFilters.rating;
   const limit = state.product.limit;
-  const categoryId = state.filters.selectedFilters.category;
+  const categoryId = state.filters.searchValue
+    ? state.filters.searchCategory
+    : state.filters.selectedFilters.category;
   const [sortField, sortDirection] = state.product.sortValue.split("_");
   const page = state.product.page;
   const searchValue = state.filters.searchValue;

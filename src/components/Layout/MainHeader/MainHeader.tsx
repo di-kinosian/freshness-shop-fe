@@ -91,7 +91,7 @@ export const MainHeader = () => {
       >
         <div className="h-16 flex justify-between items-center max-w-[1200px] w-full mx-auto">
           <img
-            src="/freshnesecom.svg"
+            src="/freshness-shop-fe/freshnesecom.svg"
             alt="Logo freshnesecom"
             onClick={goToMainPage}
             className="cursor-pointer hidden md:block"
@@ -105,12 +105,12 @@ export const MainHeader = () => {
             />
             <div className="relative">
               <img
-                src="/ic-ecommerce-basket.svg"
+                src="/freshness-shop-fe/ic-ecommerce-basket.svg"
                 alt="Shopping basket icon"
                 className="cursor-pointer"
               />
               <img
-                src="/group.svg"
+                src="/freshness-shop-fe/group.svg"
                 alt="Badge icon"
                 className="cursor-pointer absolute top-[12px] right-[9px]"
               />

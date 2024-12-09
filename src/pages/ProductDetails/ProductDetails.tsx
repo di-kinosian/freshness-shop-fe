@@ -8,10 +8,7 @@ import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../main/hooks";
 import { RelatedProducts } from "../../components/Carousel/RelatedProducts";
 import { ImageGallery } from "../../components/ImageGallery/ImageGallery";
-import {
-  galleryImages,
-  noProductImg,
-} from "../../main/constants/images.constants";
+import { noProductImg } from "../../main/constants/images.constants";
 import { ProductParameters } from "./ProductParameters";
 import { ProductTabs } from "./ProductTabs";
 import { calculateOriginalPrice, formatMoney } from "../../main/helpers";
@@ -62,9 +59,9 @@ export const ProductDetails = () => {
   return (
     <div className="flex flex-col gap-16">
       <div className="grid grid-cols-1 md:grid-cols-[1fr,1fr] gap-10">
-        <ImageGallery images={galleryImages} noProductImg={noProductImg} />
+        <ImageGallery images={product.images} noProductImg={noProductImg} />
         <div className="flex flex-col gap-12 items-start">
-          <div className="flex flex-col gap-4 h-[50px]">
+          <div className="flex flex-col gap-4">
             <h1 className="text-3xl font-bold text-black">{product?.title}</h1>
             <div className="flex item-center gap-4">
               <ProductRating value={product?.rating ?? 0} />
@@ -84,8 +81,9 @@ export const ProductDetails = () => {
                   product.discount ? "line-through" : "none",
                 )}
               >
-                {product.discount &&
-                  calculateOriginalPrice(product?.price, product.discount)}
+                {product.discount
+                  ? calculateOriginalPrice(product?.price, product.discount)
+                  : ""}
               </div>
             </div>
             <div className="flex gap-3">

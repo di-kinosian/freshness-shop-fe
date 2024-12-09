@@ -34,7 +34,7 @@ export const Logout: React.FC<Props> = ({ onClose }) => {
           size={ButtonSize.MEDIUM}
           onClick={onClose}
         >
-          Cansel
+          Cancel
         </Button>
       </div>
     </div>

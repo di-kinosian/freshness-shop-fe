@@ -24,20 +24,29 @@ import { selectWishList } from "../../redux/features/auth/selectors";
 export const Products = () => {
   const dispatch: AppDispatch = useDispatch();
   const wishList = useAppSelector(selectWishList);
-  const { products, total, limit, page, showMorePage, sortValue } =
-    useAppSelector((state) => state.product);
+  const { total, limit, page, showMorePage, sortValue } = useAppSelector(
+    (state) => state.product,
+  );
+  const products = useAppSelector((state) => state.product.products);
   const totalPages = Math.ceil(total / limit);
 
   useEffect(() => {
     dispatch(getAllProducts());
-  }, [sortValue, page]);
+  }, []);
 
   const handlePageChange = (newPage: number): void => {
     dispatch(setPage(newPage));
+    dispatch(getAllProducts());
   };
 
   const handleShowMore = (): void => {
     dispatch(showMoreProducts());
+  };
+
+  const onSortChange = (value: string) => {
+    dispatch(setPage(1));
+    dispatch(setSortValue(value));
+    dispatch(getAllProducts());
   };
 
   const lastDownloadedPage = showMorePage || page;
@@ -56,7 +65,7 @@ export const Products = () => {
                 <Select
                   width={170}
                   options={sortOptions}
-                  onChange={(value: string) => dispatch(setSortValue(value))}
+                  onChange={onSortChange}
                   value={sortValue}
                 />
               </div>
@@ -79,7 +88,7 @@ export const Products = () => {
       <div className="flex w-full items-center">
         <div className="flex-1">
           <PaginationController
-            page={page}
+            page={showMorePage ? showMorePage : page}
             totalPages={totalPages}
             onPageChange={handlePageChange}
           />
@@ -88,7 +97,7 @@ export const Products = () => {
           <Button className="flex gap-2 mx-auto" onClick={handleShowMore}>
             <span>Show more products</span>
             <img
-              src="/vector-button.svg"
+              src="/freshness-shop-fe/vector-button.svg"
               alt="Vector right for button"
               className="rotate-90"
             />

@@ -24,7 +24,7 @@ function App() {
             <ToastProvider>
               <ConfirmationDialogProvider>
                 <DialogProvider>
-                  <Router>
+                  <Router basename="/freshness-shop-fe">
                     <Layout>
                       <Routes>
                         <Route path={ROUTES.HOME.path} element={<Home />} />

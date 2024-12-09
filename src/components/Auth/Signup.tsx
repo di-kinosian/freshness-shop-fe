@@ -41,7 +41,7 @@ export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
   const onSubmit = async () => {
     const formData = getValues();
 
-    dispatch(signupUser(formData))
+    dispatch(signupUser({ ...formData, wishList: [] }))
       .unwrap()
       .then(() => {
         openSuccessToast(MESSAGES.SIGNUP.SUCCESS);
@@ -76,6 +76,7 @@ export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
         <FormField
           label="Password"
           placeholder="password"
+          type="password"
           {...register("password")}
           error={errors.password && errors.password.message}
         />

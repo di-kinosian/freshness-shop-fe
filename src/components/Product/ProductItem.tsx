@@ -38,17 +38,19 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
 
   return (
     <div className="border border-basicGray rounded-lg grid grid-cols-[1fr,1fr,1fr] customSm:grid-cols-[240px,2fr,1fr] gap-[26px]">
-      <img
-        src="https://cdn.pixabay.com/photo/2017/06/14/17/41/galaxy-s8-2402805_1280.jpg"
-        alt="Product image"
-        className="rounded-lg h-full"
-      />
+      <div className="w-full flex items-center justify-center">
+        <img
+          src={product.images[0]}
+          alt="Product image"
+          className="rounded-lg max-h-[250px]"
+        />
+      </div>
       <div className="flex flex-col justify-between py-6">
         <div className="flex flex-col items-start gap-2">
           <div>
             <h3 className="text-lg font-semibold">{product.title}</h3>
             <span className="text-grayText text-sm text-left">
-              {product.description}
+              {product.description ? product.description.slice(0, 60) : ""}
             </span>
           </div>
           <ProductRating value={product?.rating ?? 0} size="small" />
@@ -63,7 +65,7 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
             <span className="text-grayText">Brand</span>
             <span className="text-gray-600">{product?.brand}</span>
           </div>
-          {product?.additionalInformation?.map((item) => (
+          {product?.additionalInformation?.slice(2, 3).map((item) => (
             <div className="grid grid-cols-[1fr,2fr] gap-8" key={item.key}>
               <div className="text-grayText">{item.key}</div>
               <div className="text-gray-600">{item.value}</div>
@@ -80,8 +82,9 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
               product.discount ? "line-through" : "none",
             )}
           >
-            {product.discount &&
-              calculateOriginalPrice(product.price, product.discount)}
+            {product.discount
+              ? calculateOriginalPrice(product.price, product.discount)
+              : ""}
           </div>
         </div>
         <div className="text-sm text-grayText">Delivery in 1 day</div>
@@ -93,7 +96,10 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
             onClick={() => goToPDP(product._id)}
           >
             <span>Product Detail</span>
-            <img src="/vector-button.svg" alt="Vector right for button" />
+            <img
+              src="/freshness-shop-fe/vector-button.svg"
+              alt="Vector right for button"
+            />
           </Button>
           <Button
             color={ButtonVariant.SECONDARY}

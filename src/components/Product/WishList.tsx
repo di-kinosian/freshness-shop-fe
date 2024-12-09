@@ -23,7 +23,7 @@ export const WishList = ({ onClose }: Props) => {
     dispatch(getWishList());
   }, [dispatch]);
 
-  if (isWishListLoading) {
+  if (isWishListLoading && !wishList.length) {
     return "Loading...";
   }
 
@@ -46,7 +46,7 @@ export const WishList = ({ onClose }: Props) => {
             className="border border-basicGray rounded-lg w-full flex cursor-pointer"
           >
             <img
-              src="https://cdn.pixabay.com/photo/2017/06/14/17/41/galaxy-s8-2402805_1280.jpg"
+              src={product.images[0]}
               alt="Product image"
               className="rounded-lg w-[100px]"
             />
@@ -55,7 +55,9 @@ export const WishList = ({ onClose }: Props) => {
                 <div>
                   <div className="font-semibold">{product.title}</div>
                   <div className="text-sm text-grayText">
-                    {product.description}
+                    {product.description
+                      ? product.description.slice(0, 100)
+                      : ""}
                   </div>
                 </div>
                 <div>{formatMoney(product.price)}</div>
@@ -72,7 +74,7 @@ export const WishList = ({ onClose }: Props) => {
       <div className="flex gap-3 w-full justify-center">
         <Button>Buy now</Button>
         <Button color={ButtonVariant.SECONDARY} onClick={onClose}>
-          Cansel
+          Cancel
         </Button>
       </div>
     </div>
