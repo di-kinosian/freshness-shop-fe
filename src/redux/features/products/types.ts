@@ -45,4 +45,7 @@ export interface ProductsState {
   product: Product | null;
   productsError: string | null;
   relatedProductsError: string | null;
+  wishList: Product[];
+  isWishListLoading: boolean;
+  wishListError: string | null;
 }

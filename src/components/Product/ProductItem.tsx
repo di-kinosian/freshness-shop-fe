@@ -5,22 +5,40 @@ import { getProductDetailsRoute } from "../../main/constants/routes.constants";
 import { Product } from "../../redux/features/products/types";
 import { ProductRating } from "./ProductRating";
 import { formatMoney } from "../../main/helpers";
+import { AppDispatch } from "../../redux/app/store";
+import { useDispatch } from "react-redux";
+import {
+  addToWishList,
+  deleteFromWishList,
+} from "../../redux/features/auth/authSlise";
+import WishListIcon from "../Icons/WishListIcon";
 
 interface Props {
   product: Product;
+  wishList?: string[];
 }
 
-export const ProductItem: React.FC<Props> = ({ product }) => {
+export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
   const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
+  const isInWishList = wishList?.includes(product._id);
+
+  const updateWishList = (): void => {
+    if (isInWishList) {
+      dispatch(deleteFromWishList({ productId: product._id }));
+    } else {
+      dispatch(addToWishList({ productId: product._id }));
+    }
+  };
 
   const goToPDP = (productId: string): void => {
     navigate(getProductDetailsRoute(productId));
   };
 
   return (
-    <div className="border border-basicGray rounded-lg grid grid-cols-[220px,2fr,1fr] gap-[26px]">
+    <div className="border border-basicGray rounded-lg grid grid-cols-[260px,2fr,1fr] gap-[26px]">
       <img
-        src="https://tse3.mm.bing.net/th?id=OIP.5cV6Bxiey16ZNKucbF2r0QHaHa&pid=Api"
+        src="https://cdn.pixabay.com/photo/2017/06/14/17/41/galaxy-s8-2402805_1280.jpg"
         alt="Product image"
         className="rounded-lg h-[220px]"
       />
@@ -68,9 +86,10 @@ export const ProductItem: React.FC<Props> = ({ product }) => {
             color={ButtonVariant.SECONDARY}
             size={ButtonSize.SMALL}
             className="flex gap-1"
+            onClick={updateWishList}
           >
-            <img src="/like.svg" />
-            <span>Add to wish list</span>
+            <WishListIcon isInWishList={isInWishList as boolean} />
+            <span>{isInWishList ? "Product added" : "Add to wish list"}</span>
           </Button>
         </div>
       </div>

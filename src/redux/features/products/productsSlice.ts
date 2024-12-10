@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios, { AxiosError } from "axios";
-import { url } from "../../../main/constants/common";
+import { AxiosError } from "axios";
+
 import {
   GetAllProductsPayload,
   GetProductPayload,
   Product,
   ProductsState,
 } from "./types";
+import api from "../../../config/axios";
 
 const initialState: ProductsState = {
   products: [],
@@ -18,6 +19,9 @@ const initialState: ProductsState = {
   productError: null,
   productsError: null,
   relatedProductsError: null,
+  wishList: [],
+  isWishListLoading: false,
+  wishListError: null,
 };
 
 export const getProduct = createAsyncThunk<
@@ -27,7 +31,7 @@ export const getProduct = createAsyncThunk<
 >("products/product", async (payload, thunkAPI) => {
   try {
     const { _id } = payload;
-    const response = await axios.get(`${url}/products/${_id}`);
+    const response = await api.get(`/products/${_id}`);
 
     return response.data;
   } catch (error) {
@@ -60,7 +64,7 @@ export const getAllProducts = createAsyncThunk<
       sortDirection,
     } = payload;
 
-    const { data } = await axios.get(`${url}/products`, {
+    const { data } = await api.get("/products", {
       params: {
         page,
         limit,
@@ -95,7 +99,7 @@ export const fetchRelatedProducts = createAsyncThunk<
   { rejectValue: string }
 >("product/getRelatedProducts", async (_, thunkAPI) => {
   try {
-    const { data } = await axios.get(`${url}/products`, {
+    const { data } = await api.get("/products", {
       params: {
         page: 1,
         limit: 5,
@@ -103,6 +107,22 @@ export const fetchRelatedProducts = createAsyncThunk<
     });
 
     return data.items;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+
+    return thunkAPI.rejectWithValue(axiosError.message);
+  }
+});
+
+export const getWishList = createAsyncThunk<
+  Product[],
+  void,
+  { rejectValue: string }
+>("product/getWishList", async (_, thunkAPI) => {
+  try {
+    const response = await api.get("/users/wish-list");
+
+    return response.data;
   } catch (error) {
     const axiosError = error as AxiosError;
 
@@ -144,6 +164,19 @@ const productsSlice = createSlice({
       .addCase(fetchRelatedProducts.rejected, (state, action) => {
         state.relatedProductsError =
           action.payload || "Failed to fetch related products";
+      })
+      .addCase(getWishList.fulfilled, (state, action) => {
+        state.wishList = action.payload;
+        state.isWishListLoading = false;
+        state.wishListError = null;
+      })
+      .addCase(getWishList.pending, (state) => {
+        state.isWishListLoading = true;
+        state.wishListError = null;
+      })
+      .addCase(getWishList.rejected, (state, action) => {
+        state.wishListError = action.payload || null;
+        state.isWishListLoading = false;
       });
   },
 });

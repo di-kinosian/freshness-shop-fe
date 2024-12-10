@@ -3,12 +3,15 @@ import { MainHeader } from "./MainHeader/MainHeader";
 import { Categories } from "./Categories/Categories";
 import { Breadcrumbs } from "./Breadcrumbs/Breadcrumbs";
 import { Footer } from "./Footer/Footer";
+import { useAuth } from "../Auth/useAuth";
 
 interface IProps {
   children: ReactNode;
 }
 
 export const Layout: React.FC<IProps> = ({ children }) => {
+  useAuth();
+
   return (
     <div className="mx-auto flex flex-col min-h-screen">
       <div className="h-12 border-b border-gray-200">

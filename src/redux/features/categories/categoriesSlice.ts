@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import axios, { AxiosError } from "axios";
-import { url } from "../../../main/constants/common";
+import { AxiosError } from "axios";
 import { Category, CategoryState } from "./types";
+import api from "../../../config/axios";
 
 const initialState: CategoryState = {
   categories: [],
@@ -14,7 +14,7 @@ export const getAllCategories = createAsyncThunk<
   { rejectValue: string }
 >("categories/getAllCategories", async (_, thunkAPI) => {
   try {
-    const response = await axios.get<Category[]>(`${url}/categories`);
+    const response = await api.get<Category[]>("/categories");
 
     return response.data;
   } catch (error) {
