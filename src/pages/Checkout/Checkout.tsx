@@ -1,8 +1,10 @@
+import { OrderSection } from "./OrderSection";
+
 export const Checkout = () => {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold">Checkout Page</h1>
-      <p>Proceed to checkout here!</p>
+    <div className="grid grid-cols-[1fr,1fr] gap-8 max-w-[1200px] mx-auto w-full">
+      <div>Left side</div>
+      <OrderSection />
     </div>
   );
 };
