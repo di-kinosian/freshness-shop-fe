@@ -3,6 +3,7 @@ import authReducer from "../features/auth/authSlise";
 import productsReducer from "../features/products/productsSlice";
 import filtersReducer from "../features/filters/filtersSlice";
 import categoriesReducer from "../features/categories/categoriesSlice";
+import cartReducer from "../features/cart/cartSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -12,21 +13,28 @@ const persistConfig = {
 };
 
 const persisteAuthReducer = persistReducer(persistConfig, authReducer);
-const persisteFiltersReducer = persistReducer({
-  key: 'filters',
-  storage
-}, filtersReducer);
-const persisteCategoriesReducer = persistReducer({
-  key: 'categories',
-  storage
-}, categoriesReducer);
+const persisteFiltersReducer = persistReducer(
+  {
+    key: "filters",
+    storage,
+  },
+  filtersReducer,
+);
+const persisteCategoriesReducer = persistReducer(
+  {
+    key: "categories",
+    storage,
+  },
+  categoriesReducer,
+);
 
 const store = configureStore({
   reducer: {
     auth: persisteAuthReducer,
-    product: productsReducer,
     categories: persisteCategoriesReducer,
     filters: persisteFiltersReducer,
+    product: productsReducer,
+    cart: cartReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

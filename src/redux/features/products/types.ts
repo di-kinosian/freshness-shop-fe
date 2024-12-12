@@ -23,6 +23,13 @@ export interface GetProductPayload {
   _id: string;
 }
 
+export interface PaginatedProductsResponse {
+  products: Product[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
 export interface ProductsState {
   products: Product[];
   relatedProducts: Product[];

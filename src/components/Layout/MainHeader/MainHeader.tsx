@@ -14,15 +14,19 @@ import PersonIcon from "@mui/icons-material/Person";
 import { Logout } from "../../Auth/Logout";
 import { WishList } from "../../Product/WishList";
 import { Search } from "../../Search/Search";
-import { selectAccessToken } from "../../../redux/features/auth/selectors";
+import {
+  selectAccessToken,
+} from "../../../redux/features/auth/selectors";
+import { Bage } from "@components/Bage/Bage";
+import { selectCart } from "../../../redux/features/cart/selectors";
 
 export const MainHeader = () => {
   const { openDialog, closeDialog } = useDialog();
+  const navigate = useNavigate();
   const [hasShadow, setHasShadow] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<SVGSVGElement | null>(null);
-  const navigate = useNavigate();
-
   const token = useAppSelector(selectAccessToken);
+  const cart = useAppSelector(selectCart);
   const isLogin = !!token;
 
   useEffect(() => {
@@ -81,6 +85,10 @@ export const MainHeader = () => {
     navigate(ROUTES.HOME.path);
   };
 
+  const goToCart = (): void => {
+    navigate(ROUTES.CHECKOUT.path);
+  };
+
   return (
     <>
       <div
@@ -103,17 +111,15 @@ export const MainHeader = () => {
               className="cursor-pointer"
               onClick={isLogin ? handleUserIconClick : handleOpenLogin}
             />
-            <div className="relative">
+            <div className="relative" onClick={goToCart}>
               <img
                 src="/freshness-shop-fe/ic-ecommerce-basket.svg"
                 alt="Shopping basket icon"
                 className="cursor-pointer"
               />
-              <img
-                src="/freshness-shop-fe/group.svg"
-                alt="Badge icon"
-                className="cursor-pointer absolute top-[12px] right-[9px]"
-              />
+              <div className="cursor-pointer absolute top-[12px] right-[9px]">
+                <Bage>{cart.length}</Bage>
+              </div>
             </div>
           </div>
         </div>

@@ -11,6 +11,8 @@ import {
 } from "./types";
 import { RootState } from "../../app/store";
 import api from "../../../config/axios";
+import { handleAxiosError } from "../utils/handleThunkError";
+import { ThunkRejectValue } from "../../types";
 
 const initialState: AuthState = {
   accessToken: null,
@@ -27,7 +29,7 @@ const initialState: AuthState = {
 export const loginUser = createAsyncThunk<
   IUserLogin,
   LoginCredentials,
-  { rejectValue: string }
+  ThunkRejectValue
 >("auth/loginUser", async (payload, thunkAPI) => {
   try {
     const { accessToken, refreshToken, user } = await loginRequest(payload);
@@ -51,7 +53,7 @@ export const loginUser = createAsyncThunk<
 export const signupUser = createAsyncThunk<
   void,
   SignupCredentials,
-  { rejectValue: string }
+  ThunkRejectValue
 >("auth/signupUser", async (payload, thunkAPI) => {
   try {
     await api.post("/users/signup", { ...payload });
@@ -70,26 +72,23 @@ export const signupUser = createAsyncThunk<
   }
 });
 
-export const getUserProfile = createAsyncThunk<
-  User,
-  void,
-  { rejectValue: string }
->("auth/getUserProfile", async (_, thunkAPI) => {
-  try {
-    const response = await api.get("/users/profile");
+export const getUserProfile = createAsyncThunk<User, void, ThunkRejectValue>(
+  "auth/getUserProfile",
+  async (_, thunkAPI) => {
+    try {
+      const response = await api.get("/users/profile");
 
-    return response.data;
-  } catch (error) {
-    const axiosError = error as AxiosError;
-
-    return thunkAPI.rejectWithValue(axiosError.message);
-  }
-});
+      return response.data;
+    } catch (error) {
+      return handleAxiosError(error, thunkAPI);
+    }
+  },
+);
 
 export const addToWishList = createAsyncThunk<
   { wishList: string[] },
   { productId: string },
-  { rejectValue: string }
+  ThunkRejectValue
 >("product/addToWishList", async (payload, thunkAPI) => {
   try {
     const response = await api.patch<{ wishList: string[] }>(
@@ -99,16 +98,14 @@ export const addToWishList = createAsyncThunk<
 
     return response.data;
   } catch (error) {
-    const axiosError = error as AxiosError;
-
-    return thunkAPI.rejectWithValue(axiosError.message);
+    return handleAxiosError(error, thunkAPI);
   }
 });
 
 export const deleteFromWishList = createAsyncThunk<
   { wishList: string[] },
   { productId: string },
-  { rejectValue: string }
+  ThunkRejectValue
 >("product/deleteFromWishList", async (payload, thunkAPI) => {
   try {
     const response = await api.patch<{ wishList: string[] }>(
@@ -118,16 +115,14 @@ export const deleteFromWishList = createAsyncThunk<
 
     return response.data;
   } catch (error) {
-    const axiosError = error as AxiosError;
-
-    return thunkAPI.rejectWithValue(axiosError.message);
+    return handleAxiosError(error, thunkAPI);
   }
 });
 
 export const refreshToken = createAsyncThunk<
   { accessToken: string },
   void,
-  { rejectValue: string }
+  ThunkRejectValue
 >("auth/refreshToken", async (_, thunkAPI) => {
   const state = thunkAPI.getState() as RootState;
   const { refreshToken } = state.auth;
@@ -141,9 +136,7 @@ export const refreshToken = createAsyncThunk<
       accessToken: response.data.accessToken,
     };
   } catch (error) {
-    const axiosError = error as AxiosError;
-
-    return thunkAPI.rejectWithValue(axiosError.message);
+    return handleAxiosError(error, thunkAPI);
   }
 });
 

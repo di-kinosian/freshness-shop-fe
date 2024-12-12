@@ -1,10 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { ButtonSize, ButtonVariant } from "../../main/types/enums";
 import { Button } from "../Button/Button";
-import {
-  getProductDetailsRoute,
-  ROUTES,
-} from "../../main/constants/routes.constants";
+import { getProductDetailsRoute } from "../../main/constants/routes.constants";
 import { Product } from "../../redux/features/products/types";
 import { ProductRating } from "./ProductRating";
 import { calculateOriginalPrice, formatMoney } from "../../main/helpers";
@@ -18,6 +15,7 @@ import { twMerge } from "tailwind-merge";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Tooltip } from "@mui/material";
+import { addToCart } from "../../redux/features/cart/cartSlice";
 
 interface Props {
   product: Product;
@@ -37,12 +35,12 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
     }
   };
 
-  const goToPDP = (productId: string): void => {
-    navigate(getProductDetailsRoute(productId));
+  const addProductToCart = (): void => {
+    dispatch(addToCart({ productId: product._id, quantity: 1 }));
   };
 
-  const goToCart = (): void => {
-    navigate(ROUTES.CHECKOUT.path);
+  const goToPDP = (productId: string): void => {
+    navigate(getProductDetailsRoute(productId));
   };
 
   return (
@@ -127,7 +125,7 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
             color={ButtonVariant.PRIMARY}
             size={ButtonSize.MEDIUM}
             className="w-[164px] flex gap-2"
-            onClick={goToCart}
+            onClick={addProductToCart}
           >
             <span>Add to cart</span>
             <span>+</span>

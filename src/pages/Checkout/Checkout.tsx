@@ -1,4 +1,4 @@
-import { OrderSection } from "./OrderSection";
+import { OrderSection } from "../../components/Cart/OrderSection";
 
 export const Checkout = () => {
   return (
