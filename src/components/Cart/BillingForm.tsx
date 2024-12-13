@@ -12,37 +12,49 @@ import { useEffect, useMemo } from "react";
 import { AppDispatch } from "../../redux/app/store";
 import { useDispatch } from "react-redux";
 import {
+  getCities,
   getCountries,
-} from "../../redux/features/countries/countriesSlice";
+} from "../../redux/features/location/locationSlice";
 import { useAppSelector } from "../../redux/app/hooks";
 import {
   transformCitiesToOptions,
   transformCountriesToOptions,
 } from "../../main/helpers";
-import { selectCities, selectCountries } from "../../redux/features/countries/selectors";
+import {
+  selectCities,
+  selectCountries,
+} from "../../redux/features/location/selectors";
 
 export const BillingForm = () => {
   const {
     handleSubmit,
     register,
     formState: { errors },
-    getValues,
     control,
+    watch,
+    setValue,
   } = useForm({
     resolver: yupResolver(billingValidationShema),
   });
+
+  const country = watch("country");
+  const dispatch: AppDispatch = useDispatch();
+  const countries = useAppSelector(selectCountries);
+  const cities = useAppSelector(selectCities);
 
   useEffect(() => {
     dispatch(getCountries());
   }, []);
 
-  const dispatch: AppDispatch = useDispatch();
-  const countries = useAppSelector(selectCountries);
-  const cities = useAppSelector(selectCities);
+  useEffect(() => {
+    if (country) {
+      dispatch(getCities({ country: country }));
+    } else {
+      setValue("city", "");
+    }
+  }, [country]);
 
-  const onSubmit = async () => {
-    const data = getValues();
-  };
+  const onSubmit = async () => {};
 
   const countriesOptions = useMemo(
     () => transformCountriesToOptions(countries),
@@ -129,7 +141,8 @@ export const BillingForm = () => {
                   value={field.value}
                   onChange={field.onChange}
                   inputRef={field.ref}
-                  placeholder="city"
+                  placeholder={country ? "city" : "select country"}
+                  disabled={!country}
                 />
                 {errors.city && (
                   <span className="text-red-500">{errors.city.message}</span>

@@ -45,7 +45,7 @@ export const getCities = createAsyncThunk<
   }
 });
 
-const countriesSlice = createSlice({
+const locationSlice = createSlice({
   name: "countries",
   initialState,
   reducers: {},
@@ -68,4 +68,4 @@ const countriesSlice = createSlice({
   },
 });
 
-export default countriesSlice.reducer;
+export default locationSlice.reducer;

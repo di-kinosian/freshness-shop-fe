@@ -2,9 +2,6 @@ import { TextField, Theme } from "@mui/material";
 import AutocompleteMUI from "@mui/material/Autocomplete";
 import { Options } from "../../main/types/interfaces";
 import { makeStyles } from "@mui/styles";
-import { AppDispatch } from "../../redux/app/store";
-import { useDispatch } from "react-redux";
-import { getCities } from "../../redux/features/countries/countriesSlice";
 
 interface Props {
   options: Options[];
@@ -12,6 +9,7 @@ interface Props {
   onChange?: (value: string) => void;
   inputRef?: React.Ref<HTMLInputElement>;
   placeholder: string;
+  disabled?: boolean;
 }
 
 export const Autocomplete = ({
@@ -20,19 +18,23 @@ export const Autocomplete = ({
   onChange,
   inputRef,
   placeholder,
+  disabled,
 }: Props) => {
-  const dispatch: AppDispatch = useDispatch();
   const classes = useStyles();
 
   const handleChange = (value: string): void => {
     onChange?.(value || "");
-    dispatch(getCities({ country: value }));
   };
+
+  const selectedOption =
+    options.find((option) => option.value === value) || null;
 
   return (
     <>
       <input type="hidden" value={value || ""} ref={inputRef} />
       <AutocompleteMUI
+        disabled={disabled}
+        value={selectedOption}
         options={options}
         id="grid-choose-pesticide"
         clearOnEscape

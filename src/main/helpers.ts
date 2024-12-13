@@ -1,5 +1,5 @@
 import { Category } from "../redux/features/categories/types";
-import { Country } from "../redux/features/countries/types";
+import { Country } from "../redux/features/location/types";
 
 export const formatMoney = (amount: number): string => {
   if (typeof amount !== "number" || isNaN(amount)) {
