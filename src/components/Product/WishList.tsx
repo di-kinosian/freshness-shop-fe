@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/app/store";
 import { useAppSelector } from "../../main/hooks";
-import { getWishList } from "../../redux/features/products/productsSlice";
 import { useEffect } from "react";
 import { Button } from "../Button/Button";
 import { ButtonVariant } from "../../main/types/enums";
 import { deleteFromWishList } from "../../redux/features/auth/authSlise";
+import { getWishList } from "../../redux/features/products/productThunks";
 import { WishListItem } from "./WishListItem";
 
 interface Props {

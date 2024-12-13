@@ -12,7 +12,6 @@ export const CategoryItem = ({ category, handleClick }: Props) => {
         handleClick(event, category._id)
       }
       className="flex gap-1 items-center cursor-pointer"
-      key={category._id}
     >
       <div className="text-black font-medium">{category.name}</div>
       <img src="/vector.svg" alt="Vector icon bottom" className="w-2.5 h-2.5" />

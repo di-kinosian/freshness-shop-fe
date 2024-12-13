@@ -10,9 +10,11 @@ import { useAppSelector } from "../../main/hooks";
 import {
   setSelectedFilters,
   fetchFilters,
-  removeSelectedFilters,
+  resetFilters,
+  clearSearchValue,
 } from "../../redux/features/filters/filtersSlice";
 import { FiltersCategories } from "../../redux/features/filters/types";
+import { getAllProducts } from "../../redux/features/products/productThunks";
 
 export const AsideFilter = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -27,39 +29,45 @@ export const AsideFilter = () => {
   const handleFilterChange = useCallback(
     (key: FilterKey) =>
       (value: SelectedFilters[FilterKey]): void => {
+        if (key === "category") {
+          dispatch(clearSearchValue());
+        }
         dispatch(setSelectedFilters({ [key]: value }));
+        dispatch(getAllProducts());
       },
     [dispatch],
   );
 
   const handleReset = (): void => {
-    dispatch(removeSelectedFilters());
+    dispatch(resetFilters());
   };
 
   return (
-    <div className="flex flex-col gap-8">
-      <CategoryFilter
-        onChange={handleFilterChange("category")}
-        value={selectedFilters.category || ""}
-        categories={availableFilters?.categories as FiltersCategories[]}
-      />
-      <BrandFilter
-        brands={availableFilters?.brands}
-        onChange={handleFilterChange("brands")}
-        value={selectedFilters.brands || []}
-      />
-      <RatingFilter
-        onChange={handleFilterChange("rating")}
-        value={selectedFilters.rating || []}
-      />
-      <PriceFilter
-        onChange={handleFilterChange("price")}
-        value={selectedFilters.price}
-        availableRange={availableFilters?.price}
-      />
-      <button onClick={handleReset} className="text-grayText font-bold">
-        Reset
-      </button>
+    <div className="hidden custom:hidden md:hidden lg:block">
+      <div className="flex flex-col gap-8">
+        <CategoryFilter
+          onChange={handleFilterChange("category")}
+          value={selectedFilters.category || ""}
+          categories={availableFilters?.categories as FiltersCategories[]}
+        />
+        <BrandFilter
+          brands={availableFilters?.brands}
+          onChange={handleFilterChange("brands")}
+          value={selectedFilters.brands || []}
+        />
+        <RatingFilter
+          onChange={handleFilterChange("rating")}
+          value={selectedFilters.rating || []}
+        />
+        <PriceFilter
+          onChange={handleFilterChange("price")}
+          value={selectedFilters.price}
+          availableRange={availableFilters?.price}
+        />
+        <button onClick={handleReset} className="text-grayText font-bold">
+          Reset
+        </button>
+      </div>
     </div>
   );
 };

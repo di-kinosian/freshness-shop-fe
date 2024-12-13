@@ -3,10 +3,8 @@ import { AppDispatch } from "../../redux/app/store";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../main/hooks";
 import {
-  getAllProducts,
   setPage,
   setSortValue,
-  showMoreProducts,
 } from "../../redux/features/products/productsSlice";
 import { ProductItem } from "../../components/Product/ProductItem";
 import { AsideFilter } from "../../components/Filters/AsideFilter";
@@ -17,34 +15,22 @@ import { sortOptions } from "../../main/constants/filter.sort.data";
 import { PaginationController } from "../../components/Pagination/Pagination";
 import { Button } from "../../components/Button/Button";
 import { Bage } from "../../components/Bage/Bage";
+import {
+  getAllProducts,
+  showMoreProducts,
+} from "../../redux/features/products/productThunks";
 import { selectWishList } from "../../redux/features/auth/selectors";
 
 export const Products = () => {
   const dispatch: AppDispatch = useDispatch();
-  const selectedFilters = useAppSelector(
-    (state) => state.filters.selectedFilters,
-  );
   const wishList = useAppSelector(selectWishList);
   const { products, total, limit, page, showMorePage, sortValue } =
     useAppSelector((state) => state.product);
   const totalPages = Math.ceil(total / limit);
 
   useEffect(() => {
-    const [sortField, sortDirection] = sortValue.split("_");
-    dispatch(
-      getAllProducts({
-        page: page,
-        limit,
-        categoryId: selectedFilters.category,
-        brands: selectedFilters.brands,
-        priceMax: selectedFilters.price.max,
-        priceMin: selectedFilters.price.min,
-        rating: selectedFilters.rating || 5,
-        sortField,
-        sortDirection,
-      }),
-    );
-  }, [selectedFilters, sortValue, page]);
+    dispatch(getAllProducts());
+  }, [sortValue, page]);
 
   const handlePageChange = (newPage: number): void => {
     dispatch(setPage(newPage));
@@ -60,15 +46,15 @@ export const Products = () => {
     <div className="flex flex-col gap-12">
       <div className="flex flex-col gap-6">
         <AllProductsHeader />
-        <div className="w-[250px]">
+        <div className="w-[270px]">
           <ControlContainer
             leftElement={
-              <span className="bg-neutralGrayBg w-[50px] text-sm">Sort by</span>
+              <span className="bg-neutralGrayBg text-sm w-[50px]">Sort by</span>
             }
             rightElement={
-              <div className="flex gap-2 items-center">
+              <div className="px-4">
                 <Select
-                  width={150}
+                  width={170}
                   options={sortOptions}
                   onChange={(value: string) => dispatch(setSortValue(value))}
                   value={sortValue}
@@ -78,7 +64,7 @@ export const Products = () => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-[270px,2fr] gap-8 max-w-[1200px] mx-auto w-full">
+      <div className="grid xl:grid-cols-[270px,1fr] lg:grid-cols-[250px,1fr] custom:grid-cols-1 md:grid-cols-1 gap-8 max-w-[1200px] mx-auto w-full">
         <AsideFilter />
         <div className="flex flex-col gap-[34px] items-end">
           {products?.map((product) => (

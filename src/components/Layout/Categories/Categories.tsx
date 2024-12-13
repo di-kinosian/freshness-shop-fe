@@ -36,7 +36,7 @@ export const Categories = () => {
     <>
       <div className="h-14 flex justify-around items-center bg-neutralGrayBg w-full max-w-[1200px] mx-auto">
         {categories?.map((category) => (
-          <CategoryItem category={category} handleClick={handleClick} />
+          <CategoryItem category={category} handleClick={handleClick} key={category._id}/>
         ))}
       </div>
       <Popover onClose={handleClose} anchorEl={anchorEl} left={-24}>

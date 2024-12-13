@@ -13,6 +13,7 @@ import ChecklistIcon from "@mui/icons-material/Checklist";
 import PersonIcon from "@mui/icons-material/Person";
 import { Logout } from "../../Auth/Logout";
 import { WishList } from "../../Product/WishList";
+import { Search } from "../../Search/Search";
 import { selectAccessToken } from "../../../redux/features/auth/selectors";
 
 export const MainHeader = () => {
@@ -93,9 +94,9 @@ export const MainHeader = () => {
             src="/freshnesecom.svg"
             alt="Logo freshnesecom"
             onClick={goToMainPage}
-            className="cursor-pointer"
+            className="cursor-pointer hidden md:block"
           />
-          <div>Search component</div>
+          <Search />
           <div className="flex gap-10">
             <UserIcon
               isLogin={isLogin}

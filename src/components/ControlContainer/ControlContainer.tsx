@@ -23,7 +23,7 @@ export const ControlContainer = ({
       controlContainerSizeClass(size as ControlSize),
     )}
   >
-    <div className="flex gap-2">
+    <div className="flex gap-2 items-center">
       {leftElement}
       <div className="border border-basicGray h-[20px]"></div>
     </div>

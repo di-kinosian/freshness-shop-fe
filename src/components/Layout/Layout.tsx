@@ -13,15 +13,15 @@ export const Layout: React.FC<IProps> = ({ children }) => {
   useAuth();
 
   return (
-    <div className="mx-auto flex flex-col min-h-screen">
+    <div className="mx-auto flex flex-col min-h-screen sm:px-4 lg:px-0">
       <div className="h-12 border-b border-gray-200">
         <div className="flex items-center justify-between max-w-[1200px] mx-auto h-full">
           <div className="flex gap-5">
             <div className="text-neutralGreenBg cursor-pointer">
               Chat with us
             </div>
-            <div>+380932016730</div>
-            <div>info@freshness.com</div>
+            <div className="hidden md:block">+380932016730</div>
+            <div className="hidden md:block">info@freshness.com</div>
           </div>
           <div className="flex gap-5">
             <div className="text-neutralGreenBg cursor-pointer">Blog</div>
