@@ -1,4 +1,5 @@
 import { Category } from "../redux/features/categories/types";
+import { Country } from "../redux/features/countries/types";
 
 export const formatMoney = (amount: number): string => {
   if (typeof amount !== "number" || isNaN(amount)) {
@@ -36,5 +37,23 @@ export const transformCategoriesToOptions = (
   return categories.map((category) => ({
     value: category._id,
     label: category.name,
+  }));
+};
+
+export const transformCountriesToOptions = (
+  countries: Country[],
+): { value: string; label: string }[] => {
+  return countries.map((country) => ({
+    value: country.name.toLowerCase(),
+    label: country.name,
+  }));
+};
+
+export const transformCitiesToOptions = (
+  cities: string[],
+): { value: string; label: string }[] => {
+  return cities.map((city) => ({
+    value: city.toLowerCase(),
+    label: city,
   }));
 };

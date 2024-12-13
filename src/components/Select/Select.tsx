@@ -5,7 +5,7 @@ import {
   Select as SelectMUI,
 } from "@mui/material";
 import { useState } from "react";
-import { Options } from "./types";
+import { Options } from "../../main/types/interfaces";
 
 interface Props {
   width?: number;
