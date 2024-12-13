@@ -5,10 +5,11 @@ import { useAppSelector } from "../../../redux/app/hooks";
 import { getAllCategories } from "../../../redux/features/categories/categoriesSlice";
 import { Popover } from "../../Popover/Popover";
 import { CategoryItem } from "./CategoryItem";
+import { selectCategories } from "../../../redux/features/categories/selectors";
 
 export const Categories = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { categories } = useAppSelector((state) => state.categories);
+  const categories = useAppSelector(selectCategories);
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -36,7 +37,11 @@ export const Categories = () => {
     <>
       <div className="h-14 flex justify-around items-center bg-neutralGrayBg w-full max-w-[1200px] mx-auto">
         {categories?.map((category) => (
-          <CategoryItem category={category} handleClick={handleClick} key={category._id}/>
+          <CategoryItem
+            category={category}
+            handleClick={handleClick}
+            key={category._id}
+          />
         ))}
       </div>
       <Popover onClose={handleClose} anchorEl={anchorEl} left={-24}>

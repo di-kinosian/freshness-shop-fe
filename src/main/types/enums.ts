@@ -20,3 +20,10 @@ export enum ToastVariant {
   SUCCESS = "success",
   ERROR = "error",
 }
+
+export enum Filters {
+  Category = "category",
+  Brands = "brands",
+  Rating = "rating",
+  Price = "price",
+}

@@ -12,13 +12,14 @@ import {
 import { formatMoney } from "../../main/helpers";
 import { sliderBreakpoints } from "../../main/constants/media.queries.constants";
 import { fetchRelatedProducts } from "../../redux/features/products/productThunks";
+import { selectRelatedProducts } from "../../redux/features/products/selectors";
 
 export const RelatedProducts = () => {
   const navigate = useNavigate();
   const [ref] = useKeenSlider<HTMLDivElement>({
     breakpoints: sliderBreakpoints,
   });
-  const { relatedProducts } = useAppSelector((state) => state.product);
+  const relatedProducts = useAppSelector(selectRelatedProducts);
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {

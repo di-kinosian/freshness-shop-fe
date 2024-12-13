@@ -12,10 +12,11 @@ import {
   setSearchValue,
 } from "../../redux/features/filters/filtersSlice";
 import { searchProducts } from "../../redux/features/products/productThunks";
+import { selectCategories } from "../../redux/features/categories/selectors";
 
 export const Search = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { categories } = useAppSelector((state) => state.categories);
+  const categories = useAppSelector(selectCategories);
   const { searchValue, searchCategory } = useAppSelector(
     (state) => state.filters,
   );

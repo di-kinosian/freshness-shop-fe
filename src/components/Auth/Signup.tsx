@@ -14,6 +14,7 @@ import {
 } from "../../redux/features/auth/authSlise";
 import { useToast } from "../Toast/ToastContext";
 import { MESSAGES } from "../../main/constants/messages";
+import { selectSignupError } from "../../redux/features/auth/selectors";
 
 interface Props {
   onClose: () => void;
@@ -32,7 +33,7 @@ export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
 
   const { openSuccessToast, openErrorToast } = useToast();
   const dispatch: AppDispatch = useDispatch();
-  const { signupError } = useAppSelector((state) => state.auth);
+  const signupError = useAppSelector(selectSignupError);
 
   useEffect(() => {
     dispatch(clearSignupError());

@@ -17,7 +17,7 @@ const initialFilters = {
 
 const initialState: FiltersState = {
   availableFilters: null,
-  selectedFilters: initialFilters,
+  selectedFilters: initialFilters || [],
   filtersError: null,
   searchValue: null,
   searchCategory: null,
