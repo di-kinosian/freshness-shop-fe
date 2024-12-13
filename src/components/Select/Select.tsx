@@ -10,16 +10,17 @@ import { Options } from "./types";
 interface Props {
   width?: number;
   options: Options[];
-  getParams?: (value: string) => void;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
-export const Select = ({ width, options, getParams }: Props) => {
-  const [selectValue, setSelectValue] = useState<string>("");
+export const Select = ({ width, options, onChange: onChange, value }: Props) => {
+  const [selectValue, setSelectValue] = useState<string>(value || '');
 
   const handleChange = (event: SelectChangeEvent): void => {
     const value = event.target.value as string;
     setSelectValue(value);
-    getParams?.(value);
+    onChange?.(value);
   };
 
   return (

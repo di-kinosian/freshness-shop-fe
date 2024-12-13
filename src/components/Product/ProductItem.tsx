@@ -4,14 +4,15 @@ import { Button } from "../Button/Button";
 import { getProductDetailsRoute } from "../../main/constants/routes.constants";
 import { Product } from "../../redux/features/products/types";
 import { ProductRating } from "./ProductRating";
-import { formatMoney } from "../../main/helpers";
+import { calculateOriginalPrice, formatMoney } from "../../main/helpers";
 import { AppDispatch } from "../../redux/app/store";
 import { useDispatch } from "react-redux";
 import {
   addToWishList,
   deleteFromWishList,
 } from "../../redux/features/auth/authSlise";
-import WishListIcon from "../Icons/WishListIcon";
+import WishListIcon from "./WishListIcon";
+import { twMerge } from "tailwind-merge";
 
 interface Props {
   product: Product;
@@ -40,7 +41,7 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
       <img
         src="https://cdn.pixabay.com/photo/2017/06/14/17/41/galaxy-s8-2402805_1280.jpg"
         alt="Product image"
-        className="rounded-lg h-[220px]"
+        className="rounded-lg h-full"
       />
       <div className="flex flex-col justify-between py-6">
         <div className="flex flex-col items-start gap-2">
@@ -70,8 +71,22 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
           ))}
         </div>
       </div>
-      <div className="py-6 flex flex-col justify-between items-start pr-6">
-        <div className="text-lg font-bold">{formatMoney(product.price)}</div>
+      <div className="py-6 flex flex-col justify-between items-start pr-6 gap-3">
+        <div>
+          <div className="text-lg font-bold">{formatMoney(product.price)}</div>
+          <div
+            className={twMerge(
+              "text-sm font-semibold text-grayText",
+              product.discount ? "line-through" : "none",
+            )}
+          >
+            {product.discount &&
+              calculateOriginalPrice(product.price, product.discount)}
+          </div>
+        </div>
+        <div className="text-sm text-grayText">
+          Delivery in 1 day
+        </div>
         <div className="flex flex-col gap-2">
           <Button
             color={ButtonVariant.PRIMARY}

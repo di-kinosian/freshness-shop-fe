@@ -25,7 +25,7 @@ export const ControlContainer = ({
   >
     <div className="flex gap-2">
       {leftElement}
-      <img src="/separator.svg" alt="Separator for controller" />
+      <div className="border border-basicGray h-[20px]"></div>
     </div>
     {rightElement}
   </div>
