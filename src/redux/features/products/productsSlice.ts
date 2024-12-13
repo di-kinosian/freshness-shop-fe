@@ -114,7 +114,7 @@ export const showMoreProducts = createAsyncThunk<
   const categoryId = state.filters.selectedFilters.category;
   const [sortField, sortDirection] = state.product.sortValue.split("_");
   try {
-    const { data } = await axios.get(`${url}/products`, {
+    const { data } = await api.get(`/products`, {
       params: {
         page,
         limit,
