@@ -25,10 +25,10 @@ const getProductsParams = (state: RootState) => {
     sortDirection,
     categoryId,
     searchValue,
-    ...(brands?.length && { brands }),
-    ...(priceMin !== undefined && { priceMin }),
-    ...(priceMax !== undefined && { priceMax }),
-    ...(rating?.length && { rating }),
+    brands,
+    priceMin,
+    priceMax,
+    rating,
   };
 };
 
