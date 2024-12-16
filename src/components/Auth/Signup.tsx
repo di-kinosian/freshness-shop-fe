@@ -42,7 +42,7 @@ export const Signup: React.FC<Props> = ({ onClose, onOpenLogin }) => {
   const onSubmit = async () => {
     const formData = getValues();
 
-    dispatch(signupUser({ ...formData, wishList: [] }))
+    dispatch(signupUser(formData))
       .unwrap()
       .then(() => {
         openSuccessToast(MESSAGES.SIGNUP.SUCCESS);
