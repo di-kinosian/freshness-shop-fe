@@ -25,7 +25,7 @@ export interface SignupCredentials {
   email: string;
   password: string;
   phoneNumber: string;
-  wishList: string[];
+  wishList?: string[];
 }
 
 export interface IUserLogin {
