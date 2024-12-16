@@ -4,12 +4,9 @@ import { PALETTE } from "../../main/constants/palette";
 
 export const Checkbox: React.FC<CheckboxProps> = (props) => {
   const classes = useStyles();
+
   return (
-    <CheckboxMUI
-      color="primary"
-      classes={{ root: classes.root }}
-      {...props}
-    />
+    <CheckboxMUI color="primary" classes={{ root: classes.root }} {...props} />
   );
 };
 

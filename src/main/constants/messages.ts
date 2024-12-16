@@ -12,6 +12,7 @@ export const MESSAGES = {
     PASSWORD_LOWERCASE: "Password must contain at least 2 lowercase letters",
     PASSWORD_UPPERCASE: "Password must contain at least 2 uppercase letters",
     PASSWORD_DIGITS: "Password must contain at least 2 digits",
+    AGREEMENT_REQUIRED: "You must agree to the policy.",
     PASSWORD_SPECIAL_CHARACTERS:
       "Password must contain at least 2 special characters",
     PHONE_NUMBER_REQUIRED: "Phone number is required",

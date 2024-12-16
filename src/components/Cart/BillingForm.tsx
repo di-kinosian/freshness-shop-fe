@@ -1,13 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { billingValidationShema } from "./validation";
 import FormField from "@components/FormComponents/FormField";
 import { Button } from "@components/Button/Button";
 import { ButtonVariant } from "../../main/types/enums";
-import { Autocomplete } from "@components/FormComponents/Autocomplete";
-import { FormControl } from "@mui/material";
-import { twMerge } from "tailwind-merge";
-import Label from "@components/FormComponents/Label";
+
 import { useEffect, useMemo } from "react";
 import { AppDispatch } from "../../redux/app/store";
 import { useDispatch } from "react-redux";
@@ -24,6 +21,10 @@ import {
   selectCities,
   selectCountries,
 } from "../../redux/features/location/selectors";
+import { NotesField } from "./NotesField";
+import { BillingFormData } from "./types";
+import { LocationFields } from "./LocationFields";
+import { PolicyField } from "./PolicyField";
 
 export const BillingForm = () => {
   const {
@@ -33,8 +34,13 @@ export const BillingForm = () => {
     control,
     watch,
     setValue,
-  } = useForm({
+    getValues,
+  } = useForm<BillingFormData>({
     resolver: yupResolver(billingValidationShema),
+    defaultValues: {
+      agreeToPolicy: false,
+      agreeToEmails: false,
+    },
   });
 
   const country = watch("country");
@@ -54,7 +60,9 @@ export const BillingForm = () => {
     }
   }, [country]);
 
-  const onSubmit = async () => {};
+  const onSubmit = async () => {
+    const data = getValues();
+  };
 
   const countriesOptions = useMemo(
     () => transformCountriesToOptions(countries),
@@ -69,7 +77,7 @@ export const BillingForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-7 max-w-[500px]"
+      className="flex flex-col gap-16 max-w-[500px]"
     >
       <div className="flex flex-col gap-4">
         <FormField
@@ -102,54 +110,22 @@ export const BillingForm = () => {
           {...register("address")}
           error={errors.address && errors.address.message}
         />
-        <Controller
-          control={control}
+        <LocationFields
           name="country"
-          render={({ field }) => {
-            return (
-              <FormControl
-                variant="standard"
-                className={twMerge("items-start")}
-              >
-                <Label>{"State / Country"}</Label>
-                <Autocomplete
-                  options={countriesOptions}
-                  value={field.value}
-                  onChange={field.onChange}
-                  inputRef={field.ref}
-                  placeholder="country"
-                />
-                {errors.country && (
-                  <span className="text-red-500">{errors.country.message}</span>
-                )}
-              </FormControl>
-            );
-          }}
-        />
-        <Controller
           control={control}
+          locationOptions={countriesOptions}
+          error={errors.country ? errors.country.message : ""}
+          label="State / Country"
+          placeholder="country"
+        />
+        <LocationFields
           name="city"
-          render={({ field }) => {
-            return (
-              <FormControl
-                variant="standard"
-                className={twMerge("items-start")}
-              >
-                <Label>{"Town / City"}</Label>
-                <Autocomplete
-                  options={citiesOptions}
-                  value={field.value}
-                  onChange={field.onChange}
-                  inputRef={field.ref}
-                  placeholder={country ? "city" : "select country"}
-                  disabled={!country}
-                />
-                {errors.city && (
-                  <span className="text-red-500">{errors.city.message}</span>
-                )}
-              </FormControl>
-            );
-          }}
+          control={control}
+          locationOptions={citiesOptions}
+          error={errors.city ? errors.city.message : ""}
+          label="Town / City"
+          placeholder={country ? "city" : "select country"}
+          disabled={!country}
         />
         <FormField
           label="Zip / Postal Code"
@@ -158,9 +134,35 @@ export const BillingForm = () => {
           error={errors.zipCode && errors.zipCode.message}
         />
       </div>
+      <NotesField control={control} errors={errors} />
+      <div className="flex flex-col gap-6">
+        <div>
+          <h2 className="text-2xl font-semibold">Confirmation</h2>
+          <span className="text-sm text-grayText">
+            We are getting to the end. Just few clicks and your order is ready!
+          </span>
+        </div>
+        <div className="flex flex-col gap-2">
+          <PolicyField
+            control={control}
+            name="agreeToEmails"
+            checkboxMessage="I agree with sending an Marketing and newsletter emails. No spam, promissed!"
+          />
+          <PolicyField
+            control={control}
+            name="agreeToPolicy"
+            error={errors.agreeToPolicy?.message || ""}
+            checkboxMessage=" I agree with our terms and conditions and privacy policy."
+          />
+        </div>
+      </div>
       <div className="flex flex-col gap-2">
-        <Button type="submit" color={ButtonVariant.SECONDARY}>
-          Submit
+        <Button
+          type="submit"
+          color={ButtonVariant.PRIMARY}
+          className="w-[200px]"
+        >
+          Complete order
         </Button>
       </div>
     </form>

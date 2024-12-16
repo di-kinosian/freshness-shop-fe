@@ -29,4 +29,9 @@ export const billingValidationShema = yup.object().shape({
     .string()
     .required(MESSAGES.VALIDATION.ZIP_POSTAL_CODE_REQUIRED)
     .matches(REGEX.ZIP_POSTAL_CODE, MESSAGES.VALIDATION.ZIP_POSTAL_CODE_FORMAT),
+  notes: yup.string().optional(),
+  agreeToPolicy: yup
+  .boolean()
+  .oneOf([true], MESSAGES.VALIDATION.AGREEMENT_REQUIRED),
+  agreeToEmails: yup.boolean().optional(),
 });
