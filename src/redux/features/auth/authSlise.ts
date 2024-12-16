@@ -54,7 +54,7 @@ export const signupUser = createAsyncThunk<
   { rejectValue: string }
 >("auth/signupUser", async (payload, thunkAPI) => {
   try {
-    await api.post("/users/signup", payload);
+    await api.post("/users/signup", { ...payload });
   } catch (error) {
     const axiosError = error as AxiosError;
 

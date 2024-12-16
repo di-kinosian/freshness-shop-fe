@@ -22,7 +22,7 @@ export const WishList = ({ onClose }: Props) => {
     dispatch(getWishList());
   }, [dispatch]);
 
-  if (isWishListLoading) {
+  if (isWishListLoading && !wishList.length) {
     return "Loading...";
   }
 
@@ -50,7 +50,7 @@ export const WishList = ({ onClose }: Props) => {
       <div className="flex gap-3 w-full justify-center">
         <Button>Buy now</Button>
         <Button color={ButtonVariant.SECONDARY} onClick={onClose}>
-          Cansel
+          Cancel
         </Button>
       </div>
     </div>

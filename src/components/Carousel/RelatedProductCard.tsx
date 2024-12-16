@@ -29,7 +29,7 @@ export const RelatedProductCard = ({
     />
     <div className="flex flex-col gap-2.5">
       <span className="font-semibold text-base">{title}</span>
-      <span className="text-sm text-gray-500">{description}</span>
+      <span className="text-sm text-gray-500">{description ? description.slice(0,60) : ''}</span>
     </div>
     <div className="flex justify-between items-center">
       <span className="font-bold text-xl">{price}</span>

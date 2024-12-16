@@ -11,7 +11,6 @@ interface IProps {
 
 export const Layout: React.FC<IProps> = ({ children }) => {
   useAuth();
-
   return (
     <div className="mx-auto flex flex-col min-h-screen sm:px-4 lg:px-0">
       <div className="h-12 border-b border-gray-200">

@@ -43,7 +43,7 @@ export const RelatedProducts = () => {
         >
           <span className="font-semibold">More products</span>
           <img
-            src="/vector.svg"
+            src="/freshness-shop-fe/vector.svg"
             alt="Vector right"
             className="w-2.5 h-2.5 rotate-[270deg]"
           />
@@ -54,7 +54,7 @@ export const RelatedProducts = () => {
           {relatedProducts.map((product) => (
             <RelatedProductCard
               key={product._id}
-              imageURL="https://a.allegroimg.com/s180/11742c/2598a0204fea9692397b52f0e75c/GROVIJ-KOMP-YuTER-I7-64GB-DDR4-RAM-512SSD-WIN10"
+              imageURL={product.images[0]}
               title={product.title}
               description={product.description}
               price={formatMoney(product.price)}

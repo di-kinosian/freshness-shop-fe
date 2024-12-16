@@ -14,7 +14,7 @@ export const CategoryItem = ({ category, handleClick }: Props) => {
       className="flex gap-1 items-center cursor-pointer"
     >
       <div className="text-black font-medium">{category.name}</div>
-      <img src="/vector.svg" alt="Vector icon bottom" className="w-2.5 h-2.5" />
+      <img src="/freshness-shop-fe/vector.svg" alt="Vector icon bottom" className="w-2.5 h-2.5" />
     </button>
   );
 };

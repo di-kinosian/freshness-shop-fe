@@ -12,6 +12,7 @@ import {
   fetchFilters,
   resetFilters,
   clearSearchValue,
+  setSearchValue,
 } from "../../redux/features/filters/filtersSlice";
 import { FiltersCategories } from "../../redux/features/filters/types";
 import { getAllProducts } from "../../redux/features/products/productThunks";
@@ -40,6 +41,8 @@ export const AsideFilter = () => {
 
   const handleReset = (): void => {
     dispatch(resetFilters());
+    dispatch(setSearchValue(null));
+    dispatch(getAllProducts());
   };
 
   return (

@@ -29,7 +29,6 @@ export const DialogProvider: React.FC<{ children: ReactNode }> = ({
 
   const closeDialog = (): void => {
     setIsOpen(false);
-    setDialogData(null);
   };
 
   return (
