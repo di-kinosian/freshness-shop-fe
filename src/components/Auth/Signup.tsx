@@ -5,16 +5,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signupValidationSchema } from "./validation";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../redux/app/store";
-import { useAppSelector } from "../../redux/app/hooks";
+import { AppDispatch } from "@redux/app/store";
+import { useAppSelector } from "@redux/app/hooks";
 import { useEffect } from "react";
-import {
-  clearSignupError,
-  signupUser,
-} from "../../redux/features/auth/authSlise";
+import { clearSignupError, signupUser } from "@redux/features/auth/authSlise";
 import { useToast } from "../Toast/ToastContext";
 import { MESSAGES } from "../../main/constants/messages";
-import { selectSignupError } from "../../redux/features/auth/selectors";
+import { selectSignupError } from "@redux/features/auth/selectors";
 
 interface Props {
   onClose: () => void;

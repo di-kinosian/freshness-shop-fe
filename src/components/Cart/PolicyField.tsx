@@ -6,16 +6,11 @@ import { BillingFormData } from "./types";
 interface Props {
   control: Control<BillingFormData>;
   name: keyof BillingFormData;
-  checkboxMessage: string;
+  text: string;
   error?: string;
 }
 
-export const PolicyField = ({
-  control,
-  name,
-  checkboxMessage,
-  error,
-}: Props) => {
+export const CheckboxField = ({ control, name, text, error }: Props) => {
   return (
     <Controller
       control={control}
@@ -29,7 +24,7 @@ export const PolicyField = ({
                 checked={!!field.value}
                 value={field.value}
               />
-              <span>{checkboxMessage}</span>
+              <span>{text}</span>
             </div>
             {error && (
               <FormHelperText className="text-red-600">

@@ -23,8 +23,9 @@ import {
 } from "../../redux/features/location/selectors";
 import { NotesField } from "./NotesField";
 import { BillingFormData } from "./types";
-import { LocationFields } from "./LocationFields";
-import { PolicyField } from "./PolicyField";
+import { LocationField } from "./LocationFields";
+import { CheckboxField } from "./PolicyField";
+import { MESSAGES } from "../../main/constants/messages";
 
 export const BillingForm = () => {
   const {
@@ -34,7 +35,6 @@ export const BillingForm = () => {
     control,
     watch,
     setValue,
-    getValues,
   } = useForm<BillingFormData>({
     resolver: yupResolver(billingValidationShema),
     defaultValues: {
@@ -60,9 +60,7 @@ export const BillingForm = () => {
     }
   }, [country]);
 
-  const onSubmit = async () => {
-    const data = getValues();
-  };
+  const onSubmit = async () => {};
 
   const countriesOptions = useMemo(
     () => transformCountriesToOptions(countries),
@@ -110,7 +108,7 @@ export const BillingForm = () => {
           {...register("address")}
           error={errors.address && errors.address.message}
         />
-        <LocationFields
+        <LocationField
           name="country"
           control={control}
           locationOptions={countriesOptions}
@@ -118,7 +116,7 @@ export const BillingForm = () => {
           label="State / Country"
           placeholder="country"
         />
-        <LocationFields
+        <LocationField
           name="city"
           control={control}
           locationOptions={citiesOptions}
@@ -143,16 +141,16 @@ export const BillingForm = () => {
           </span>
         </div>
         <div className="flex flex-col gap-2">
-          <PolicyField
+          <CheckboxField
             control={control}
             name="agreeToEmails"
-            checkboxMessage="I agree with sending an Marketing and newsletter emails. No spam, promissed!"
+            text={MESSAGES.CHECKBOX.MARKETING_AGREEMENT}
           />
-          <PolicyField
+          <CheckboxField
             control={control}
             name="agreeToPolicy"
             error={errors.agreeToPolicy?.message || ""}
-            checkboxMessage=" I agree with our terms and conditions and privacy policy."
+            text={MESSAGES.CHECKBOX.TERMS_AND_CONDITIONS}
           />
         </div>
       </div>
