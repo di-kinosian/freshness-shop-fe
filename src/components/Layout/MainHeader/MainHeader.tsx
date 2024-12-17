@@ -5,7 +5,7 @@ import { useDialog } from "../../Dialog/context/DialogContext";
 import { twMerge } from "tailwind-merge";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../main/constants/routes.constants";
-import { useAppSelector } from "../../../main/hooks";
+import { useAppSelector } from "../../../redux/app/hooks";
 import UserIcon from "../../Icons/UserIcon";
 import { Popover } from "../../Popover/Popover";
 import LogoutIcon from "@mui/icons-material/Logout";

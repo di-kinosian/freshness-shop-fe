@@ -5,7 +5,7 @@ import { Button } from "../../components/Button/Button";
 import { clearProduct } from "../../redux/features/products/productsSlice";
 import { AppDispatch } from "../../redux/app/store";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../main/hooks";
+import { useAppSelector } from "../../redux/app/hooks";
 import { RelatedProducts } from "../../components/Carousel/RelatedProducts";
 import { ImageGallery } from "../../components/ImageGallery/ImageGallery";
 import { noProductImg } from "../../main/constants/images.constants";

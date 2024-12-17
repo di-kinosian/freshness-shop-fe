@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../main/hooks";
+import { useAppSelector } from "../../redux/app/hooks";
 import { Bage } from "../Bage/Bage";
 
 export const AllProductsHeader = () => {

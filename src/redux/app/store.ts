@@ -5,7 +5,6 @@ import filtersReducer from "../features/filters/filtersSlice";
 import categoriesReducer from "../features/categories/categoriesSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { setStore } from "../../config/axios";
 
 const persistConfig = {
   key: "auth",
@@ -39,7 +38,6 @@ const store = configureStore({
 
 const persistor = persistStore(store);
 
-setStore(store)
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

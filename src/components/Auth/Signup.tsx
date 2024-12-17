@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { signupValidationSchema } from "./validation";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/app/store";
-import { useAppSelector } from "../../main/hooks";
+import { useAppSelector } from "../../redux/app/hooks";
 import { useEffect } from "react";
 import {
   clearSignupError,

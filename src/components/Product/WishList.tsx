@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/app/store";
-import { useAppSelector } from "../../main/hooks";
+import { useAppSelector } from "../../redux/app/hooks";
 import { useEffect } from "react";
 import { Button } from "../Button/Button";
 import { ButtonVariant } from "../../main/types/enums";

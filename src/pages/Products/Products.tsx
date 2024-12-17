@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { AppDispatch } from "../../redux/app/store";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../main/hooks";
+import { useAppSelector } from "../../redux/app/hooks";
 import {
   setPage,
   setSortValue,
