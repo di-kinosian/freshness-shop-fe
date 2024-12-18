@@ -11,8 +11,11 @@ import {
   addToWishList,
   deleteFromWishList,
 } from "../../redux/features/auth/authSlise";
-import WishListIcon from "./WishListIcon";
 import { twMerge } from "tailwind-merge";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Tooltip } from "@mui/material";
+import { addToCart } from "../../redux/features/cart/cartSlice";
 
 interface Props {
   product: Product;
@@ -32,20 +35,30 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
     }
   };
 
+  const addProductToCart = (): void => {
+    dispatch(addToCart({ productId: product._id, quantity: 1 }));
+  };
+
   const goToPDP = (productId: string): void => {
     navigate(getProductDetailsRoute(productId));
   };
 
   return (
     <div className="border border-basicGray rounded-lg grid grid-cols-[1fr,1fr,1fr] customSm:grid-cols-[240px,2fr,1fr] gap-[26px]">
-      <div className="w-full flex items-center justify-center">
+      <div
+        className="w-full flex items-center justify-center"
+        onClick={() => goToPDP(product._id)}
+      >
         <img
           src={product.images[0]}
           alt="Product image"
           className="rounded-lg max-h-[250px]"
         />
       </div>
-      <div className="flex flex-col justify-between py-6">
+      <div
+        className="flex flex-col justify-between py-6"
+        onClick={() => goToPDP(product._id)}
+      >
         <div className="flex flex-col items-start gap-2">
           <div>
             <h3 className="text-lg font-semibold">{product.title}</h3>
@@ -65,7 +78,7 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
             <span className="text-grayText">Brand</span>
             <span className="text-gray-600">{product?.brand}</span>
           </div>
-          {product?.additionalInformation?.slice(2,3).map((item) => (
+          {product?.additionalInformation?.slice(2, 3).map((item) => (
             <div className="grid grid-cols-[1fr,2fr] gap-8" key={item.key}>
               <div className="text-grayText">{item.key}</div>
               <div className="text-gray-600">{item.value}</div>
@@ -74,40 +87,48 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
         </div>
       </div>
       <div className="py-6 flex flex-col justify-between items-start pr-6 gap-3">
-        <div>
-          <div className="text-lg font-bold">{formatMoney(product.price)}</div>
-          <div
-            className={twMerge(
-              "text-sm font-semibold text-grayText",
-              product.discount ? "line-through" : "none",
-            )}
-          >
-            {product.discount ?
-              calculateOriginalPrice(product.price, product.discount) : ''}
+        <div className="w-full flex flex-col gap-3">
+          <div className="w-full">
+            <div className="flex justify-between items-center w-full">
+              <div className="text-lg font-bold">
+                {formatMoney(product.price)}
+              </div>
+              {isInWishList ? (
+                <Tooltip title="Delete from wish list">
+                  <FavoriteIcon fontSize="medium" onClick={updateWishList} />
+                </Tooltip>
+              ) : (
+                <Tooltip title="Add to wish list">
+                  <FavoriteBorderIcon
+                    fontSize="medium"
+                    onClick={updateWishList}
+                  />
+                </Tooltip>
+              )}
+            </div>
+
+            <div
+              className={twMerge(
+                "text-sm font-semibold text-grayText",
+                product.discount ? "line-through" : "none",
+              )}
+            >
+              {product.discount
+                ? calculateOriginalPrice(product.price, product.discount)
+                : ""}
+            </div>
           </div>
+          <div className="text-sm text-grayText">Delivery in 1 day</div>
         </div>
-        <div className="text-sm text-grayText">Delivery in 1 day</div>
         <div className="flex flex-col gap-2">
           <Button
             color={ButtonVariant.PRIMARY}
             size={ButtonSize.MEDIUM}
             className="w-[164px] flex gap-2"
-            onClick={() => goToPDP(product._id)}
+            onClick={addProductToCart}
           >
-            <span>Product Detail</span>
-            <img
-              src="/freshness-shop-fe/vector-button.svg"
-              alt="Vector right for button"
-            />
-          </Button>
-          <Button
-            color={ButtonVariant.SECONDARY}
-            size={ButtonSize.SMALL}
-            className="flex gap-1"
-            onClick={updateWishList}
-          >
-            <WishListIcon isInWishList={isInWishList as boolean} />
-            <span>{isInWishList ? "Product added" : "Add to wish list"}</span>
+            <span>Add to cart</span>
+            <span>+</span>
           </Button>
         </div>
       </div>

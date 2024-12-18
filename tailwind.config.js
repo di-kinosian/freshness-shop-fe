@@ -9,6 +9,8 @@ module.exports = {
         sans: ["Open Sans", "Poppins"],
       },
       colors: {
+        bage: "rgba(229, 112, 75, 1)",
+        separator: "rgba(229, 231, 235)",
         neutralGreenBg: "rgba(106, 152, 60, 1)",
         lightGreen: "rgba(244, 248, 236, 1)",
         neutralGrayBg: "rgba(249, 249, 249, 1)",

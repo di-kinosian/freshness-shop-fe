@@ -5,6 +5,7 @@ import { Breadcrumbs } from "./Breadcrumbs/Breadcrumbs";
 import { Footer } from "./Footer/Footer";
 import { useProfile } from "../Auth/hooks/useAuth";
 import { useAxios } from "../Auth/hooks/useAxios";
+import { useCart } from "../../main/hooks.ts/useCart";
 
 interface IProps {
   children: ReactNode;
@@ -13,6 +14,7 @@ interface IProps {
 export const Layout: React.FC<IProps> = ({ children }) => {
   useAxios();
   useProfile();
+  useCart();
 
   return (
     <div className="mx-auto flex flex-col min-h-screen sm:px-4 lg:px-0">

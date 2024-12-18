@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Filters, FiltersState, SelectedFilters } from "./types";
-import { AxiosError } from "axios";
 import { searchProducts } from "../products/productThunks";
 import api from "../../../config/axios";
+import { handleAxiosError } from "../utils/handleThunkError";
+import { ThunkRejectValue } from "../../types";
 
 const initialFilters = {
   brands: [],
@@ -22,21 +23,18 @@ const initialState: FiltersState = {
   searchCategory: null,
 };
 
-export const fetchFilters = createAsyncThunk<
-  Filters,
-  void,
-  { rejectValue: string }
->("filters/getFilters", async (_, thunkAPI) => {
-  try {
-    const response = await api.get<Filters>("/products/filters");
+export const fetchFilters = createAsyncThunk<Filters, void, ThunkRejectValue>(
+  "filters/getFilters",
+  async (_, thunkAPI) => {
+    try {
+      const response = await api.get<Filters>("/products/filters");
 
-    return response.data;
-  } catch (error) {
-    const axiosError = error as AxiosError;
-
-    return thunkAPI.rejectWithValue(axiosError.message);
-  }
-});
+      return response.data;
+    } catch (error) {
+      return handleAxiosError(error, thunkAPI);
+    }
+  },
+);
 
 const filtersSlice = createSlice({
   name: "filters",

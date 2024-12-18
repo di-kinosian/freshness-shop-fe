@@ -1,8 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { GetProductPayload, Product } from "./types";
-import { AxiosError } from "axios";
+import { GetProductPayload, Product, PaginatedProductsResponse } from "./types";
 import { RootState } from "../../app/store";
 import api from "../../../config/axios";
+import { handleAxiosError } from "../utils/handleThunkError";
+import { ThunkRejectValue } from "../../types";
 
 const getProductsParams = (state: RootState) => {
   const priceMin = state.filters.selectedFilters.price.min;
@@ -34,7 +35,7 @@ const getProductsParams = (state: RootState) => {
 export const getProduct = createAsyncThunk<
   Product,
   GetProductPayload,
-  { rejectValue: string }
+  ThunkRejectValue
 >("products/product", async (payload, thunkAPI) => {
   try {
     const { _id } = payload;
@@ -42,21 +43,14 @@ export const getProduct = createAsyncThunk<
 
     return response.data;
   } catch (error) {
-    const axiosError = error as AxiosError;
-
-    return thunkAPI.rejectWithValue(axiosError.message);
+    return handleAxiosError(error, thunkAPI);
   }
 });
 
 export const getAllProducts = createAsyncThunk<
-  {
-    products: Product[];
-    total: number;
-    page: number;
-    limit: number;
-  },
+  PaginatedProductsResponse,
   void,
-  { rejectValue: string }
+  ThunkRejectValue
 >("product/getAllProducts", async (_, thunkAPI) => {
   try {
     const state: RootState = thunkAPI.getState() as RootState;
@@ -73,21 +67,14 @@ export const getAllProducts = createAsyncThunk<
       limit: data.limit,
     };
   } catch (error) {
-    const axiosError = error as AxiosError;
-
-    return thunkAPI.rejectWithValue(axiosError.message);
+    return handleAxiosError(error, thunkAPI);
   }
 });
 
 export const showMoreProducts = createAsyncThunk<
-  {
-    products: Product[];
-    total: number;
-    page: number;
-    limit: number;
-  },
+  PaginatedProductsResponse,
   void,
-  { rejectValue: string }
+  ThunkRejectValue
 >("product/showMoreProducts", async (_, thunkAPI) => {
   const state: RootState = thunkAPI.getState() as RootState;
   const page = (state.product.showMorePage || state.product.page) + 1;
@@ -107,21 +94,14 @@ export const showMoreProducts = createAsyncThunk<
       limit: data.page,
     };
   } catch (error) {
-    const axiosError = error as AxiosError;
-
-    return thunkAPI.rejectWithValue(axiosError.message);
+    return handleAxiosError(error, thunkAPI);
   }
 });
 
 export const searchProducts = createAsyncThunk<
-  {
-    products: Product[];
-    total: number;
-    page: number;
-    limit: number;
-  },
+  PaginatedProductsResponse,
   { searchValue: string },
-  { rejectValue: string }
+  ThunkRejectValue
 >("product/searchProducts", async (_, thunkAPI) => {
   const state: RootState = thunkAPI.getState() as RootState;
   const categoryId = state.filters.searchCategory;
@@ -142,16 +122,14 @@ export const searchProducts = createAsyncThunk<
       limit: data.limit,
     };
   } catch (error) {
-    const axiosError = error as AxiosError;
-
-    return thunkAPI.rejectWithValue(axiosError.message);
+    return handleAxiosError(error, thunkAPI);
   }
 });
 
 export const fetchRelatedProducts = createAsyncThunk<
   Product[],
   void,
-  { rejectValue: string }
+  ThunkRejectValue
 >("product/getRelatedProducts", async (_, thunkAPI) => {
   try {
     const { data } = await api.get("/products", {
@@ -163,24 +141,19 @@ export const fetchRelatedProducts = createAsyncThunk<
 
     return data.items;
   } catch (error) {
-    const axiosError = error as AxiosError;
-
-    return thunkAPI.rejectWithValue(axiosError.message);
+    return handleAxiosError(error, thunkAPI);
   }
 });
 
-export const getWishList = createAsyncThunk<
-  Product[],
-  void,
-  { rejectValue: string }
->("product/getWishList", async (_, thunkAPI) => {
-  try {
-    const response = await api.get("/users/wish-list");
+export const getWishList = createAsyncThunk<Product[], void, ThunkRejectValue>(
+  "product/getWishList",
+  async (_, thunkAPI) => {
+    try {
+      const response = await api.get("/users/wish-list");
 
-    return response.data;
-  } catch (error) {
-    const axiosError = error as AxiosError;
-
-    return thunkAPI.rejectWithValue(axiosError.message);
-  }
-});
+      return response.data;
+    } catch (error) {
+      return handleAxiosError(error, thunkAPI);
+    }
+  },
+);
