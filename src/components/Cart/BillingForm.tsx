@@ -26,6 +26,9 @@ import { BillingFormData } from "./types";
 import { LocationField } from "./LocationFields";
 import { CheckboxField } from "./PolicyField";
 import { MESSAGES } from "../../main/constants/messages";
+import { createOrder } from "@redux/features/orders/ordersSlice";
+import { selectCart } from "@redux/features/cart/selectors";
+import { OrderStatus, PaymentStatus } from "@redux/features/orders/type";
 
 export const BillingForm = () => {
   const {
@@ -35,6 +38,7 @@ export const BillingForm = () => {
     control,
     watch,
     setValue,
+    getValues,
   } = useForm<BillingFormData>({
     resolver: yupResolver(billingValidationShema),
     defaultValues: {
@@ -47,6 +51,7 @@ export const BillingForm = () => {
   const dispatch: AppDispatch = useDispatch();
   const countries = useAppSelector(selectCountries);
   const cities = useAppSelector(selectCities);
+  const cart = useAppSelector(selectCart);
 
   useEffect(() => {
     dispatch(getCountries());
@@ -60,7 +65,18 @@ export const BillingForm = () => {
     }
   }, [country]);
 
-  const onSubmit = async () => {};
+  const onSubmit = async () => {
+    const data = getValues();
+    dispatch(
+      createOrder({
+        billingInfo: data,
+        paymentStatus: PaymentStatus.UNPAID,
+        products: cart,
+        status: OrderStatus.PENDING,
+        totalAmount: 3900,
+      }),
+    );
+  };
 
   const countriesOptions = useMemo(
     () => transformCountriesToOptions(countries),
