@@ -17,6 +17,7 @@ export enum PaymentStatus {
 }
 
 export interface Order {
+  id?: string;
   status: OrderStatus;
   products: Cart[];
   billingInfo: BillingFormData;

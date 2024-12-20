@@ -3,6 +3,7 @@ import { Order, OrderState } from "./type";
 import { ThunkRejectValue } from "@redux/types";
 import { handleAxiosError } from "../utils/handleThunkError";
 import api from "../../../config/axios";
+import { MESSAGES } from "../../../main/constants/messages";
 
 const initialState: OrderState = {
   order: null,
@@ -16,7 +17,13 @@ export const createOrder = createAsyncThunk<Order, Order, ThunkRejectValue>(
     try {
       const response = await api.post("order/create", { ...payload });
 
-      return response.data;
+      if (response.data.url) {
+        window.location.href = response.data.url;
+      } else {
+        return thunkAPI.rejectWithValue(MESSAGES.ERROR.URL_ERROR);
+      }
+
+      return response.data.order;
     } catch (error) {
       return handleAxiosError(error, thunkAPI);
     }

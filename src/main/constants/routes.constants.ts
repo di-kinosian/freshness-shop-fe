@@ -2,7 +2,7 @@ import { RootState } from "../../redux/app/store";
 
 interface Route {
   path: string;
-  breadcrumb: string | ((state: RootState) => string);
+  breadcrumb?: string | ((state: RootState) => string);
 }
 
 export const getProductDetailsRoute = (id: string): string =>
@@ -24,5 +24,8 @@ export const ROUTES: Record<string, Route> = {
   CHECKOUT: {
     path: "/checkout",
     breadcrumb: "Checkout page",
+  },
+  ORDER_CONFIRMATION: {
+    path: "/orderConfirmation",
   },
 };

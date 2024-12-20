@@ -5,6 +5,7 @@ import filtersReducer from "../features/filters/filtersSlice";
 import categoriesReducer from "../features/categories/categoriesSlice";
 import locationReducer from "../features/location/locationSlice";
 import cartReducer from "../features/cart/cartSlice";
+import orderReducer from "../features/orders/ordersSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -37,6 +38,7 @@ const store = configureStore({
     product: productsReducer,
     cart: cartReducer,
     location: locationReducer,
+    orders: orderReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

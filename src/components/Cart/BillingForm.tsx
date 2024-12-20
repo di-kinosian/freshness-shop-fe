@@ -67,7 +67,7 @@ export const BillingForm = () => {
 
   const onSubmit = async () => {
     const data = getValues();
-    dispatch(
+    await dispatch(
       createOrder({
         billingInfo: data,
         paymentStatus: PaymentStatus.UNPAID,
@@ -176,7 +176,7 @@ export const BillingForm = () => {
           color={ButtonVariant.PRIMARY}
           className="w-[200px]"
         >
-          Complete order
+          Complete
         </Button>
       </div>
     </form>
