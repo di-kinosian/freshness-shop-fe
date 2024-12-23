@@ -135,7 +135,7 @@ export const fetchRelatedProducts = createAsyncThunk<
     const { data } = await api.get("/products", {
       params: {
         page: 1,
-        limit: 5,
+        limit: 12,
       },
     });
 

@@ -68,6 +68,10 @@ export const BillingForm = () => {
     }
   }, [country]);
 
+  const totalAmount = cart.reduce((acc, item) => {
+    return (acc = acc + item.product.price);
+  }, 0);
+
   const onSubmit = async () => {
     const data = getValues();
     await dispatch(
@@ -76,7 +80,7 @@ export const BillingForm = () => {
         paymentStatus: PaymentStatus.UNPAID,
         products: cart,
         status: OrderStatus.PENDING,
-        totalAmount: 3900,
+        totalAmount: totalAmount,
       }),
     );
   };
