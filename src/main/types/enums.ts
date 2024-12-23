@@ -27,3 +27,14 @@ export enum Filters {
   Rating = "rating",
   Price = "price",
 }
+
+export enum BillingFormFields {
+  FirstName = "firstName",
+  LastName = "lastName",
+  Email = "email",
+  PhoneNumber = "phoneNumber",
+  Address = "address",
+  City = "city",
+  Country = "country",
+  ZipCode = "zipCode",
+}

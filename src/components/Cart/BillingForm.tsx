@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { billingValidationShema } from "./validation";
 import FormField from "@components/FormComponents/FormField";
 import { Button } from "@components/Button/Button";
-import { ButtonVariant } from "../../main/types/enums";
 
+import { BillingFormFields, ButtonVariant } from "../../main/types/enums";
 import { useEffect, useMemo } from "react";
 import { AppDispatch } from "../../redux/app/store";
 import { useDispatch } from "react-redux";
@@ -22,20 +22,22 @@ import {
   selectCountries,
 } from "../../redux/features/location/selectors";
 import { NotesField } from "./NotesField";
-import { BillingFormData } from "./types";
 import { LocationFields } from "./LocationFields";
 import { PolicyField } from "./PolicyField";
+
+interface BillingFormFieldProps {
+  name: BillingFormFields;
+  label: string;
+}
 
 export const BillingForm = () => {
   const {
     handleSubmit,
-    register,
     formState: { errors },
     control,
     watch,
-    setValue,
-    getValues,
-  } = useForm<BillingFormData>({
+    resetField,
+  } = useForm({
     resolver: yupResolver(billingValidationShema),
     defaultValues: {
       agreeToPolicy: false,
@@ -54,15 +56,13 @@ export const BillingForm = () => {
 
   useEffect(() => {
     if (country) {
-      dispatch(getCities({ country: country }));
+      dispatch(getCities(country));
     } else {
-      setValue("city", "");
+      resetField("city");
     }
   }, [country]);
 
-  const onSubmit = async () => {
-    const data = getValues();
-  };
+  const onSubmit = async () => {};
 
   const countriesOptions = useMemo(
     () => transformCountriesToOptions(countries),
@@ -74,42 +74,40 @@ export const BillingForm = () => {
     [cities],
   );
 
+  const BillingFormField = ({ name, label }: BillingFormFieldProps) => {
+    return (
+      <Controller
+        control={control}
+        name={name}
+        render={({ field, fieldState }) => (
+          <FormField
+            label={label}
+            placeholder={label}
+            {...field}
+            error={fieldState.error?.message}
+          />
+        )}
+      />
+    );
+  };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-16 max-w-[500px]"
     >
       <div className="flex flex-col gap-4">
-        <FormField
+        <BillingFormField
+          name={BillingFormFields.FirstName}
           label="First name"
-          placeholder="firstName"
-          {...register("firstName")}
-          error={errors.firstName && errors.firstName.message}
         />
-        <FormField
-          label="Last name"
-          placeholder="lastName"
-          {...register("lastName")}
-          error={errors.lastName && errors.lastName.message}
-        />
-        <FormField
-          label="Email"
-          placeholder="email"
-          {...register("email")}
-          error={errors.email && errors.email.message}
-        />
-        <FormField
+        <BillingFormField name={BillingFormFields.LastName} label="Last name" />
+        <BillingFormField name={BillingFormFields.Email} label="Email" />
+        <BillingFormField
+          name={BillingFormFields.PhoneNumber}
           label="Phone number"
-          placeholder="phoneNumber"
-          {...register("phoneNumber")}
-          error={errors.phoneNumber && errors.phoneNumber.message}
         />
-        <FormField
-          label="Address"
-          placeholder="address"
-          {...register("address")}
-          error={errors.address && errors.address.message}
-        />
+        <BillingFormField name={BillingFormFields.Address} label="Address" />
         <LocationFields
           name="country"
           control={control}
@@ -127,11 +125,9 @@ export const BillingForm = () => {
           placeholder={country ? "city" : "select country"}
           disabled={!country}
         />
-        <FormField
+        <BillingFormField
+          name={BillingFormFields.ZipCode}
           label="Zip / Postal Code"
-          placeholder="zip code"
-          {...register("zipCode")}
-          error={errors.zipCode && errors.zipCode.message}
         />
       </div>
       <NotesField control={control} errors={errors} />
