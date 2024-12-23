@@ -15,35 +15,27 @@ export const getCountries = createAsyncThunk<Country[], void, ThunkRejectValue>(
   "countries/getCountries",
   async (_, thunkAPI) => {
     try {
-      const response = await api.get(
-        "https://countriesnow.space/api/v0.1/countries/capital",
-      );
+      const response = await api.get("location/countries");
 
-      return [...response.data.data];
+      return response.data;
     } catch (error) {
       return handleAxiosError(error, thunkAPI);
     }
   },
 );
 
-export const getCities = createAsyncThunk<
-  string[],
-  { country: string },
-  ThunkRejectValue
->("countries/getCities", async (payload, thunkAPI) => {
-  try {
-    const response = await api.post(
-      "https://countriesnow.space/api/v0.1/countries/cities",
-      {
-        country: payload.country,
-      },
-    );
+export const getCities = createAsyncThunk<string[], string, ThunkRejectValue>(
+  "countries/getCities",
+  async (payload, thunkAPI) => {
+    try {
+      const response = await api.post("location/cities", { country: payload });
 
-    return response.data.data;
-  } catch (error) {
-    return handleAxiosError(error, thunkAPI);
-  }
-});
+      return response.data.data;
+    } catch (error) {
+      return handleAxiosError(error, thunkAPI);
+    }
+  },
+);
 
 const locationSlice = createSlice({
   name: "countries",
