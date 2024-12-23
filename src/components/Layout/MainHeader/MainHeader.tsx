@@ -14,9 +14,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import { Logout } from "../../Auth/Logout";
 import { WishList } from "../../Product/WishList";
 import { Search } from "../../Search/Search";
-import {
-  selectAccessToken,
-} from "../../../redux/features/auth/selectors";
+import { selectAccessToken } from "../../../redux/features/auth/selectors";
 import { Bage } from "@components/Bage/Bage";
 import { selectCart } from "../../../redux/features/cart/selectors";
 
@@ -77,7 +75,13 @@ export const MainHeader = () => {
     handleUserMenuClose();
     openDialog({
       title: "Wish list",
-      content: <WishList onClose={closeDialog} />,
+      content: (
+        <WishList
+          onClose={closeDialog}
+          goToCart={goToCart}
+          goToMainPage={goToMainPage}
+        />
+      ),
     });
   };
 

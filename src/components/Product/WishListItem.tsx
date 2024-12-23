@@ -1,37 +1,34 @@
+import { Tooltip } from "@mui/material";
 import { formatMoney } from "../../main/helpers";
 import { Product } from "../../redux/features/products/types";
-import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 interface Props {
   product: Product;
   onDelete: (id: string) => void;
 }
 
-export const WishListItem = ({ product, onDelete }: Props) => {
-  return (
-    <div
-      key={product._id}
-      className="border border-basicGray rounded-lg w-full flex cursor-pointer"
-    >
-      <img
-        src="https://cdn.pixabay.com/photo/2017/06/14/17/41/galaxy-s8-2402805_1280.jpg"
-        alt="Product image"
-        className="rounded-lg w-[100px]"
-      />
-      <div className="p-3 flex items-center w-full">
-        <div className="flex flex-col content-center gap-2">
-          <div>
-            <div className="font-semibold">{product.title}</div>
-            <div className="text-sm text-grayText">{product.description}</div>
-          </div>
-          <div>{formatMoney(product.price)}</div>
-        </div>
-        <DeleteIcon
-          fontSize="small"
-          className="ml-auto"
-          onClick={() => onDelete(product._id)}
-        />
+export const WishListItem = ({ product, onDelete }: Props) => (
+  <div className="w-full pb-4 border-b border-separator grid grid-cols-[1fr,2fr,1fr]">
+    <div className="w-full flex justify-center">
+      <img src={product.images[0]} className="rounded-md max-h-[100px] " />
+    </div>
+    <div className="w-full flex flex-col gap-2">
+      <div className="text-sm font-semibold">{product.title}</div>
+      <div className="text-grayText text-xs">
+        {product.description ? product.description.slice(0, 60) : ""}
+      </div>
+      <div className="text-sm text-neutralGreenBg font-semibold">
+        {formatMoney(product.price)}
       </div>
     </div>
-  );
-};
+    <div className="flex flex-col justify-between items-end">
+      <Tooltip title="Delete">
+        <DeleteOutlineIcon
+          fontSize="medium"
+          onClick={() => onDelete(product._id)}
+        />
+      </Tooltip>
+    </div>
+  </div>
+);
