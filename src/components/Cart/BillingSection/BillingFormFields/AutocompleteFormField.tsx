@@ -2,23 +2,23 @@ import { Autocomplete } from "@components/FormComponents/Autocomplete";
 import Label from "@components/FormComponents/Label";
 import { FormControl, FormHelperText } from "@mui/material";
 import { Control, Controller } from "react-hook-form";
-import { BillingFormData } from "./types";
-import { Options } from "../../main/types/interfaces";
+import { BillingFormData } from "../../types";
+import { Options } from "../../../../main/types/interfaces";
 
 interface Props {
   control: Control<BillingFormData>;
   label: string;
-  locationOptions: Options[];
+  options: Options[];
   error?: string;
   placeholder: string;
   disabled?: boolean;
   name: keyof BillingFormData;
 }
 
-export const LocationField = ({
+export const AutocompleteFormField = ({
   control,
   label,
-  locationOptions: countriesOptions,
+  options,
   error,
   placeholder,
   disabled,
@@ -32,7 +32,7 @@ export const LocationField = ({
         <FormControl variant="standard" className="items-start" error={!!error}>
           <Label>{label}</Label>
           <Autocomplete
-            options={countriesOptions}
+            options={options}
             value={field.value as string}
             onChange={field.onChange}
             inputRef={field.ref}

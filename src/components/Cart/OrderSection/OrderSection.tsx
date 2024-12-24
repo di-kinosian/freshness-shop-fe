@@ -1,6 +1,6 @@
-import { ProductCard } from "./ProductCard";
-import { useAppSelector } from "../../redux/app/hooks";
-import { selectCart } from "../../redux/features/cart/selectors";
+import { useAppSelector } from "../../../redux/app/hooks";
+import { selectCart } from "../../../redux/features/cart/selectors";
+import { ProductCard } from "./ProductCard/ProductCard";
 
 export const OrderSection = () => {
   const cart = useAppSelector(selectCart);

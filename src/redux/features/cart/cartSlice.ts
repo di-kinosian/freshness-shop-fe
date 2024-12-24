@@ -81,6 +81,7 @@ const cartSlice = createSlice({
     builder
       .addCase(getCart.fulfilled, (state, action) => {
         state.cart = action.payload;
+        state.isCartLoading = false;
         state.cartError = null;
       })
       .addCase(getCart.pending, (state) => {
@@ -89,6 +90,7 @@ const cartSlice = createSlice({
       })
       .addCase(getCart.rejected, (state, action) => {
         state.cartError = action.payload || "Failed to fetch cart";
+        state.isCartLoading = false;
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.addToCartError = action.payload || "Failed add to cart";
