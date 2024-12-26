@@ -23,12 +23,14 @@ import {
 import WishListIcon from "../../components/Product/WishListIcon";
 import { twMerge } from "tailwind-merge";
 import { getProduct } from "../../redux/features/products/productThunks";
+import { selectProduct } from "../../redux/features/products/selectors";
+import { selectWishList } from "../../redux/features/auth/selectors";
 
 export const ProductDetails = () => {
   const { productId } = useParams();
   const dispatch: AppDispatch = useDispatch();
-  const { product } = useAppSelector((state) => state.product);
-  const wishList = useAppSelector((state) => state.auth.user?.wishList);
+  const product = useAppSelector(selectProduct);
+  const wishList = useAppSelector(selectWishList);
 
   const isInWishList = wishList?.includes(productId as string);
 

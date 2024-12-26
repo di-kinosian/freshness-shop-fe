@@ -20,3 +20,21 @@ export enum ToastVariant {
   SUCCESS = "success",
   ERROR = "error",
 }
+
+export enum Filters {
+  Category = "category",
+  Brands = "brands",
+  Rating = "rating",
+  Price = "price",
+}
+
+export enum BillingFormFields {
+  FirstName = "firstName",
+  LastName = "lastName",
+  Email = "email",
+  PhoneNumber = "phoneNumber",
+  Address = "address",
+  City = "city",
+  Country = "country",
+  ZipCode = "zipCode",
+}

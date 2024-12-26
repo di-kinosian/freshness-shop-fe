@@ -16,6 +16,12 @@ export const MESSAGES = {
       "Password must contain at least 2 special characters",
     PHONE_NUMBER_REQUIRED: "Phone number is required",
     PHONE_NUMBER_FORMAT: "Enter a valid phone number with country code",
+    ADDRESS_REQUIRED: "Address is required",
+    ADDRESS_MIN_LENGTH: "Address must be at least 5 characters",
+    TOWN_CITY_REQUIRED: "Town/City is required",
+    STATE_COUNTRY_REQUIRED: "State/Country is required",
+    ZIP_POSTAL_CODE_REQUIRED: "Zip/Postal Code is required",
+    ZIP_POSTAL_CODE_FORMAT: "Enter a valid Zip/Postal Code",
   },
   ERROR: {
     ACCOUNT_NOT_FOUND: "Account not found. Please sign up.",

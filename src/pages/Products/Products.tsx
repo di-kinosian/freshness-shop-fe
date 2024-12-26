@@ -20,6 +20,7 @@ import {
   showMoreProducts,
 } from "../../redux/features/products/productThunks";
 import { selectWishList } from "../../redux/features/auth/selectors";
+import { selectProducts } from "../../redux/features/products/selectors";
 
 export const Products = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -27,7 +28,7 @@ export const Products = () => {
   const { total, limit, page, showMorePage, sortValue } = useAppSelector(
     (state) => state.product,
   );
-  const products = useAppSelector((state) => state.product.products);
+  const products = useAppSelector(selectProducts);
   const totalPages = Math.ceil(total / limit);
 
   useEffect(() => {

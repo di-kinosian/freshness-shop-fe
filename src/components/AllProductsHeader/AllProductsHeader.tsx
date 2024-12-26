@@ -1,8 +1,9 @@
 import { useAppSelector } from "../../redux/app/hooks";
+import { selectTotal } from "../../redux/features/products/selectors";
 import { Bage } from "../Bage/Bage";
 
 export const AllProductsHeader = () => {
-  const { total } = useAppSelector((state) => state.product);
+  const total = useAppSelector(selectTotal);
 
   return (
     <div className="flex justify-between items-center max-w-[1200px] w-full mx-auto">

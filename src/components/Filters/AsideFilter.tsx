@@ -16,6 +16,7 @@ import {
 } from "../../redux/features/filters/filtersSlice";
 import { FiltersCategories } from "../../redux/features/filters/types";
 import { getAllProducts } from "../../redux/features/products/productThunks";
+import { Filters } from "../../main/types/enums";
 
 export const AsideFilter = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -30,7 +31,7 @@ export const AsideFilter = () => {
   const handleFilterChange = useCallback(
     (key: FilterKey) =>
       (value: SelectedFilters[FilterKey]): void => {
-        if (key === "category") {
+        if (key === Filters.Category) {
           dispatch(clearSearchValue());
         }
         dispatch(setSelectedFilters({ [key]: value }));
@@ -49,21 +50,21 @@ export const AsideFilter = () => {
     <div className="hidden custom:hidden md:hidden lg:block">
       <div className="flex flex-col gap-8">
         <CategoryFilter
-          onChange={handleFilterChange("category")}
+          onChange={handleFilterChange(Filters.Category)}
           value={selectedFilters.category || ""}
           categories={availableFilters?.categories as FiltersCategories[]}
         />
         <BrandFilter
           brands={availableFilters?.brands}
-          onChange={handleFilterChange("brands")}
-          value={selectedFilters.brands || []}
+          onChange={handleFilterChange(Filters.Brands)}
+          value={selectedFilters.brands}
         />
         <RatingFilter
-          onChange={handleFilterChange("rating")}
-          value={selectedFilters.rating || []}
+          onChange={handleFilterChange(Filters.Rating)}
+          value={selectedFilters.rating}
         />
         <PriceFilter
-          onChange={handleFilterChange("price")}
+          onChange={handleFilterChange(Filters.Price)}
           value={selectedFilters.price}
           availableRange={availableFilters?.price}
         />

@@ -12,6 +12,7 @@ import {
 import { AppDispatch } from "../../redux/app/store";
 import { useAppSelector } from "../../redux/app/hooks";
 import { useEffect } from "react";
+import { selectLoginError } from "../../redux/features/auth/selectors";
 
 interface Props {
   onClose: () => void;
@@ -30,7 +31,7 @@ export const Login: React.FC<Props> = ({ onClose, onOpenSignup }) => {
   });
 
   const dispatch: AppDispatch = useDispatch();
-  const { loginError } = useAppSelector((state) => state.auth);
+  const loginError = useAppSelector(selectLoginError);
 
   useEffect(() => {
     dispatch(clearLoginError());
