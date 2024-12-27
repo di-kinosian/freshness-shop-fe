@@ -1,23 +1,38 @@
 import { FormControl } from "@mui/material";
 import Label from "./Label";
+import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
 
-interface Props {
-  value: string;
-  onChange: () => void;
-  error?: string;
+interface Props<T extends FieldValues> {
+  name: FieldPath<T>;
+  label?: string;
+  placeholder?: string;
+  control: Control<T>;
 }
 
-export const TextareaFormField = ({ value, onChange, error }: Props) => {
+export function TextareaFormField<T extends FieldValues>({
+  label,
+  control,
+  name,
+  placeholder,
+}: Props<T>) {
   return (
-    <FormControl variant="standard" className="items-start">
-      <Label>Order notes</Label>
-      <textarea
-        value={value}
-        className="border border-basicGray rounded-2xl bg-neutralGrayBg min-h-[110px] w-full px-[20px] py-2 outline-none"
-        placeholder="Need a specific delivery day? Sending a gitf? Let’s say ..."
-        onChange={onChange}
-      />
-      {error && <span className="text-red-500">{error}</span>}
-    </FormControl>
+    <Controller
+      control={control}
+      name={name}
+      render={({ field, fieldState }) => (
+        <FormControl variant="standard" className="items-start w-full">
+          {label && <Label>{label}</Label>}
+          <textarea
+            value={field.value}
+            className="border border-basicGray rounded-2xl bg-neutralGrayBg min-h-[110px] w-full px-[20px] py-2 outline-none"
+            placeholder={placeholder}
+            onChange={field.onChange}
+          />
+          {fieldState.error && (
+            <span className="text-red-500">{fieldState.error.message}</span>
+          )}
+        </FormControl>
+      )}
+    />
   );
-};
+}
