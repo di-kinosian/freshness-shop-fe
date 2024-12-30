@@ -125,7 +125,7 @@ export const BillingForm = () => {
           name="country"
           control={control}
           options={countriesOptions}
-          error={errors.country ? errors.country.message : ""}
+          error={errors.country?.message || ""}
           label="State / Country"
           placeholder="country"
         />
@@ -133,7 +133,7 @@ export const BillingForm = () => {
           name="city"
           control={control}
           options={citiesOptions}
-          error={errors.city ? errors.city.message : ""}
+          error={errors.country?.message || ""}
           label="Town / City"
           placeholder={country ? "city" : "select country"}
           disabled={!country}
