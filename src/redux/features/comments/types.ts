@@ -4,6 +4,14 @@ export interface Comment {
   parentId?: string | null;
 }
 
+export interface Author {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+}
+
 export interface CommentResponce {
   productId: string;
   userId: string;
@@ -13,6 +21,7 @@ export interface CommentResponce {
   _id: string;
   createdAt: string;
   updatedAt: string;
+  user: Author;
   replies?: Omit<CommentResponce, "replies">[];
 }
 

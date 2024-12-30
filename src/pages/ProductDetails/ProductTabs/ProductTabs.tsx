@@ -1,20 +1,15 @@
 import { useAppSelector } from "@redux/app/hooks";
 import { selectComments } from "@redux/features/comments/selectors";
 import { Product } from "@redux/features/products/types";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useDialog } from "@components/Dialog/context/DialogContext";
 import { AddReviewForm } from "@components/AddReviewForm/AddReviewForm";
 import { AppDispatch } from "@redux/app/store";
 import { useDispatch } from "react-redux";
-import {
-  deleteComment,
-  getComments,
-} from "@redux/features/comments/commentsSlice";
-import { Popover } from "@components/Popover/Popover";
+import { getComments } from "@redux/features/comments/commentsSlice";
 import { DescriptionTab } from "./Tabs/DescriptionTab";
 import { ReviewsTab } from "./Tabs/Review/ReviewsTab";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 interface Props {
   product: Product;
@@ -25,24 +20,10 @@ export const ProductTabs = ({ product }: Props) => {
   const comments = useAppSelector(selectComments);
   const { openDialog, closeDialog } = useDialog();
   const dispatch: AppDispatch = useDispatch();
-  const [anchorEl, setAnchorEl] = useState<SVGSVGElement | null>(null);
-  const [activeCommentId, setActiveCommentId] = useState<string | null>(null);
 
   useEffect(() => {
     dispatch(getComments({ productId: product._id }));
   }, []);
-
-  const handleMenuClick = (
-    event: React.MouseEvent<SVGSVGElement>,
-    id: string,
-  ): void => {
-    setActiveCommentId(id);
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = useCallback((): void => {
-    setAnchorEl(null);
-  }, [setAnchorEl]);
 
   const handleOpenReviewDialog = (): void => {
     openDialog({
@@ -50,12 +31,6 @@ export const ProductTabs = ({ product }: Props) => {
       content: <AddReviewForm onClose={closeDialog} productId={product._id} />,
       className: "w-[400px]",
     });
-  };
-
-  const handleReviewDelete = (): void => {
-    if (activeCommentId) {
-      dispatch(deleteComment({ id: activeCommentId }));
-    }
   };
 
   return (
@@ -82,19 +57,9 @@ export const ProductTabs = ({ product }: Props) => {
         <ReviewsTab
           productId={product._id}
           comments={comments}
-          handleMenuClick={handleMenuClick}
           handleOpenReviewDialog={handleOpenReviewDialog}
         />
       )}
-      <Popover onClose={handleMenuClose} anchorEl={anchorEl} left={-24}>
-        <div
-          className="flex gap-2 px-6 py-2 border border-basicGray rounded-md"
-          onClick={handleReviewDelete}
-        >
-          <DeleteOutlineIcon />
-          <div>Delete review</div>
-        </div>
-      </Popover>
     </div>
   );
 };
