@@ -24,7 +24,7 @@ module.exports = {
       screens: {
         custom: "886px",
         customSm: "690px",
-        customCheckout: "930px",
+        customMd: "930px",
         sm: "640px",
         md: "768px",
         lg: "1024px",
