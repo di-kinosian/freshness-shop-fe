@@ -10,7 +10,7 @@ export const Checkout = () => {
   return (
     <>
       {cart.length ? (
-        <div className="grid grid-cols-1 customCheckout:grid-cols-[1fr,1fr] gap-8 max-w-[1200px] mx-auto w-full">
+        <div className="grid grid-cols-1 customMd:grid-cols-[1fr,1fr] gap-8 max-w-[1200px] mx-auto w-full">
           <div className="flex flex-col gap-4 w-full">
             <div>
               <h2 className="text-2xl font-semibold">Billing info</h2>
