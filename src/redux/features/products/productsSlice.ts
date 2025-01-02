@@ -13,6 +13,7 @@ import { setSelectedFilters } from "../filters/filtersSlice";
 
 const initialState: ProductsState = {
   products: [],
+  isProductsLoading: false,
   product: null,
   relatedProducts: [],
   total: 0,
@@ -49,9 +50,15 @@ const productsSlice = createSlice({
         state.products = [...action.payload.products];
         state.total = action.payload.total;
         state.productsError = null;
+        state.isProductsLoading = false;
+      })
+      .addCase(getAllProducts.pending, (state) => {
+        state.productsError = null;
+        state.isProductsLoading = true;
       })
       .addCase(getAllProducts.rejected, (state, action) => {
         state.productsError = action.payload || "Failed to fetch products";
+        state.isProductsLoading = false;
       })
       .addCase(getProduct.fulfilled, (state, action) => {
         state.showMorePage = null;

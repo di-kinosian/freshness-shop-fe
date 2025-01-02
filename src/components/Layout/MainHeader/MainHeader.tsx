@@ -12,7 +12,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import PersonIcon from "@mui/icons-material/Person";
 import { Logout } from "../../Auth/Logout";
-import { WishList } from "../../Product/WishList";
+import { WishList } from "../../Product/WishList/WishList";
 import { Search } from "../../Search/Search";
 import { selectAccessToken } from "../../../redux/features/auth/selectors";
 import { Bage } from "@components/Bage/Bage";

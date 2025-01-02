@@ -1,13 +1,14 @@
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../redux/app/store";
-import { useAppSelector } from "../../redux/app/hooks";
+import { AppDispatch } from "../../../redux/app/store";
+import { useAppSelector } from "../../../redux/app/hooks";
 import { useEffect } from "react";
-import { Button } from "../Button/Button";
-import { ButtonVariant } from "../../main/types/enums";
-import { deleteFromWishList } from "../../redux/features/auth/authSlise";
-import { getWishList } from "../../redux/features/products/productThunks";
+import { Button } from "../../Button/Button";
+import { ButtonVariant } from "../../../main/types/enums";
+import { deleteFromWishList } from "../../../redux/features/auth/authSlise";
+import { getWishList } from "../../../redux/features/products/productThunks";
 import { WishListItem } from "./WishListItem";
 import { addToCart } from "@redux/features/cart/cartSlice";
+import { WishListSkeleton } from "./WishListSkeleton";
 
 interface Props {
   onClose: () => void;
@@ -26,7 +27,13 @@ export const WishList = ({ onClose, goToCart, goToMainPage }: Props) => {
   }, [dispatch]);
 
   if (isWishListLoading && !wishList.length) {
-    return "Loading...";
+    return (
+      <>
+        {[...Array(5)].map(() => (
+          <WishListSkeleton />
+        ))}
+      </>
+    );
   }
 
   const handleDelete = (id: string): void => {
@@ -46,21 +53,24 @@ export const WishList = ({ onClose, goToCart, goToMainPage }: Props) => {
     goToCart();
   };
 
-  const goToProductsPage = () => {
+  const goToProductsPage = (): void => {
     onClose();
     goToMainPage();
   };
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-[34px] items-start">
         {wishList.length ? (
-          wishList?.map((product) => (
-            <WishListItem
-              product={product}
-              onDelete={handleDelete}
-              key={product._id}
-            />
-          ))
+          wishList?.map((product) => {
+            return (
+              <WishListItem
+                product={product}
+                onDelete={handleDelete}
+                key={product._id}
+              />
+            );
+          })
         ) : (
           <div className="flex flex-col gap-3 text-center">
             <img

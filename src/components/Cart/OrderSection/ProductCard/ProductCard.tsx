@@ -45,7 +45,7 @@ export const ProductCard = ({ productItem }: Props) => {
   };
 
   return (
-    <div className="w-full pb-4 border-b border-separator grid grid-cols-[1fr,2fr,1fr]">
+    <div className="w-full pb-4 border-b border-separator grid grid-cols-[1fr,2fr,1fr] gap-2">
       <div className="w-full flex justify-center">
         <img
           src={productItem.product.images[0]}
