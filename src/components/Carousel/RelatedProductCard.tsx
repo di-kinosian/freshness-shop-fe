@@ -28,14 +28,14 @@ export const RelatedProductCard = ({
       className="h-[180px] rounded-2xl"
     />
     <div className="flex flex-col gap-2.5">
-      <span className="font-semibold text-base">{title}</span>
-      <span className="text-sm text-gray-500">{description ? description.slice(0,60) : ''}</span>
+      <span className="font-semibold text-base">{title.slice(0, 44)}</span>
+      <span className="text-sm text-gray-500">
+        {description ? description.slice(0, 60) : ""}
+      </span>
     </div>
-    <div className="flex justify-between items-center">
+    <div className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center">
       <span className="font-bold text-xl">{price}</span>
-      <Button size={ButtonSize.SMALL} >
-        Buy now
-      </Button>
+      <Button size={ButtonSize.SMALL}>Buy now</Button>
     </div>
   </div>
 );

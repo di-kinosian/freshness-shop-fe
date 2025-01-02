@@ -49,7 +49,7 @@ export const MainHeader = () => {
     openDialog({
       title: "Log in",
       content: <Login onClose={closeDialog} onOpenSignup={handleOpenSignup} />,
-      className: "w-[400px]",
+      className: "w-fit xs:w-[300px] customSm:w-[400px]",
     });
   };
 
@@ -58,7 +58,7 @@ export const MainHeader = () => {
     openDialog({
       title: "Sign up",
       content: <Signup onClose={closeDialog} onOpenLogin={handleOpenLogin} />,
-      className: "w-[400px]",
+      className: "w-fit xs:w-[300px] customSm:w-[400px]",
     });
   };
 
@@ -67,7 +67,7 @@ export const MainHeader = () => {
     openDialog({
       title: "Log out",
       content: <Logout onClose={closeDialog} />,
-      className: "w-[400px]",
+      className: "w-fit xs:w-[300px] customSm:w-[400px]",
     });
   };
 
@@ -101,15 +101,17 @@ export const MainHeader = () => {
           hasShadow && "border-b border-gray-300",
         )}
       >
-        <div className="h-16 flex justify-between items-center max-w-[1200px] w-full mx-auto">
+        <div className="h-16 flex items-center justify-between max-w-full sm:max-w-[1200px] mx-auto">
           <img
             src="/freshness-shop-fe/freshnesecom.svg"
             alt="Logo freshnesecom"
             onClick={goToMainPage}
-            className="cursor-pointer hidden md:block"
+            className="cursor-pointer"
           />
-          <Search />
-          <div className="flex gap-10">
+          <div className="hidden customSm:block">
+            <Search />
+          </div>
+          <div className="flex gap-6 sm:gap-10 items-center">
             <UserIcon
               isLogin={isLogin}
               className="cursor-pointer"
@@ -126,6 +128,9 @@ export const MainHeader = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="block customSm:hidden flex items-center justify-center pb-6">
+          <Search />
         </div>
       </div>
       <Popover onClose={handleUserMenuClose} anchorEl={anchorEl} left={-24}>

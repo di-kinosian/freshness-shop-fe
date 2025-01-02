@@ -35,7 +35,7 @@ export const Categories = () => {
 
   return (
     <>
-      <div className="h-14 flex justify-around items-center bg-neutralGrayBg w-full max-w-[1200px] mx-auto">
+      <div className="h-fit-content sm:h-14 flex gap-4 justify-start sm:justify-around items-center flex-wrap gap-4 justify-center bg-neutralGrayBg w-full max-w-[1200px] mx-auto">
         {categories?.map((category) => (
           <CategoryItem
             category={category}

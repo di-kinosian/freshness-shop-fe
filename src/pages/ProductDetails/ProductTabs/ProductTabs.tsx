@@ -16,7 +16,7 @@ interface Props {
 }
 
 export const ProductTabs = ({ product }: Props) => {
-  const [activeTab, setActiveTab] = useState<string>("Reviews");
+  const [activeTab, setActiveTab] = useState<string>("Description");
   const comments = useAppSelector(selectComments);
   const { openDialog, closeDialog } = useDialog();
   const dispatch: AppDispatch = useDispatch();
@@ -29,7 +29,7 @@ export const ProductTabs = ({ product }: Props) => {
     openDialog({
       title: "Add review",
       content: <AddReviewForm onClose={closeDialog} productId={product._id} />,
-      className: "w-[400px]",
+      className: "w-fit xs:w-[300px] customSm:w-[400px]",
     });
   };
 

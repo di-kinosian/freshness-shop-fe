@@ -66,7 +66,7 @@ export const Comment = ({
             onClick={() => onReplyClick(comment._id)}
           >
             <SubdirectoryArrowRightIcon />
-            <div>Answer</div>
+            <div>Reply</div>
           </div>
         )}
       </div>

@@ -44,14 +44,14 @@ export const OrderConfirmation = () => {
         </span>
       </div>
       <div className="flex flex-col gap-6">
-        <div className="grid grid-cols-[1fr,100px,200px] font-semibold border-b-2 pb-2">
+        <div className="grid grid-cols-[100px,100px,100px] xs:grid-cols-[200px,120px,120px] sm:grid-cols-[1fr,100px,200px] font-semibold border-b-2 pb-2">
           <div className="text-left">Product</div>
           <div className="text-center">Quantity</div>
           <div className="text-right">Price</div>
         </div>
         {order?.products.map((product) => (
           <div
-            className="grid grid-cols-[1fr,100px,200px] items-center py-2 border-b last:border-b-0"
+            className="grid grid-cols-[100px,100px,100px] xs:grid-cols-[200px,120px,120px] sm:grid-cols-[1fr,100px,200px] items-center py-2 border-b last:border-b-0"
             key={product.product._id}
           >
             <div className="text-left">{product.product.title}</div>

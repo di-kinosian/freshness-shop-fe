@@ -104,7 +104,7 @@ export const Products = () => {
           })}
         </div>
       </div>
-      <div className="flex w-full items-center">
+      <div className="flex flex-col md:flex-row gap-6 w-full items-center">
         <div className="flex-1">
           <PaginationController
             page={showMorePage ? showMorePage : page}

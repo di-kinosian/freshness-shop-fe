@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme: Theme) => {
         backgroundColor: theme.input?.background.default,
         borderRadius: theme.input?.border.radius,
         border: theme.input.border.default,
-        padding: theme.input.padding,
       },
       "& .MuiOutlinedInput-root": {
         "& fieldset": {

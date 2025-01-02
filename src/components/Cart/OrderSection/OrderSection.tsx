@@ -1,9 +1,19 @@
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../redux/app/hooks";
 import { selectCart } from "../../../redux/features/cart/selectors";
 import { ProductCard } from "./ProductCard/ProductCard";
+import { formatMoney } from "../../../main/helpers";
 
 export const OrderSection = () => {
   const cart = useAppSelector(selectCart);
+  const [total, setTotal] = useState<number>(0);
+
+  useEffect(() => {
+    const result = cart.reduce((acc, product) => {
+      return (acc = acc + product.product.price);
+    }, 0);
+    setTotal(result);
+  }, [cart]);
 
   return (
     <div className="flex flex-col gap-4 p-4 border border-basicGray rounded-lg w-full h-fit">
@@ -16,6 +26,12 @@ export const OrderSection = () => {
       {cart.map((item) => (
         <ProductCard productItem={item} key={item.product._id} />
       ))}
+      <div className="flex gap-4">
+        <span className="font-bold">Total price:</span>
+        <span className="text-neutralGreenBg font-bold">
+          {formatMoney(total)}
+        </span>
+      </div>
     </div>
   );
 };

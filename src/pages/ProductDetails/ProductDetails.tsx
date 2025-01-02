@@ -28,6 +28,7 @@ import { selectWishList } from "../../redux/features/auth/selectors";
 import { selectCart } from "../../redux/features/cart/selectors";
 import { QuantitySelector } from "@components/QuantitySelector/QuantitySelector";
 import { addToCart, editQuantity } from "../../redux/features/cart/cartSlice";
+import { ProductDetailPageSkeleton } from "./ProductDetailsSkeleton";
 
 export const ProductDetails = () => {
   const { productId } = useParams();
@@ -93,11 +94,7 @@ export const ProductDetails = () => {
   };
 
   if (!product) {
-    return (
-      <div className="w-full min-h-40 flex justify-center items-center">
-        <span className="mx-auto">Loading</span>
-      </div>
-    );
+    return <ProductDetailPageSkeleton />;
   }
 
   return (
@@ -114,7 +111,7 @@ export const ProductDetails = () => {
           </div>
           <div>{product?.description}</div>
           <ProductParameters product={product} />
-          <div className="p-4 border border-grayBorder rounded-2xl flex sm:flex-row md:flex-col lg:flex-row md:items-start md:gap-4 justify-between lg:w-full sm:w-full md:w-full ">
+          <div className="p-4 border border-grayBorder rounded-2xl flex flex-col gap-4 sm:flex-row md:flex-col lg:flex-row md:items-start md:gap-4 justify-between w-full">
             <div>
               <div className="text-2xl font-bold text-black">
                 {formatMoney(product?.price)}
@@ -130,7 +127,7 @@ export const ProductDetails = () => {
                   : ""}
               </div>
             </div>
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-3 items-center justify-between">
               <div className="w-[170px]">
                 <ControlContainer
                   size={ControlSize.LARGE}
@@ -164,7 +161,7 @@ export const ProductDetails = () => {
               <span>{isInWishList ? "Product added" : "Add to wish list"}</span>
             </div>
           </Button>
-          <ProductTabs product={product}/>
+          <ProductTabs product={product} />
         </div>
       </div>
       <RelatedProducts />

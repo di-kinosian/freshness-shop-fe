@@ -32,7 +32,7 @@ export const ReviewsTab = ({
           commentId={commentId}
         />
       ),
-      className: "w-[400px]",
+      className: "w-fit xs:w-[300px] customSm:w-[400px]",
     });
   };
 
