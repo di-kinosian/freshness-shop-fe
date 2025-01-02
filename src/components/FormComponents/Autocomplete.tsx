@@ -30,23 +30,21 @@ export const Autocomplete = ({
     options.find((option) => option.value === value) || null;
 
   return (
-    <>
-      <input type="hidden" value={value || ""} ref={inputRef} />
-      <AutocompleteMUI
-        disabled={disabled}
-        value={selectedOption}
-        options={options}
-        id="grid-choose-pesticide"
-        clearOnEscape
-        renderInput={(params) => (
-          <TextField {...params} placeholder={placeholder} />
-        )}
-        classes={{ root: classes.root }}
-        onChange={(_, newValue) => {
-          handleChange(newValue?.value as string);
-        }}
-      />
-    </>
+    <AutocompleteMUI
+      ref={inputRef}
+      disabled={disabled}
+      value={selectedOption}
+      options={options}
+      id="grid-choose-pesticide"
+      clearOnEscape
+      renderInput={(params) => (
+        <TextField {...params} placeholder={placeholder} />
+      )}
+      classes={{ root: classes.root }}
+      onChange={(_, newValue) => {
+        handleChange(newValue?.value as string);
+      }}
+    />
   );
 };
 
