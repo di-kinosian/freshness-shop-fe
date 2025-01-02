@@ -1,8 +1,10 @@
 import { FormControl } from "@mui/material";
 import Label from "./Label";
 import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
+import Textarea from "./Textarea";
 
 interface Props<T extends FieldValues> {
+  rows?: number;
   name: FieldPath<T>;
   label?: string;
   placeholder?: string;
@@ -14,6 +16,7 @@ export function TextareaFormField<T extends FieldValues>({
   control,
   name,
   placeholder,
+  rows,
 }: Props<T>) {
   return (
     <Controller
@@ -22,9 +25,9 @@ export function TextareaFormField<T extends FieldValues>({
       render={({ field, fieldState }) => (
         <FormControl variant="standard" className="items-start w-full">
           {label && <Label>{label}</Label>}
-          <textarea
+          <Textarea
+            rows={rows}
             value={field.value}
-            className="border border-basicGray rounded-2xl bg-neutralGrayBg min-h-[110px] w-full px-[20px] py-2 outline-none"
             placeholder={placeholder}
             onChange={field.onChange}
           />
