@@ -152,6 +152,7 @@ export const BillingForm = () => {
           </span>
         </div>
         <TextareaFormField
+          rows={3}
           control={control}
           name="notes"
           label="Notes"
