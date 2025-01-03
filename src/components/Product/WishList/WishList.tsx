@@ -10,6 +10,7 @@ import { WishListItem } from "./WishListItem";
 import { addToCart } from "@redux/features/cart/cartSlice";
 import { WishListSkeleton } from "./WishListSkeleton";
 import { formatMoney } from "../../../main/helpers";
+import { Checkbox } from "@components/Checkbox/Checkbox";
 
 interface Props {
   onClose: () => void;
@@ -23,6 +24,7 @@ export const WishList = ({ onClose, goToCart, goToMainPage }: Props) => {
     (state) => state.product,
   );
   const [total, setTotal] = useState<number>(0);
+  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
 
   useEffect(() => {
     const result = wishList.reduce((acc, product) => {
@@ -45,6 +47,22 @@ export const WishList = ({ onClose, goToCart, goToMainPage }: Props) => {
     );
   }
 
+  const handleCheckboxToggle = (productId: string): void => {
+    setSelectedProducts((prev) =>
+      prev.includes(productId)
+        ? prev.filter((id) => id !== productId)
+        : [...prev, productId],
+    );
+  };
+
+  const handleSelectAll = (): void => {
+    if (selectedProducts.length === wishList.length) {
+      setSelectedProducts([]);
+    } else {
+      setSelectedProducts(wishList.map((product) => product._id));
+    }
+  };
+
   const handleDelete = (id: string): void => {
     dispatch(deleteFromWishList({ productId: id })).then(() => {
       dispatch(getWishList());
@@ -52,12 +70,13 @@ export const WishList = ({ onClose, goToCart, goToMainPage }: Props) => {
   };
 
   const addProductToCart = async () => {
-    await wishList.map((product) => {
-      dispatch(addToCart({ productId: product._id, quantity: 1 }));
-      dispatch(deleteFromWishList({ productId: product._id })).then(() => {
+    await selectedProducts.map((id) => {
+      dispatch(addToCart({ productId: id, quantity: 1 }));
+      dispatch(deleteFromWishList({ productId: id })).then(() => {
         dispatch(getWishList());
       });
     });
+    setSelectedProducts([]);
     onClose();
     goToCart();
   };
@@ -69,15 +88,31 @@ export const WishList = ({ onClose, goToCart, goToMainPage }: Props) => {
 
   return (
     <div className="flex flex-col gap-6">
+      <div className="flex items-center gap-2">
+        <Checkbox
+          checked={
+            selectedProducts.length === wishList.length &&
+            selectedProducts.length !== 0
+          }
+          onChange={handleSelectAll}
+        />
+        <span>Select All</span>
+      </div>
       <div className="flex flex-col gap-[34px] items-start">
         {wishList.length ? (
           wishList?.map((product) => {
             return (
-              <WishListItem
-                product={product}
-                onDelete={handleDelete}
-                key={product._id}
-              />
+              <div key={product._id} className="flex items-center gap-4">
+                <Checkbox
+                  checked={selectedProducts.includes(product._id)}
+                  onChange={() => handleCheckboxToggle(product._id)}
+                />
+                <WishListItem
+                  product={product}
+                  onDelete={handleDelete}
+                  key={product._id}
+                />
+              </div>
             );
           })
         ) : (
@@ -106,7 +141,17 @@ export const WishList = ({ onClose, goToCart, goToMainPage }: Props) => {
       ) : null}
       <div className="flex gap-3 w-full justify-center">
         {wishList.length ? (
-          <Button onClick={addProductToCart}>Buy now</Button>
+          selectedProducts.length === 0 ? (
+            <Button
+              onClick={addProductToCart}
+              color={ButtonVariant.SECONDARY}
+              disabled
+            >
+              Buy now
+            </Button>
+          ) : (
+            <Button onClick={addProductToCart}>Buy now</Button>
+          )
         ) : (
           <Button onClick={goToProductsPage}>Go to products</Button>
         )}

@@ -16,8 +16,8 @@ export const ProductPageSkeleton = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-6 sm:gap-8 sm:grid-cols-[270px,1fr] max-w-full sm:max-w-[1200px] mx-auto w-full">
-        <div className="hidden sm:block">
+      <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[1fr] xl:grid-cols-[270px,1fr] max-w-full sm:max-w-[1200px] mx-auto w-full">
+        <div className="hidden xl:block">
           <div className="flex flex-col gap-4 sm:gap-8">
             {[...Array(4)].map((_, index) => (
               <div key={index}>
@@ -62,7 +62,10 @@ export const ProductItemSkeleton = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm w-full">
           {[...Array(2)].map((_, index) => (
-            <div key={index} className="grid grid-cols-[1fr,2fr] gap-4 sm:gap-8">
+            <div
+              key={index}
+              className="grid grid-cols-[1fr,2fr] gap-4 sm:gap-8"
+            >
               <div className="h-4 bg-gray-300 rounded w-1/3"></div>
               <div className="h-4 bg-gray-300 rounded w-2/3"></div>
             </div>
