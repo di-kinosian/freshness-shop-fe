@@ -101,7 +101,7 @@ export const ProductItem: React.FC<Props> = ({
           </span>
           <ProductRating value={product?.rating ?? 0} size="small" />
         </div>
-        <div className="grid gap-x-8 gap-y-2 text-sm w-full">
+        <div className="hidden mobileSm:grid gap-x-8 gap-y-2 text-sm w-full">
           <div className="grid grid-cols-2">
             <span className="text-grayText">Country</span>
             <span className="text-gray-600">{product?.country}</span>

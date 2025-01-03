@@ -96,12 +96,14 @@ export const WishList = ({ onClose, goToCart, goToMainPage }: Props) => {
           </div>
         )}
       </div>
-      <div className="flex gap-4">
-        <span className="font-bold">Total price:</span>
-        <span className="text-neutralGreenBg font-bold">
-          {formatMoney(total)}
-        </span>
-      </div>
+      {wishList.length ? (
+        <div className="flex gap-4">
+          <span className="font-bold">Total price:</span>
+          <span className="text-neutralGreenBg font-bold">
+            {formatMoney(total)}
+          </span>
+        </div>
+      ) : null}
       <div className="flex gap-3 w-full justify-center">
         {wishList.length ? (
           <Button onClick={addProductToCart}>Buy now</Button>
