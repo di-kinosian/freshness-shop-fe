@@ -20,10 +20,10 @@ import { Filters } from "../../main/types/enums";
 import { twMerge } from "tailwind-merge";
 
 interface Props {
-  inMenu?: boolean;
+  inSidebar?: boolean;
 }
 
-export const AsideFilter = ({ inMenu }: Props) => {
+export const AsideFilter = ({ inSidebar }: Props) => {
   const dispatch: AppDispatch = useDispatch();
   const { availableFilters, selectedFilters } = useAppSelector(
     (state) => state.filters,
@@ -54,7 +54,7 @@ export const AsideFilter = ({ inMenu }: Props) => {
   return (
     <div
       className={twMerge(
-        inMenu ? "block" : "hidden custom:hidden md:hidden lg:block",
+        inSidebar ? "block" : "hidden custom:hidden md:hidden lg:block",
       )}
     >
       <div className="flex flex-col gap-8">

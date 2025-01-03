@@ -6,11 +6,11 @@ interface Props {
   onClose: (isOpen: boolean) => void;
 }
 
-export const AsideMenu = ({ isOpen, onClose }: Props) => {
+export const FiterSidebar = ({ isOpen, onClose }: Props) => {
   return (
     <Drawer open={isOpen} onClose={onClose}>
       <Box sx={{ width: 350, padding: "16px 16px" }} role="presentation">
-        <AsideFilter inMenu={true} />
+        <AsideFilter inSidebar={true} />
       </Box>
     </Drawer>
   );

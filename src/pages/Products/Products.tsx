@@ -27,7 +27,7 @@ import {
 import { selectCart } from "../../redux/features/cart/selectors";
 import { ProductPageSkeleton } from "./ProductPageSkeleton";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import { AsideMenu } from "@components/Filters/AsideMenu/AsideMenu";
+import { FiterSidebar } from "@components/Filters/AsideMenu/AsideMenu";
 import { twMerge } from "tailwind-merge";
 
 export const Products = () => {
@@ -40,7 +40,7 @@ export const Products = () => {
     (state) => state.product,
   );
   const totalPages = Math.ceil(total / limit);
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -61,8 +61,8 @@ export const Products = () => {
     dispatch(getAllProducts());
   };
 
-  const toggleMenu = (isOpen: boolean) => {
-    setIsMenuOpen(isOpen);
+  const toggleSidebar = (isOpen: boolean) => {
+    setIsSidebarOpen(isOpen);
   };
 
   const lastDownloadedPage = showMorePage || page;
@@ -96,7 +96,7 @@ export const Products = () => {
             </div>
             <div className="flex gap-2 block lg:hidden">
               <span>Filters</span>
-              <FilterAltIcon className="" onClick={() => toggleMenu(true)} />
+              <FilterAltIcon className="" onClick={() => toggleSidebar(true)} />
             </div>
           </div>
           <div className="grid xl:grid-cols-[270px,1fr] lg:grid-cols-[250px,1fr] custom:grid-cols-1 md:grid-cols-1 gap-8 max-w-[1200px] mx-auto w-full">
@@ -172,7 +172,7 @@ export const Products = () => {
           ) : null}
         </div>
       )}
-      <AsideMenu isOpen={isMenuOpen} onClose={() => toggleMenu(false)} />
+      <FiterSidebar isOpen={isSidebarOpen} onClose={() => toggleSidebar(false)} />
     </>
   );
 };
