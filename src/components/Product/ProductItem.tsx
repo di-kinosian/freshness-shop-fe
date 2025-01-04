@@ -16,7 +16,6 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Tooltip } from "@mui/material";
 import { addToCart, editQuantity } from "../../redux/features/cart/cartSlice";
-import { useState } from "react";
 import { QuantitySelector } from "@components/QuantitySelector/QuantitySelector";
 
 interface Props {
@@ -35,7 +34,6 @@ export const ProductItem: React.FC<Props> = ({
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const isInWishList = wishList?.includes(product._id);
-  const [quantity, setQuantity] = useState<number>(cartProduct?.quantity || 1);
 
   const updateWishList = (): void => {
     if (isInWishList) {
@@ -54,17 +52,18 @@ export const ProductItem: React.FC<Props> = ({
   };
 
   const handleIncreaseQuantity = (): void => {
-    const newQuantity = quantity + 1;
-    updateQuantity(newQuantity);
-    setQuantity(newQuantity);
+    if (cartProduct) {
+      const newQuantity = cartProduct.quantity + 1;
+      updateQuantity(newQuantity);
+    }
   };
 
   const handleDecreaseQuantity = (): void => {
-    const newQuantity = quantity - 1;
-
-    if (newQuantity > 0) {
-      updateQuantity(newQuantity);
-      setQuantity(newQuantity);
+    if (cartProduct) {
+      const newQuantity = cartProduct.quantity - 1;
+      if (newQuantity > 0) {
+        updateQuantity(newQuantity);
+      }
     }
   };
 
@@ -160,7 +159,7 @@ export const ProductItem: React.FC<Props> = ({
           {isInCart ? (
             <div className="">
               <QuantitySelector
-                quantity={cartProduct?.quantity || quantity}
+                quantity={cartProduct?.quantity || 1}
                 handleIncreaseQuantity={handleIncreaseQuantity}
                 handleDecreaseQuantity={handleDecreaseQuantity}
               />
