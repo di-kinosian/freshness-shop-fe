@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import api from "../../config/axios";
 import { useAppSelector } from "@redux/app/hooks";
 import { selectAccessToken } from "@redux/features/auth/selectors";
 import { AppDispatch } from "@redux/app/store";
@@ -8,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { cleanUpCart } from "@redux/features/cart/cartSlice";
 import { formatMoney } from "../../main/helpers";
 import { Order } from "@redux/features/orders/type";
+import api from "../../config/axios";
 
 export const OrderConfirmation = () => {
   const [params] = useSearchParams();
