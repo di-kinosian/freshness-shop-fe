@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ProductRating } from "../../components/Product/ProductRating";
 import { Button } from "../../components/Button/Button";
 import { clearProduct } from "../../redux/features/products/productsSlice";
@@ -37,8 +37,6 @@ export const ProductDetails = () => {
   const wishList = useAppSelector(selectWishList);
   const cart = useAppSelector(selectCart);
   const addedProduct = cart.find((item) => item.product._id === productId);
-  const [quantity, setQuantity] = useState<number>(addedProduct?.quantity || 1);
-
   const isInWishList = wishList?.includes(productId as string);
 
   useEffect(() => {
@@ -68,17 +66,16 @@ export const ProductDetails = () => {
   };
 
   const handleIncreaseQuantity = (): void => {
-    const newQuantity = quantity + 1;
-    updateQuantity(newQuantity);
-    setQuantity(newQuantity);
+    if (addedProduct) {
+      const newQuantity = addedProduct?.quantity + 1;
+      updateQuantity(newQuantity);
+    }
   };
 
   const handleDecreaseQuantity = (): void => {
-    const newQuantity = quantity - 1;
-
-    if (newQuantity > 0) {
+    if (addedProduct) {
+      const newQuantity = addedProduct?.quantity - 1;
       updateQuantity(newQuantity);
-      setQuantity(newQuantity);
     }
   };
 
@@ -148,7 +145,7 @@ export const ProductDetails = () => {
                 <QuantitySelector
                   handleIncreaseQuantity={handleIncreaseQuantity}
                   handleDecreaseQuantity={handleDecreaseQuantity}
-                  quantity={addedProduct.quantity || quantity}
+                  quantity={addedProduct.quantity || 1}
                 />
               ) : (
                 <Button onClick={addProductToCart}>+ Add to card</Button>
