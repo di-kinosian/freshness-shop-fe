@@ -4,6 +4,7 @@ import { ThunkRejectValue } from "@redux/types";
 import { handleAxiosError } from "../utils/handleThunkError";
 import api from "../../../config/axios";
 import { MESSAGES } from "../../../main/constants/messages";
+import { cleanUpCart } from "../cart/cartSlice";
 
 const initialState: OrderState = {
   order: null,
@@ -29,6 +30,32 @@ export const createOrder = createAsyncThunk<Order, Order, ThunkRejectValue>(
     }
   },
 );
+
+export const confirmOrder = createAsyncThunk<
+  void,
+  { sessionId: string; token: string },
+  { rejectValue: string }
+>("order/confirmOrder", async ({ sessionId, token }, thunkAPI) => {
+  try {
+    const response = await api.post(
+      "/order/confirm",
+      { sessionId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    if (response.status === 200) {
+      thunkAPI.dispatch(cleanUpCart());
+    } else {
+      return thunkAPI.rejectWithValue("Order confirmation failed.");
+    }
+  } catch (error) {
+    return handleAxiosError(error, thunkAPI);
+  }
+});
 
 const ordersSlice = createSlice({
   name: "orders",
