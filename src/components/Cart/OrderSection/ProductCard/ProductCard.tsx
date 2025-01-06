@@ -1,7 +1,6 @@
 import { Tooltip } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
 import { QuantitySelector } from "@components/QuantitySelector/QuantitySelector";
 import { Cart } from "@redux/features/cart/types";
 import { AppDispatch } from "@redux/app/store";
@@ -14,20 +13,16 @@ interface Props {
 
 export const ProductCard = ({ productItem }: Props) => {
   const dispatch: AppDispatch = useDispatch();
-  const [quantity, setQuantity] = useState<number>(productItem.quantity || 1);
 
   const handleIncreaseQuantity = (): void => {
-    const newQuantity = quantity + 1;
+    const newQuantity = productItem?.quantity + 1;
     updateQuantity(newQuantity);
-    setQuantity(newQuantity);
   };
 
   const handleDecreaseQuantity = (): void => {
-    const newQuantity = quantity - 1;
-
+    const newQuantity = productItem?.quantity - 1;
     if (newQuantity > 0) {
       updateQuantity(newQuantity);
-      setQuantity(newQuantity);
     }
   };
 
@@ -70,7 +65,7 @@ export const ProductCard = ({ productItem }: Props) => {
         <QuantitySelector
           handleDecreaseQuantity={handleDecreaseQuantity}
           handleIncreaseQuantity={handleIncreaseQuantity}
-          quantity={productItem.quantity || quantity}
+          quantity={productItem.quantity || 1}
         />
       </div>
     </div>
