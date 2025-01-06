@@ -63,7 +63,6 @@ export const editQuantity = createAsyncThunk<
       productId: payload.productId,
       quantity: payload.quantity,
     });
-    thunkAPI.dispatch(getCart());
   } catch (error) {
     return handleAxiosError(error, thunkAPI);
   }
@@ -95,6 +94,16 @@ const cartSlice = createSlice({
       })
       .addCase(deleteFromCart.rejected, (state, action) => {
         state.deleteFromCartError = action.payload || "Failed remove from cart";
+      })
+      .addCase(editQuantity.pending, (state, action) => {
+        state.cart = state.cart.map((item) =>
+          item.product._id === action.meta.arg.productId
+            ? {
+                ...item,
+                quantity: action.meta.arg.quantity,
+              }
+            : item,
+        );
       })
       .addCase(editQuantity.rejected, (state, action) => {
         state.editQuantityError = action.payload || "Failed edit quantity";
