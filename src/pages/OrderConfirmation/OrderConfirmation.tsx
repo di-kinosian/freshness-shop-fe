@@ -4,7 +4,8 @@ import { useAppSelector } from "@redux/app/hooks";
 import { selectAccessToken } from "@redux/features/auth/selectors";
 import { AppDispatch } from "@redux/app/store";
 import { useDispatch } from "react-redux";
-import { confirmOrder } from "@redux/features/orders/ordersSlice";
+import { cleanUpCart } from "@redux/features/cart/cartSlice";
+import api from "../../config/axios";
 
 export const OrderConfirmation = () => {
   const [params] = useSearchParams();
@@ -13,10 +14,20 @@ export const OrderConfirmation = () => {
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    if (sessionId && token) {
-      dispatch(confirmOrder({ sessionId, token }));
-    }
-  }, [dispatch, sessionId, token]);
+    const confirm = async () => {
+      await api.post(
+        "/order/confirm",
+        { sessionId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      dispatch(cleanUpCart());
+    };
+    confirm();
+  }, []);
 
   return <div>Confirmation Page</div>;
 };
