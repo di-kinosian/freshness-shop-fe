@@ -15,14 +15,22 @@ import { twMerge } from "tailwind-merge";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Tooltip } from "@mui/material";
-import { addToCart } from "../../redux/features/cart/cartSlice";
+import { addToCart, editQuantity } from "../../redux/features/cart/cartSlice";
+import { QuantitySelector } from "@components/QuantitySelector/QuantitySelector";
 
 interface Props {
   product: Product;
+  isInCart: boolean;
   wishList?: string[];
+  cartProduct?: { product: Product; quantity: number };
 }
 
-export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
+export const ProductItem: React.FC<Props> = ({
+  product,
+  wishList,
+  isInCart,
+  cartProduct,
+}) => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const isInWishList = wishList?.includes(product._id);
@@ -41,6 +49,33 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
 
   const goToPDP = (productId: string): void => {
     navigate(getProductDetailsRoute(productId));
+  };
+
+  const handleIncreaseQuantity = (): void => {
+    if (cartProduct) {
+      const newQuantity = cartProduct.quantity + 1;
+      updateQuantity(newQuantity);
+    }
+  };
+
+  const handleDecreaseQuantity = (): void => {
+    if (cartProduct) {
+      const newQuantity = cartProduct.quantity - 1;
+      if (newQuantity > 0) {
+        updateQuantity(newQuantity);
+      }
+    }
+  };
+
+  const updateQuantity = (quantity: number): void => {
+    if (cartProduct) {
+      dispatch(
+        editQuantity({
+          productId: cartProduct.product._id,
+          quantity,
+        }),
+      );
+    }
   };
 
   return (
@@ -121,15 +156,25 @@ export const ProductItem: React.FC<Props> = ({ product, wishList }) => {
           <div className="text-sm text-grayText">Delivery in 1 day</div>
         </div>
         <div className="flex flex-col gap-2">
-          <Button
-            color={ButtonVariant.PRIMARY}
-            size={ButtonSize.MEDIUM}
-            className="w-[164px] flex gap-2"
-            onClick={addProductToCart}
-          >
-            <span>Add to cart</span>
-            <span>+</span>
-          </Button>
+          {isInCart ? (
+            <div className="">
+              <QuantitySelector
+                quantity={cartProduct?.quantity || 1}
+                handleIncreaseQuantity={handleIncreaseQuantity}
+                handleDecreaseQuantity={handleDecreaseQuantity}
+              />
+            </div>
+          ) : (
+            <Button
+              color={ButtonVariant.PRIMARY}
+              size={ButtonSize.MEDIUM}
+              className="w-[164px] flex gap-2"
+              onClick={addProductToCart}
+            >
+              <span>Add to cart</span>
+              <span>+</span>
+            </Button>
+          )}
         </div>
       </div>
     </div>

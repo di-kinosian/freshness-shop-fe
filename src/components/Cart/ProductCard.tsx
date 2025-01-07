@@ -1,8 +1,5 @@
-import { IconButton, Tooltip } from "@mui/material";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { Tooltip } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { PALETTE } from "../../main/constants/palette";
 import { Cart } from "../../redux/features/cart/types";
 import { formatMoney } from "../../main/helpers";
 import { AppDispatch } from "../../redux/app/store";
@@ -11,7 +8,7 @@ import {
   deleteFromCart,
   editQuantity,
 } from "../../redux/features/cart/cartSlice";
-import { useState } from "react";
+import { QuantitySelector } from "@components/QuantitySelector/QuantitySelector";
 
 interface Props {
   productItem: Cart;
@@ -19,20 +16,16 @@ interface Props {
 
 export const ProductCard = ({ productItem }: Props) => {
   const dispatch: AppDispatch = useDispatch();
-  const [quantity, setQuantity] = useState<number>(productItem.quantity || 1);
 
   const handleIncreaseQuantity = (): void => {
-    const newQuantity = quantity + 1;
+    const newQuantity = productItem?.quantity + 1;
     updateQuantity(newQuantity);
-    setQuantity(newQuantity);
   };
 
   const handleDecreaseQuantity = (): void => {
-    const newQuantity = quantity - 1;
-
+    const newQuantity = productItem?.quantity - 1;
     if (newQuantity > 0) {
       updateQuantity(newQuantity);
-      setQuantity(newQuantity);
     }
   };
 
@@ -72,20 +65,11 @@ export const ProductCard = ({ productItem }: Props) => {
         <Tooltip title="Delete">
           <DeleteOutlineIcon fontSize="medium" onClick={deleteProduct} />
         </Tooltip>
-        <div className="flex gap-3">
-          <IconButton
-            sx={{ padding: 0 }}
-            disabled={productItem.quantity === 1}
-            onClick={handleDecreaseQuantity}
-          >
-            <RemoveCircleOutlineIcon sx={{ color: PALETTE.neutralGreenBg }} />
-          </IconButton>
-          <div>{quantity}</div>
-          <AddCircleOutlineIcon
-            onClick={handleIncreaseQuantity}
-            sx={{ color: PALETTE.neutralGreenBg }}
-          />
-        </div>
+        <QuantitySelector
+          handleDecreaseQuantity={handleDecreaseQuantity}
+          handleIncreaseQuantity={handleIncreaseQuantity}
+          quantity={productItem.quantity || 1}
+        />
       </div>
     </div>
   );

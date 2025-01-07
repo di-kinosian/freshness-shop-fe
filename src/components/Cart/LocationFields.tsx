@@ -15,7 +15,7 @@ interface Props {
   name: keyof BillingFormData;
 }
 
-export const LocationFields = ({
+export const LocationField = ({
   control,
   label,
   locationOptions: countriesOptions,

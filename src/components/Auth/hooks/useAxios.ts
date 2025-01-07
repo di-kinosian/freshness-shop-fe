@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { createApiWithAuth } from "../../../config/axios";
-import { store } from "../../../redux/app/store";
+import { store } from "@redux/app/store";
 
 export const useAxios = (): void => {
   useEffect(() => {

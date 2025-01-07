@@ -34,4 +34,10 @@ export const MESSAGES = {
   SIGNUP: {
     SUCCESS: "Account was successfully created",
   },
+  CHECKBOX: {
+    MARKETING_AGREEMENT:
+      "I agree with sending Marketing and newsletter emails. No spam, promised!",
+    TERMS_AND_CONDITIONS:
+      "I agree with our terms and conditions and privacy policy.",
+  },
 };

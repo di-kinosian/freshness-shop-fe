@@ -25,13 +25,17 @@ import { twMerge } from "tailwind-merge";
 import { getProduct } from "../../redux/features/products/productThunks";
 import { selectProduct } from "../../redux/features/products/selectors";
 import { selectWishList } from "../../redux/features/auth/selectors";
+import { selectCart } from "../../redux/features/cart/selectors";
+import { QuantitySelector } from "@components/QuantitySelector/QuantitySelector";
+import { addToCart, editQuantity } from "../../redux/features/cart/cartSlice";
 
 export const ProductDetails = () => {
   const { productId } = useParams();
   const dispatch: AppDispatch = useDispatch();
   const product = useAppSelector(selectProduct);
   const wishList = useAppSelector(selectWishList);
-
+  const cart = useAppSelector(selectCart);
+  const addedProduct = cart.find((item) => item.product._id === productId);
   const isInWishList = wishList?.includes(productId as string);
 
   useEffect(() => {
@@ -51,6 +55,37 @@ export const ProductDetails = () => {
       dispatch(deleteFromWishList({ productId: productId }));
     } else {
       dispatch(addToWishList({ productId: productId }));
+    }
+  };
+
+  const addProductToCart = (): void => {
+    if (productId) {
+      dispatch(addToCart({ productId: productId, quantity: 1 }));
+    }
+  };
+
+  const handleIncreaseQuantity = (): void => {
+    if (addedProduct) {
+      const newQuantity = addedProduct?.quantity + 1;
+      updateQuantity(newQuantity);
+    }
+  };
+
+  const handleDecreaseQuantity = (): void => {
+    if (addedProduct) {
+      const newQuantity = addedProduct?.quantity - 1;
+      updateQuantity(newQuantity);
+    }
+  };
+
+  const updateQuantity = (quantity: number): void => {
+    if (addedProduct) {
+      dispatch(
+        editQuantity({
+          productId: addedProduct.product._id,
+          quantity,
+        }),
+      );
     }
   };
 
@@ -88,7 +123,7 @@ export const ProductDetails = () => {
                   : ""}
               </div>
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-3 items-center">
               <div className="w-[170px]">
                 <ControlContainer
                   size={ControlSize.LARGE}
@@ -105,7 +140,15 @@ export const ProductDetails = () => {
                   }
                 />
               </div>
-              <Button>+ Add to card</Button>
+              {addedProduct ? (
+                <QuantitySelector
+                  handleIncreaseQuantity={handleIncreaseQuantity}
+                  handleDecreaseQuantity={handleDecreaseQuantity}
+                  quantity={addedProduct.quantity || 1}
+                />
+              ) : (
+                <Button onClick={addProductToCart}>+ Add to card</Button>
+              )}
             </div>
           </div>
           <Button variant="text" onClick={updateWishList}>

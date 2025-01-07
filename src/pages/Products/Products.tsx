@@ -21,14 +21,16 @@ import {
 } from "../../redux/features/products/productThunks";
 import { selectWishList } from "../../redux/features/auth/selectors";
 import { selectProducts } from "../../redux/features/products/selectors";
+import { selectCart } from "../../redux/features/cart/selectors";
 
 export const Products = () => {
   const dispatch: AppDispatch = useDispatch();
   const wishList = useAppSelector(selectWishList);
+  const products = useAppSelector(selectProducts);
+  const cart = useAppSelector(selectCart);
   const { total, limit, page, showMorePage, sortValue } = useAppSelector(
     (state) => state.product,
   );
-  const products = useAppSelector(selectProducts);
   const totalPages = Math.ceil(total / limit);
 
   useEffect(() => {
@@ -77,13 +79,20 @@ export const Products = () => {
       <div className="grid xl:grid-cols-[270px,1fr] lg:grid-cols-[250px,1fr] custom:grid-cols-1 md:grid-cols-1 gap-8 max-w-[1200px] mx-auto w-full">
         <AsideFilter />
         <div className="flex flex-col gap-[34px] items-end">
-          {products?.map((product) => (
-            <ProductItem
-              key={product._id}
-              product={product}
-              wishList={wishList}
-            />
-          ))}
+          {products?.map((product) => {
+            const addedProduct = cart.find(
+              (item) => item.product._id === product._id,
+            );
+            return (
+              <ProductItem
+                key={product._id}
+                product={product}
+                isInCart={!!addedProduct}
+                wishList={wishList}
+                cartProduct={addedProduct}
+              />
+            );
+          })}
         </div>
       </div>
       <div className="flex w-full items-center">

@@ -22,8 +22,9 @@ import {
   selectCountries,
 } from "../../redux/features/location/selectors";
 import { NotesField } from "./NotesField";
-import { LocationFields } from "./LocationFields";
-import { PolicyField } from "./PolicyField";
+import { LocationField } from "./LocationFields";
+import { CheckboxField } from "./PolicyField";
+import { MESSAGES } from "../../main/constants/messages";
 
 interface BillingFormFieldProps {
   name: BillingFormFields;
@@ -108,7 +109,7 @@ export const BillingForm = () => {
           label="Phone number"
         />
         <BillingFormField name={BillingFormFields.Address} label="Address" />
-        <LocationFields
+        <LocationField
           name="country"
           control={control}
           locationOptions={countriesOptions}
@@ -116,7 +117,7 @@ export const BillingForm = () => {
           label="State / Country"
           placeholder="country"
         />
-        <LocationFields
+        <LocationField
           name="city"
           control={control}
           locationOptions={citiesOptions}
@@ -139,16 +140,16 @@ export const BillingForm = () => {
           </span>
         </div>
         <div className="flex flex-col gap-2">
-          <PolicyField
+          <CheckboxField
             control={control}
             name="agreeToEmails"
-            checkboxMessage="I agree with sending an Marketing and newsletter emails. No spam, promissed!"
+            text={MESSAGES.CHECKBOX.MARKETING_AGREEMENT}
           />
-          <PolicyField
+          <CheckboxField
             control={control}
             name="agreeToPolicy"
             error={errors.agreeToPolicy?.message || ""}
-            checkboxMessage=" I agree with our terms and conditions and privacy policy."
+            text={MESSAGES.CHECKBOX.TERMS_AND_CONDITIONS}
           />
         </div>
       </div>
