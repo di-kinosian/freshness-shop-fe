@@ -7,6 +7,7 @@ export interface Product {
   _id: string;
   title: string;
   description: string;
+  fullDescription?: string;
   rating?: number;
   price: number;
   quantity: number;
@@ -32,6 +33,7 @@ export interface PaginatedProductsResponse {
 
 export interface ProductsState {
   products: Product[];
+  isProductsLoading: boolean;
   relatedProducts: Product[];
   total: number;
   page: number;

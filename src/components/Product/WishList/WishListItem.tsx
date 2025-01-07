@@ -1,6 +1,6 @@
 import { Tooltip } from "@mui/material";
-import { formatMoney } from "../../main/helpers";
-import { Product } from "../../redux/features/products/types";
+import { formatMoney } from "../../../main/helpers";
+import { Product } from "../../../redux/features/products/types";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const WishListItem = ({ product, onDelete }: Props) => (
-  <div className="w-full pb-4 border-b border-separator grid grid-cols-[1fr,2fr,1fr]">
+  <div className="w-full pb-4 border-b border-separator grid grid-cols-[1fr,2fr,1fr] gap-2">
     <div className="w-full flex justify-center">
       <img src={product.images[0]} className="rounded-md max-h-[100px] " />
     </div>

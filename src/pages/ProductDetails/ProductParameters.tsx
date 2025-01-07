@@ -22,7 +22,7 @@ export const ProductParameters = ({ product }: Props) => (
       {product?.additionalInformation?.map((item) => (
         <div className="grid grid-cols-[1fr,2fr] gap-8" key={item.key}>
           <div className="text-grayText">{item.key}</div>
-          <div className="">{item.value}</div>
+          <div>{item.value}</div>
         </div>
       ))}
     </div>

@@ -38,3 +38,7 @@ export enum BillingFormFields {
   Country = "country",
   ZipCode = "zipCode",
 }
+
+export enum ReviewFields {
+  Review = "review",
+}

@@ -17,8 +17,13 @@ import {
 import { FiltersCategories } from "../../redux/features/filters/types";
 import { getAllProducts } from "../../redux/features/products/productThunks";
 import { Filters } from "../../main/types/enums";
+import { twMerge } from "tailwind-merge";
 
-export const AsideFilter = () => {
+interface Props {
+  inSidebar?: boolean;
+}
+
+export const AsideFilter = ({ inSidebar }: Props) => {
   const dispatch: AppDispatch = useDispatch();
   const { availableFilters, selectedFilters } = useAppSelector(
     (state) => state.filters,
@@ -47,7 +52,11 @@ export const AsideFilter = () => {
   };
 
   return (
-    <div className="hidden custom:hidden md:hidden lg:block">
+    <div
+      className={twMerge(
+        inSidebar ? "block" : "hidden custom:hidden md:hidden lg:block",
+      )}
+    >
       <div className="flex flex-col gap-8">
         <CategoryFilter
           onChange={handleFilterChange(Filters.Category)}
