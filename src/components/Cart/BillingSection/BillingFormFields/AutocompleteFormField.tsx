@@ -35,7 +35,7 @@ export const AutocompleteFormField = ({
             options={options}
             value={field.value as string}
             onChange={field.onChange}
-            inputRef={field.ref}
+            ref={field.ref}
             placeholder={placeholder}
             disabled={disabled}
           />

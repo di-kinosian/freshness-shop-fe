@@ -10,10 +10,10 @@ export const OrderSection = () => {
 
   useEffect(() => {
     const result = cart.reduce((acc, product) => {
-      return (acc = acc + product.product.price);
+      return (acc = acc + (product.product.price * product.quantity || 1));
     }, 0);
     setTotal(result);
-  }, [cart]);
+  }, [cart, total]);
 
   return (
     <div className="flex flex-col gap-4 p-4 border border-basicGray rounded-lg w-full h-fit">

@@ -28,4 +28,12 @@ export const ROUTES: Record<string, Route> = {
   ORDER_CONFIRMATION: {
     path: "/orderConfirmation",
   },
+  ORDERS: {
+    path: "/orders",
+    breadcrumb: "Orders",
+  },
+  CANCEL: {
+    path: "/cancel",
+    breadcrumb: "Cancel",
+  },
 };

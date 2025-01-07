@@ -74,8 +74,10 @@ export const ProductDetails = () => {
 
   const handleDecreaseQuantity = (): void => {
     if (addedProduct) {
-      const newQuantity = addedProduct?.quantity - 1;
-      updateQuantity(newQuantity);
+      if (addedProduct?.quantity !== 1) {
+        const newQuantity = addedProduct?.quantity - 1;
+        updateQuantity(newQuantity);
+      }
     }
   };
 

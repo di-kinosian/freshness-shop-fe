@@ -18,6 +18,9 @@ export enum PaymentStatus {
 
 export interface Order {
   id?: string;
+  checkoutId?: string;
+  createdAt?: string;
+  updatedAt?: string;
   status: OrderStatus;
   products: Cart[];
   billingInfo: BillingFormData;
@@ -26,7 +29,11 @@ export interface Order {
 }
 
 export interface OrderState {
+  orders: Order[];
   order: Order | null;
   orderError: string | null;
   isOrderLoading: boolean;
+  confirmationOrder: Order | null;
+  confirmOrderError: string | null;
+  isConfirmOrderLoading: boolean;
 }

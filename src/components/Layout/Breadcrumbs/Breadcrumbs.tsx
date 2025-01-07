@@ -30,7 +30,7 @@ export const Breadcrumbs = () => {
     });
   }, [state, location]);
 
-  if (location.pathname === "/") {
+  if (location.pathname === "/" || location.pathname === "/orderConfirmation") {
     return null;
   }
 

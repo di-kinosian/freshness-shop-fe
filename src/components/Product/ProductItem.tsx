@@ -141,7 +141,7 @@ export const ProductItem: React.FC<Props> = ({
               {calculateOriginalPrice(product.price, product.discount)}
             </div>
           ) : null}
-          <div className="text-sm text-grayText">Delivery in 1 day</div>
+          <div className="text-sm text-grayText">Delivery in 2-3 days</div>
         </div>
         <div className="flex flex-col gap-2 w-full">
           {isInCart ? (

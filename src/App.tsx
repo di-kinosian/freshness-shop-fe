@@ -15,6 +15,8 @@ import { ConfirmationDialogProvider } from "./components/Dialog/context/Confirma
 import { Layout } from "@components/Layout/Layout";
 import { ToastProvider } from "@components/Toast/ToastContext";
 import { OrderConfirmation } from "@pages/OrderConfirmation/OrderConfirmation";
+import { Orders } from "@pages/Orders/Orders";
+import { Cancel } from "@pages/Cancel/Cancel";
 
 function App() {
   return (
@@ -45,6 +47,8 @@ function App() {
                           path={ROUTES.ORDER_CONFIRMATION.path}
                           element={<OrderConfirmation />}
                         />
+                        <Route path={ROUTES.ORDERS.path} element={<Orders />} />
+                        <Route path={ROUTES.CANCEL.path} element={<Cancel />} />
                       </Routes>
                     </Layout>
                   </Router>

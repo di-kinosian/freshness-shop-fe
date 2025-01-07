@@ -1,49 +1,9 @@
 export const ProductPageSkeleton = () => {
   return (
-    <div className="flex flex-col gap-6 sm:gap-12 animate-pulse">
-      <div className="flex flex-col gap-4 sm:gap-6">
-        <div className="flex flex-col sm:flex-row justify-between items-center max-w-[1200px] w-full mx-auto gap-4">
-          <div className="h-6 sm:h-8 bg-gray-300 rounded w-1/2 sm:w-1/4"></div>
-          <div className="flex gap-2 items-center">
-            <div className="h-5 sm:h-6 bg-gray-300 rounded w-6 sm:w-8"></div>
-            <div className="h-5 sm:h-6 bg-gray-300 rounded w-12 sm:w-16"></div>
-          </div>
-        </div>
-        <div className="w-full sm:w-[270px]">
-          <div className="flex justify-between items-center">
-            <div className="h-5 sm:h-6 bg-gray-300 rounded w-[40px] sm:w-[50px]"></div>
-            <div className="h-6 sm:h-8 bg-gray-300 rounded w-[120px] sm:w-[170px]"></div>
-          </div>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[1fr] xl:grid-cols-[270px,1fr] max-w-full sm:max-w-[1200px] mx-auto w-full">
-        <div className="hidden xl:block">
-          <div className="flex flex-col gap-4 sm:gap-8">
-            {[...Array(4)].map((_, index) => (
-              <div key={index}>
-                <div className="h-5 sm:h-6 bg-gray-300 rounded w-2/3 mb-2"></div>
-                <div className="h-6 sm:h-8 bg-gray-300 rounded w-full"></div>
-              </div>
-            ))}
-            <div className="h-5 sm:h-6 bg-gray-300 rounded w-16 sm:w-20"></div>
-          </div>
-        </div>
-        <div className="flex flex-col gap-4 sm:gap-[34px] items-center sm:items-end">
-          {[...Array(6)].map((_, index) => (
-            <ProductItemSkeleton key={index} />
-          ))}
-        </div>
-      </div>
-      <div className="flex flex-col sm:flex-row w-full items-center gap-4">
-        <div className="w-full sm:flex-1">
-          <div className="h-5 sm:h-6 bg-gray-300 rounded w-1/2 sm:w-1/3"></div>
-        </div>
-        <div className="h-10 bg-gray-300 rounded w-full sm:w-[200px] mx-auto"></div>
-        <div className="flex gap-2 w-full sm:w-auto sm:flex-1 justify-center sm:justify-end">
-          <div className="h-5 sm:h-6 bg-gray-300 rounded w-6 sm:w-8"></div>
-          <div className="h-5 sm:h-6 bg-gray-300 rounded w-12 sm:w-16"></div>
-        </div>
-      </div>
+    <div className="flex flex-col gap-6 w-full">
+      {[...Array(6)].map((_, index) => (
+        <ProductItemSkeleton key={index} />
+      ))}
     </div>
   );
 };

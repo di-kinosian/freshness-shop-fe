@@ -4,7 +4,7 @@ import { billingValidationShema } from "../validation";
 import { Button } from "@components/Button/Button";
 
 import { BillingFormFields, ButtonVariant } from "../../../main/types/enums";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { AppDispatch } from "../../../redux/app/store";
 import { useDispatch } from "react-redux";
 import {
@@ -28,8 +28,10 @@ import { selectCart } from "@redux/features/cart/selectors";
 import { OrderStatus, PaymentStatus } from "@redux/features/orders/type";
 import { InputFormField } from "@components/FormComponents/InputFormField";
 import { TextareaFormField } from "@components/FormComponents/TextareaFormField";
+import { selectProfile } from "@redux/features/auth/selectors";
 
 export const BillingForm = () => {
+  const profile = useAppSelector(selectProfile);
   const {
     handleSubmit,
     formState: { errors },
@@ -42,6 +44,10 @@ export const BillingForm = () => {
     defaultValues: {
       agreeToPolicy: false,
       agreeToEmails: false,
+      firstName: profile?.firstName,
+      lastName: profile?.lastName,
+      email: profile?.email,
+      phoneNumber: profile?.phoneNumber,
     },
   });
 
@@ -66,6 +72,18 @@ export const BillingForm = () => {
   const totalAmount = cart.reduce((acc, item) => {
     return (acc = acc + item.product.price);
   }, 0);
+
+  const fieldRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  const scrollToError = () => {
+    const firstErrorFieldKey = Object.keys(errors)[0];
+    if (firstErrorFieldKey && fieldRefs.current[firstErrorFieldKey]) {
+      fieldRefs.current[firstErrorFieldKey]?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  };
 
   const onSubmit = async () => {
     const data = getValues();
@@ -92,10 +110,10 @@ export const BillingForm = () => {
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit, scrollToError)}
       className="flex flex-col gap-16 max-w-[500px]"
     >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 w-full">
         <InputFormField
           control={control}
           name={BillingFormFields.FirstName}

@@ -2,6 +2,7 @@ import { TextField, Theme } from "@mui/material";
 import AutocompleteMUI from "@mui/material/Autocomplete";
 import { Options } from "../../main/types/interfaces";
 import { makeStyles } from "@mui/styles";
+import { forwardRef } from "react";
 
 interface Props {
   options: Options[];
@@ -12,14 +13,13 @@ interface Props {
   disabled?: boolean;
 }
 
-export const Autocomplete = ({
+export const Autocomplete = forwardRef(({
   options,
   value,
   onChange,
-  inputRef,
   placeholder,
   disabled,
-}: Props) => {
+}: Props, ref) => {
   const classes = useStyles();
 
   const handleChange = (value: string): void => {
@@ -31,7 +31,7 @@ export const Autocomplete = ({
 
   return (
     <AutocompleteMUI
-      ref={inputRef}
+      ref={ref}
       disabled={disabled}
       value={selectedOption}
       options={options}
@@ -46,7 +46,7 @@ export const Autocomplete = ({
       }}
     />
   );
-};
+})  ;
 
 const useStyles = makeStyles((theme: Theme) => {
   return {

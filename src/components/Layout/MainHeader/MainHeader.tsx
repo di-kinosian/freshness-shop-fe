@@ -17,6 +17,7 @@ import { Search } from "../../Search/Search";
 import { selectAccessToken } from "../../../redux/features/auth/selectors";
 import { Bage } from "@components/Bage/Bage";
 import { selectCart } from "../../../redux/features/cart/selectors";
+import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 
 export const MainHeader = () => {
   const { openDialog, closeDialog } = useDialog();
@@ -147,6 +148,16 @@ export const MainHeader = () => {
               >
                 <ChecklistIcon fontSize="small" />
                 <span>Wish list</span>
+              </li>
+              <li
+                className="cursor-pointer flex gap-2 items-center"
+                onClick={() => {
+                  handleUserMenuClose();
+                  navigate(ROUTES.ORDERS.path);
+                }}
+              >
+                <ProductionQuantityLimitsIcon fontSize="small" />
+                <span>Orders</span>
               </li>
               <li
                 className="cursor-pointer flex gap-2 items-center"
