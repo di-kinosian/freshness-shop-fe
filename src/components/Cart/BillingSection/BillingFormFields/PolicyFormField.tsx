@@ -1,7 +1,7 @@
 import { Checkbox } from "@components/Checkbox/Checkbox";
 import { FormControl, FormHelperText } from "@mui/material";
 import { Control, Controller } from "react-hook-form";
-import { BillingFormData } from "./types";
+import { BillingFormData } from "../../types";
 
 interface Props {
   control: Control<BillingFormData>;
@@ -10,7 +10,7 @@ interface Props {
   error?: string;
 }
 
-export const CheckboxField = ({ control, name, text, error }: Props) => {
+export const CheckboxFormField = ({ control, name, text, error }: Props) => {
   return (
     <Controller
       control={control}

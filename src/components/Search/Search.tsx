@@ -36,7 +36,7 @@ export const Search = () => {
   };
 
   return (
-    <div className="custom:w-[500px] w-[400px]">
+    <div className="w-[380px] customMd:w-[500px]">
       <ControlContainer
         size={ControlSize.SMALL}
         leftElement={

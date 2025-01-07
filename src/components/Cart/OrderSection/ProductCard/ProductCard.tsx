@@ -1,14 +1,11 @@
 import { Tooltip } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { Cart } from "../../redux/features/cart/types";
-import { formatMoney } from "../../main/helpers";
-import { AppDispatch } from "../../redux/app/store";
 import { useDispatch } from "react-redux";
-import {
-  deleteFromCart,
-  editQuantity,
-} from "../../redux/features/cart/cartSlice";
 import { QuantitySelector } from "@components/QuantitySelector/QuantitySelector";
+import { Cart } from "@redux/features/cart/types";
+import { AppDispatch } from "@redux/app/store";
+import { deleteFromCart, editQuantity } from "@redux/features/cart/cartSlice";
+import { formatMoney } from "../../../../main/helpers";
 
 interface Props {
   productItem: Cart;
@@ -43,7 +40,7 @@ export const ProductCard = ({ productItem }: Props) => {
   };
 
   return (
-    <div className="w-full pb-4 border-b border-separator grid grid-cols-[1fr,2fr,1fr]">
+    <div className="w-full pb-4 border-b border-separator grid grid-cols-[1fr,2fr,1fr] gap-2">
       <div className="w-full flex justify-center">
         <img
           src={productItem.product.images[0]}
