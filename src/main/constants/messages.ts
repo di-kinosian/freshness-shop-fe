@@ -30,6 +30,7 @@ export const MESSAGES = {
     ACCOUNT_ALREADY_EXISTS: "An account with this email already exists.",
     SIGNUP_FAILED: "Signup failed. Please try again later.",
     NETWORK_ERROR: "Network error. Please check your connection.",
+    URL_ERROR: "Url error: Missing redirection URL"
   },
   SIGNUP: {
     SUCCESS: "Account was successfully created",

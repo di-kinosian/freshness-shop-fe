@@ -25,6 +25,9 @@ import { NotesField } from "./NotesField";
 import { LocationField } from "./LocationFields";
 import { CheckboxField } from "./PolicyField";
 import { MESSAGES } from "../../main/constants/messages";
+import { createOrder } from "@redux/features/orders/ordersSlice";
+import { selectCart } from "@redux/features/cart/selectors";
+import { OrderStatus, PaymentStatus } from "@redux/features/orders/type";
 
 interface BillingFormFieldProps {
   name: BillingFormFields;
@@ -37,6 +40,7 @@ export const BillingForm = () => {
     formState: { errors },
     control,
     watch,
+    getValues,
     resetField,
   } = useForm({
     resolver: yupResolver(billingValidationShema),
@@ -50,6 +54,7 @@ export const BillingForm = () => {
   const dispatch: AppDispatch = useDispatch();
   const countries = useAppSelector(selectCountries);
   const cities = useAppSelector(selectCities);
+  const cart = useAppSelector(selectCart);
 
   useEffect(() => {
     dispatch(getCountries());
@@ -63,7 +68,18 @@ export const BillingForm = () => {
     }
   }, [country]);
 
-  const onSubmit = async () => {};
+  const onSubmit = async () => {
+    const data = getValues();
+    await dispatch(
+      createOrder({
+        billingInfo: data,
+        paymentStatus: PaymentStatus.UNPAID,
+        products: cart,
+        status: OrderStatus.PENDING,
+        totalAmount: 3900,
+      }),
+    );
+  };
 
   const countriesOptions = useMemo(
     () => transformCountriesToOptions(countries),
@@ -159,7 +175,7 @@ export const BillingForm = () => {
           color={ButtonVariant.PRIMARY}
           className="w-[200px]"
         >
-          Complete order
+          Complete
         </Button>
       </div>
     </form>

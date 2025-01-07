@@ -14,6 +14,7 @@ import { Home } from "./pages/Home/Home";
 import { ConfirmationDialogProvider } from "./components/Dialog/context/ConfirmationDialogContext";
 import { Layout } from "@components/Layout/Layout";
 import { ToastProvider } from "@components/Toast/ToastContext";
+import { OrderConfirmation } from "@pages/OrderConfirmation/OrderConfirmation";
 
 function App() {
   return (
@@ -39,6 +40,10 @@ function App() {
                         <Route
                           path={ROUTES.CHECKOUT.path}
                           element={<Checkout />}
+                        />
+                        <Route
+                          path={ROUTES.ORDER_CONFIRMATION.path}
+                          element={<OrderConfirmation />}
                         />
                       </Routes>
                     </Layout>
