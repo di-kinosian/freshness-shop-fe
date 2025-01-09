@@ -30,7 +30,7 @@ export const getCities = createAsyncThunk<string[], string, ThunkRejectValue>(
     try {
       const response = await api.post("location/cities", { country: payload });
 
-      return response.data.data;
+      return response.data;
     } catch (error) {
       return handleAxiosError(error, thunkAPI);
     }

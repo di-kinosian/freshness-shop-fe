@@ -30,12 +30,12 @@ export const Breadcrumbs = () => {
     });
   }, [state, location]);
 
-  if (location.pathname === "/") {
+  if (location.pathname === "/" || location.pathname === "/orderConfirmation") {
     return null;
   }
 
   return (
-    <div className="h-16 flex items-center w-full max-w-[1200px] mx-auto">
+    <div className="h-fit sm:h-16 py-6 md:py-0 flex items-center w-full max-w-[1200px] mx-auto">
       <BreadcrumbsMUI aria-label="breadcrumb">
         {breadcrumbs.map((breadcrumb, index) => {
           const isLast = breadcrumbs.length === index + 1;

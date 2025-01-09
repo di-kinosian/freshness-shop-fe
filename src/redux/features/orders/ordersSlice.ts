@@ -5,11 +5,17 @@ import { handleAxiosError } from "../utils/handleThunkError";
 import api from "../../../config/axios";
 import { MESSAGES } from "../../../main/constants/messages";
 import { cleanUpCart } from "../cart/cartSlice";
+import { selectAccessToken } from "../auth/selectors";
+import { RootState } from "@redux/app/store";
 
 const initialState: OrderState = {
+  orders: [],
   order: null,
   isOrderLoading: false,
   orderError: null,
+  confirmationOrder: null,
+  confirmOrderError: null,
+  isConfirmOrderLoading: false,
 };
 
 export const createOrder = createAsyncThunk<Order, Order, ThunkRejectValue>(
@@ -31,11 +37,31 @@ export const createOrder = createAsyncThunk<Order, Order, ThunkRejectValue>(
   },
 );
 
+export const fetchOrders = createAsyncThunk<Order[], void, ThunkRejectValue>(
+  "orders/fetchOrders",
+  async (_, thunkAPI) => {
+    const token = selectAccessToken(thunkAPI.getState() as RootState);
+
+    try {
+      const response = await api.get("order/list", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      return handleAxiosError(error, thunkAPI);
+    }
+  },
+);
+
 export const confirmOrder = createAsyncThunk<
-  void,
-  { sessionId: string; token: string },
+  Order,
+  { sessionId: string },
   { rejectValue: string }
->("order/confirmOrder", async ({ sessionId, token }, thunkAPI) => {
+>("order/confirmOrder", async ({ sessionId }, thunkAPI) => {
+  const token = selectAccessToken(thunkAPI.getState() as RootState);
   try {
     const response = await api.post(
       "/order/confirm",
@@ -47,8 +73,9 @@ export const confirmOrder = createAsyncThunk<
       },
     );
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       thunkAPI.dispatch(cleanUpCart());
+      return response.data;
     } else {
       return thunkAPI.rejectWithValue("Order confirmation failed.");
     }
@@ -77,6 +104,25 @@ const ordersSlice = createSlice({
         state.order = null;
         state.isOrderLoading = false;
         state.orderError = action.payload || "Failed to fetch order";
+      })
+      .addCase(confirmOrder.pending, (state) => {
+        state.isConfirmOrderLoading = true;
+        state.confirmOrderError = null;
+      })
+      .addCase(confirmOrder.fulfilled, (state, action) => {
+        state.isConfirmOrderLoading = false;
+        state.confirmationOrder = action.payload;
+      })
+      .addCase(confirmOrder.rejected, (state, action) => {
+        state.isConfirmOrderLoading = false;
+        state.confirmOrderError = action.payload || "Failed to confirm order.";
+      })
+      .addCase(fetchOrders.fulfilled, (state, action) => {
+        state.orders = action.payload;
+        state.isOrderLoading = false;
+      })
+      .addCase(fetchOrders.pending, (state) => {
+        state.isOrderLoading = true;
       });
   },
 });

@@ -10,17 +10,13 @@ import { RelatedProducts } from "../../components/Carousel/RelatedProducts";
 import { ImageGallery } from "../../components/ImageGallery/ImageGallery";
 import { noProductImg } from "../../main/constants/images.constants";
 import { ProductParameters } from "./ProductParameters";
-import { ProductTabs } from "./ProductTabs";
+import { ProductTabs } from "./ProductTabs/ProductTabs";
 import { calculateOriginalPrice, formatMoney } from "../../main/helpers";
-import { ControlContainer } from "../../components/ControlContainer/ControlContainer";
-import { Select } from "../../components/Select/Select";
-import { ControlSize } from "../../main/types/enums";
-import { unitOptions } from "../../main/constants/filter.sort.data";
 import {
   addToWishList,
   deleteFromWishList,
 } from "../../redux/features/auth/authSlise";
-import WishListIcon from "../../components/Product/WishListIcon";
+import WishListIcon from "../../components/Product/WishList/WishListIcon";
 import { twMerge } from "tailwind-merge";
 import { getProduct } from "../../redux/features/products/productThunks";
 import { selectProduct } from "../../redux/features/products/selectors";
@@ -28,6 +24,7 @@ import { selectWishList } from "../../redux/features/auth/selectors";
 import { selectCart } from "../../redux/features/cart/selectors";
 import { QuantitySelector } from "@components/QuantitySelector/QuantitySelector";
 import { addToCart, editQuantity } from "../../redux/features/cart/cartSlice";
+import { ProductDetailPageSkeleton } from "./ProductDetailsSkeleton";
 
 export const ProductDetails = () => {
   const { productId } = useParams();
@@ -73,8 +70,10 @@ export const ProductDetails = () => {
 
   const handleDecreaseQuantity = (): void => {
     if (addedProduct) {
-      const newQuantity = addedProduct?.quantity - 1;
-      updateQuantity(newQuantity);
+      if (addedProduct?.quantity !== 1) {
+        const newQuantity = addedProduct?.quantity - 1;
+        updateQuantity(newQuantity);
+      }
     }
   };
 
@@ -90,7 +89,7 @@ export const ProductDetails = () => {
   };
 
   if (!product) {
-    return "Loading...";
+    return <ProductDetailPageSkeleton />;
   }
 
   return (
@@ -107,7 +106,7 @@ export const ProductDetails = () => {
           </div>
           <div>{product?.description}</div>
           <ProductParameters product={product} />
-          <div className="p-4 border border-grayBorder rounded-2xl flex sm:flex-row md:flex-col lg:flex-row md:items-start md:gap-4 justify-between lg:w-full sm:w-full md:w-full ">
+          <div className="p-4 border border-grayBorder rounded-2xl flex justify-between w-full">
             <div>
               <div className="text-2xl font-bold text-black">
                 {formatMoney(product?.price)}
@@ -123,23 +122,7 @@ export const ProductDetails = () => {
                   : ""}
               </div>
             </div>
-            <div className="flex gap-3 items-center">
-              <div className="w-[170px]">
-                <ControlContainer
-                  size={ControlSize.LARGE}
-                  leftElement={
-                    <input
-                      className="bg-neutralGrayBg outline-0 w-[35px]"
-                      placeholder="1"
-                    />
-                  }
-                  rightElement={
-                    <div className="w-full px-4">
-                      <Select options={unitOptions} width={85} value="pcs" />
-                    </div>
-                  }
-                />
-              </div>
+            <div className="flex items-center">
               {addedProduct ? (
                 <QuantitySelector
                   handleIncreaseQuantity={handleIncreaseQuantity}
@@ -157,8 +140,7 @@ export const ProductDetails = () => {
               <span>{isInWishList ? "Product added" : "Add to wish list"}</span>
             </div>
           </Button>
-
-          <ProductTabs />
+          <ProductTabs product={product} />
         </div>
       </div>
       <RelatedProducts />

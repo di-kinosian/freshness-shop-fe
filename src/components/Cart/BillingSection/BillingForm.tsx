@@ -1,40 +1,37 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Controller, useForm } from "react-hook-form";
-import { billingValidationShema } from "./validation";
-import FormField from "@components/FormComponents/FormField";
+import { useForm } from "react-hook-form";
+import { billingValidationShema } from "../validation";
 import { Button } from "@components/Button/Button";
 
-import { BillingFormFields, ButtonVariant } from "../../main/types/enums";
-import { useEffect, useMemo } from "react";
-import { AppDispatch } from "../../redux/app/store";
+import { BillingFormFields, ButtonVariant } from "../../../main/types/enums";
+import { useEffect, useMemo, useRef } from "react";
+import { AppDispatch } from "../../../redux/app/store";
 import { useDispatch } from "react-redux";
 import {
   getCities,
   getCountries,
-} from "../../redux/features/location/locationSlice";
-import { useAppSelector } from "../../redux/app/hooks";
+} from "../../../redux/features/location/locationSlice";
+import { useAppSelector } from "../../../redux/app/hooks";
 import {
   transformCitiesToOptions,
   transformCountriesToOptions,
-} from "../../main/helpers";
+} from "../../../main/helpers";
 import {
   selectCities,
   selectCountries,
-} from "../../redux/features/location/selectors";
-import { NotesField } from "./NotesField";
-import { LocationField } from "./LocationFields";
-import { CheckboxField } from "./PolicyField";
-import { MESSAGES } from "../../main/constants/messages";
+} from "../../../redux/features/location/selectors";
+import { AutocompleteFormField } from "./BillingFormFields/AutocompleteFormField";
+import { CheckboxFormField } from "./BillingFormFields/PolicyFormField";
+import { MESSAGES } from "../../../main/constants/messages";
 import { createOrder } from "@redux/features/orders/ordersSlice";
 import { selectCart } from "@redux/features/cart/selectors";
 import { OrderStatus, PaymentStatus } from "@redux/features/orders/type";
-
-interface BillingFormFieldProps {
-  name: BillingFormFields;
-  label: string;
-}
+import { InputFormField } from "@components/FormComponents/InputFormField";
+import { TextareaFormField } from "@components/FormComponents/TextareaFormField";
+import { selectProfile } from "@redux/features/auth/selectors";
 
 export const BillingForm = () => {
+  const profile = useAppSelector(selectProfile);
   const {
     handleSubmit,
     formState: { errors },
@@ -47,6 +44,10 @@ export const BillingForm = () => {
     defaultValues: {
       agreeToPolicy: false,
       agreeToEmails: false,
+      firstName: profile?.firstName,
+      lastName: profile?.lastName,
+      email: profile?.email,
+      phoneNumber: profile?.phoneNumber,
     },
   });
 
@@ -72,6 +73,18 @@ export const BillingForm = () => {
     return (acc = acc + item.product.price);
   }, 0);
 
+  const fieldRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+  const scrollToError = () => {
+    const firstErrorFieldKey = Object.keys(errors)[0];
+    if (firstErrorFieldKey && fieldRefs.current[firstErrorFieldKey]) {
+      fieldRefs.current[firstErrorFieldKey]?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  };
+
   const onSubmit = async () => {
     const data = getValues();
     await dispatch(
@@ -95,63 +108,75 @@ export const BillingForm = () => {
     [cities],
   );
 
-  const BillingFormField = ({ name, label }: BillingFormFieldProps) => {
-    return (
-      <Controller
-        control={control}
-        name={name}
-        render={({ field, fieldState }) => (
-          <FormField
-            label={label}
-            placeholder={label}
-            {...field}
-            error={fieldState.error?.message}
-          />
-        )}
-      />
-    );
-  };
-
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit, scrollToError)}
       className="flex flex-col gap-16 max-w-[500px]"
     >
-      <div className="flex flex-col gap-4">
-        <BillingFormField
+      <div className="flex flex-col gap-4 w-full">
+        <InputFormField
+          control={control}
           name={BillingFormFields.FirstName}
           label="First name"
         />
-        <BillingFormField name={BillingFormFields.LastName} label="Last name" />
-        <BillingFormField name={BillingFormFields.Email} label="Email" />
-        <BillingFormField
+        <InputFormField
+          control={control}
+          name={BillingFormFields.LastName}
+          label="Last name"
+        />
+        <InputFormField
+          control={control}
+          name={BillingFormFields.Email}
+          label="Email"
+        />
+        <InputFormField
+          control={control}
           name={BillingFormFields.PhoneNumber}
           label="Phone number"
         />
-        <BillingFormField name={BillingFormFields.Address} label="Address" />
-        <LocationField
+        <InputFormField
+          control={control}
+          name={BillingFormFields.Address}
+          label="Address"
+        />
+        <AutocompleteFormField
           name="country"
           control={control}
-          locationOptions={countriesOptions}
+          options={countriesOptions}
           error={errors.country?.message || ""}
           label="State / Country"
           placeholder="country"
         />
-        <LocationField
+        <AutocompleteFormField
           name="city"
           control={control}
-          locationOptions={citiesOptions}
+          options={citiesOptions}
           error={errors.country?.message || ""}
           label="Town / City"
           placeholder={country ? "city" : "select country"}
           disabled={!country}
         />
-        <BillingFormField
+        <InputFormField
+          control={control}
           name={BillingFormFields.ZipCode}
           label="Zip / Postal Code"
         />
       </div>
-      <NotesField control={control} errors={errors} />
+      <div className="flex flex-col gap-6">
+        <div>
+          <h2 className="text-2xl font-semibold">Additional informations</h2>
+          <span className="text-sm text-grayText">
+            Need something else? We will make it for you!
+          </span>
+        </div>
+        <TextareaFormField
+          rows={3}
+          control={control}
+          name="notes"
+          label="Notes"
+          placeholder="Need a specific delivery day? Sending a gitf? Let’s say ..."
+        />
+      </div>
       <div className="flex flex-col gap-6">
         <div>
           <h2 className="text-2xl font-semibold">Confirmation</h2>
@@ -160,12 +185,12 @@ export const BillingForm = () => {
           </span>
         </div>
         <div className="flex flex-col gap-2">
-          <CheckboxField
+          <CheckboxFormField
             control={control}
             name="agreeToEmails"
             text={MESSAGES.CHECKBOX.MARKETING_AGREEMENT}
           />
-          <CheckboxField
+          <CheckboxFormField
             control={control}
             name="agreeToPolicy"
             error={errors.agreeToPolicy?.message || ""}

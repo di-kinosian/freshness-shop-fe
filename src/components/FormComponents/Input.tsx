@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) => {
 const Input = forwardRef<HTMLInputElement, InputBaseProps>((props, ref) => {
   const classes = useStyles(props);
 
-  return <InputBase ref={ref} classes={{ root: classes.root }} {...props} />;
+  return <InputBase inputRef={ref} classes={{ root: classes.root }} {...props} />;
 });
 
 export default Input;

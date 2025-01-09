@@ -11,7 +11,6 @@ import {
   addToWishList,
   deleteFromWishList,
 } from "../../redux/features/auth/authSlise";
-import { twMerge } from "tailwind-merge";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Tooltip } from "@mui/material";
@@ -79,7 +78,7 @@ export const ProductItem: React.FC<Props> = ({
   };
 
   return (
-    <div className="border border-basicGray rounded-lg grid grid-cols-[1fr,1fr,1fr] customSm:grid-cols-[240px,2fr,1fr] gap-[26px]">
+    <div className="border border-basicGray rounded-lg grid grid-cols-1 customSm:grid-cols-[240px,2fr,1fr] gap-4 sm:gap-[26px] p-4 w-full">
       <div
         className="w-full flex items-center justify-center"
         onClick={() => goToPDP(product._id)}
@@ -87,88 +86,75 @@ export const ProductItem: React.FC<Props> = ({
         <img
           src={product.images[0]}
           alt="Product image"
-          className="rounded-lg max-h-[250px]"
+          className="rounded-lg max-h-[200px] sm:max-h-[250px] object-contain"
         />
       </div>
       <div
-        className="flex flex-col justify-between py-6"
+        className="flex flex-col justify-between py-4 sm:py-6 gap-4"
         onClick={() => goToPDP(product._id)}
       >
         <div className="flex flex-col items-start gap-2">
-          <div>
-            <h3 className="text-lg font-semibold">{product.title}</h3>
-            <span className="text-grayText text-sm text-left">
-              {product.description ? product.description.slice(0, 60) : ""}
-            </span>
-          </div>
+          <h3 className="text-md sm:text-lg font-semibold">{product.title}</h3>
+          <span className="text-grayText text-sm text-left">
+            {product.description ? product.description.slice(0, 60) : ""}
+          </span>
           <ProductRating value={product?.rating ?? 0} size="small" />
         </div>
-
-        <div className="grid grid-[1fr,1fr] gap-x-16 gap-y-1 w-full text-sm">
-          <div className="grid grid-cols-[1fr,2fr] gap-8">
+        <div className="hidden mobileSm:grid gap-x-8 gap-y-2 text-sm w-full">
+          <div className="grid grid-cols-2">
             <span className="text-grayText">Country</span>
             <span className="text-gray-600">{product?.country}</span>
           </div>
-          <div className="grid grid-cols-[1fr,2fr] gap-8">
+          <div className="grid grid-cols-2">
             <span className="text-grayText">Brand</span>
             <span className="text-gray-600">{product?.brand}</span>
           </div>
           {product?.additionalInformation?.slice(2, 3).map((item) => (
-            <div className="grid grid-cols-[1fr,2fr] gap-8" key={item.key}>
-              <div className="text-grayText">{item.key}</div>
-              <div className="text-gray-600">{item.value}</div>
+            <div className="grid grid-cols-2" key={item.key}>
+              <span className="text-grayText">{item.key}</span>
+              <span className="text-gray-600">{item.value}</span>
             </div>
           ))}
         </div>
       </div>
-      <div className="py-6 flex flex-col justify-between items-start pr-6 gap-3">
-        <div className="w-full flex flex-col gap-3">
-          <div className="w-full">
-            <div className="flex justify-between items-center w-full">
-              <div className="text-lg font-bold">
-                {formatMoney(product.price)}
-              </div>
-              {isInWishList ? (
-                <Tooltip title="Delete from wish list">
-                  <FavoriteIcon fontSize="medium" onClick={updateWishList} />
-                </Tooltip>
-              ) : (
-                <Tooltip title="Add to wish list">
-                  <FavoriteBorderIcon
-                    fontSize="medium"
-                    onClick={updateWishList}
-                  />
-                </Tooltip>
-              )}
+      <div className="flex flex-col justify-between items-start gap-4 py-4 sm:py-6">
+        <div className="flex flex-col gap-2 w-full">
+          <div className="flex justify-between items-center w-full">
+            <div className="text-md sm:text-lg font-bold">
+              {formatMoney(product.price)}
             </div>
-
-            <div
-              className={twMerge(
-                "text-sm font-semibold text-grayText",
-                product.discount ? "line-through" : "none",
-              )}
-            >
-              {product.discount
-                ? calculateOriginalPrice(product.price, product.discount)
-                : ""}
-            </div>
+            {isInWishList ? (
+              <Tooltip title="Delete from wish list">
+                <FavoriteIcon fontSize="medium" onClick={updateWishList} />
+              </Tooltip>
+            ) : (
+              <Tooltip title="Add to wish list">
+                <FavoriteBorderIcon
+                  fontSize="medium"
+                  onClick={updateWishList}
+                />
+              </Tooltip>
+            )}
           </div>
-          <div className="text-sm text-grayText">Delivery in 1 day</div>
-        </div>
-        <div className="flex flex-col gap-2">
-          {isInCart ? (
-            <div className="">
-              <QuantitySelector
-                quantity={cartProduct?.quantity || 1}
-                handleIncreaseQuantity={handleIncreaseQuantity}
-                handleDecreaseQuantity={handleDecreaseQuantity}
-              />
+          {product.discount ? (
+            <div className="text-sm font-semibold text-grayText line-through">
+              {calculateOriginalPrice(product.price, product.discount)}
             </div>
+          ) : null}
+          <div className="text-sm text-grayText">Delivery in 2-3 days</div>
+        </div>
+        <div className="flex flex-col gap-2 w-full">
+          {isInCart ? (
+            <QuantitySelector
+              quantity={cartProduct?.quantity || 1}
+              handleIncreaseQuantity={handleIncreaseQuantity}
+              handleDecreaseQuantity={handleDecreaseQuantity}
+            />
           ) : (
             <Button
               color={ButtonVariant.PRIMARY}
               size={ButtonSize.MEDIUM}
-              className="w-[164px] flex gap-2"
+              className="w-full sm:w-[164px] flex gap-2"
               onClick={addProductToCart}
             >
               <span>Add to cart</span>
