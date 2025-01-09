@@ -72,9 +72,6 @@ export const WishList = ({ onClose, goToCart, goToMainPage }: Props) => {
   const addProductToCart = async () => {
     await selectedProducts.map((id) => {
       dispatch(addToCart({ productId: id, quantity: 1 }));
-      dispatch(deleteFromWishList({ productId: id })).then(() => {
-        dispatch(getWishList());
-      });
     });
     setSelectedProducts([]);
     onClose();

@@ -12,10 +12,6 @@ import { noProductImg } from "../../main/constants/images.constants";
 import { ProductParameters } from "./ProductParameters";
 import { ProductTabs } from "./ProductTabs/ProductTabs";
 import { calculateOriginalPrice, formatMoney } from "../../main/helpers";
-import { ControlContainer } from "../../components/ControlContainer/ControlContainer";
-import { Select } from "../../components/Select/Select";
-import { ControlSize } from "../../main/types/enums";
-import { unitOptions } from "../../main/constants/filter.sort.data";
 import {
   addToWishList,
   deleteFromWishList,
@@ -110,7 +106,7 @@ export const ProductDetails = () => {
           </div>
           <div>{product?.description}</div>
           <ProductParameters product={product} />
-          <div className="p-4 border border-grayBorder rounded-2xl flex flex-col gap-4 sm:flex-row md:flex-col lg:flex-row md:items-start md:gap-4 justify-between w-full">
+          <div className="p-4 border border-grayBorder rounded-2xl flex justify-between w-full">
             <div>
               <div className="text-2xl font-bold text-black">
                 {formatMoney(product?.price)}
@@ -126,23 +122,7 @@ export const ProductDetails = () => {
                   : ""}
               </div>
             </div>
-            <div className="flex gap-3 items-center justify-between">
-              <div className="w-[170px]">
-                <ControlContainer
-                  size={ControlSize.LARGE}
-                  leftElement={
-                    <input
-                      className="bg-neutralGrayBg outline-0 w-[35px]"
-                      placeholder="1"
-                    />
-                  }
-                  rightElement={
-                    <div className="w-full px-4">
-                      <Select options={unitOptions} width={85} value="pcs" />
-                    </div>
-                  }
-                />
-              </div>
+            <div className="flex items-center">
               {addedProduct ? (
                 <QuantitySelector
                   handleIncreaseQuantity={handleIncreaseQuantity}

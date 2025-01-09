@@ -94,11 +94,13 @@ const OrderCard = ({ data }: { data: Order }) => {
 
         {data.status === "pending" && (
           <Button
+            className="underline text-neutralGreenBg"
+            variant="text"
             onClick={() => {
               dispatch(createOrder(preparePayload(data)));
             }}
           >
-            Finish
+            Complete the purchase
           </Button>
         )}
       </div>
