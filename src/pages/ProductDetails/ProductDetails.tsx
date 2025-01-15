@@ -90,7 +90,11 @@ export const ProductDetails = () => {
   };
 
   if (!product) {
-    return "Loading...";
+    return (
+      <div className="w-full min-h-40 flex justify-center items-center">
+        <span className="mx-auto">Loading</span>
+      </div>
+    );
   }
 
   return (

@@ -1,14 +1,11 @@
 import { Tooltip } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { Cart } from "../../redux/features/cart/types";
-import { formatMoney } from "../../main/helpers";
-import { AppDispatch } from "../../redux/app/store";
 import { useDispatch } from "react-redux";
-import {
-  deleteFromCart,
-  editQuantity,
-} from "../../redux/features/cart/cartSlice";
 import { QuantitySelector } from "@components/QuantitySelector/QuantitySelector";
+import { Cart } from "@redux/features/cart/types";
+import { AppDispatch } from "@redux/app/store";
+import { deleteFromCart, editQuantity } from "@redux/features/cart/cartSlice";
+import { formatMoney } from "../../../../main/helpers";
 
 interface Props {
   productItem: Cart;

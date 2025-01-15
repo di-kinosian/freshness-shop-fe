@@ -1,11 +1,23 @@
-import { BillingForm } from "@components/Cart/BillingForm";
-import { OrderSection } from "../../components/Cart/OrderSection";
+import { BillingForm } from "@components/Cart/BillingSection/BillingForm";
+import { OrderSection } from "../../components/Cart/OrderSection/OrderSection";
 import { useAppSelector } from "@redux/app/hooks";
-import { selectCart } from "@redux/features/cart/selectors";
+import {
+  selectCart,
+  selectIsCartLoading,
+} from "@redux/features/cart/selectors";
 import { EmptyCheckout } from "./EmptyCheckout";
 
 export const Checkout = () => {
   const cart = useAppSelector(selectCart);
+  const isCartLoading = useAppSelector(selectIsCartLoading);
+
+  if (isCartLoading) {
+    return (
+      <div className="w-full min-h-40 flex justify-center items-center">
+        <span className="mx-auto">Loading</span>
+      </div>
+    );
+  }
 
   return (
     <>
