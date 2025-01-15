@@ -27,7 +27,6 @@ import { createOrder } from "@redux/features/orders/ordersSlice";
 import { selectCart } from "@redux/features/cart/selectors";
 import { OrderStatus, PaymentStatus } from "@redux/features/orders/type";
 import { InputFormField } from "@components/FormComponents/InputFormField";
-import { TextareaFormField } from "@components/FormComponents/TextareaFormField";
 
 export const BillingForm = () => {
   const {
@@ -151,7 +150,7 @@ export const BillingForm = () => {
             Need something else? We will make it for you!
           </span>
         </div>
-        <TextareaFormField
+        <InputFormField
           rows={3}
           control={control}
           name="notes"

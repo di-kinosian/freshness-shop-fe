@@ -3,9 +3,10 @@ import FormField from "./FormField";
 
 interface Props<T extends FieldValues> {
   name: FieldPath<T>;
-  label: string;
+  label?: string;
   placeholder?: string;
   control: Control<T>;
+  rows?: number;
 }
 
 export function InputFormField<T extends FieldValues>({
@@ -13,6 +14,7 @@ export function InputFormField<T extends FieldValues>({
   label,
   control,
   placeholder,
+  rows,
 }: Props<T>) {
   return (
     <Controller
@@ -20,6 +22,7 @@ export function InputFormField<T extends FieldValues>({
       name={name}
       render={({ field, fieldState }) => (
         <FormField
+          rows={rows}
           label={label}
           placeholder={placeholder || label}
           {...field}
