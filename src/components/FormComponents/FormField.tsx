@@ -5,7 +5,7 @@ import Label from "./Label";
 import { twMerge } from "tailwind-merge";
 
 interface IProps {
-  label: string;
+  label?: string;
   value?: string | number;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
@@ -13,11 +13,26 @@ interface IProps {
   error?: string;
   name?: string;
   className?: string;
+  rows?: number;
   type?: string;
 }
 
 const FormField = forwardRef<HTMLInputElement, IProps>(
-  ({ label, value, onChange, placeholder, error, name, className, type, onBlur }, ref) => {
+  (
+    {
+      label,
+      value,
+      onChange,
+      placeholder,
+      error,
+      name,
+      className,
+      type,
+      onBlur,
+      rows,
+    },
+    ref,
+  ) => {
     return (
       <FormControl
         variant="standard"
@@ -26,6 +41,7 @@ const FormField = forwardRef<HTMLInputElement, IProps>(
       >
         <Label htmlFor={name}>{label}</Label>
         <Input
+          rows={rows}
           name={name}
           id={name}
           ref={ref}

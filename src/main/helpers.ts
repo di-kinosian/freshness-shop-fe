@@ -56,3 +56,16 @@ export const transformCitiesToOptions = (cities: string[]): Options[] => {
     label: city,
   }));
 };
+
+const options: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  second: "numeric",
+};
+
+export const formatDate = (date: string): string => {
+  return new Date(date).toLocaleString("en-US", options);
+};

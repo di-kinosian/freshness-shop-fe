@@ -22,7 +22,7 @@ export const theme = createTheme({
       radius: "12px",
     },
     height: "42px",
-    padding: "0 20px",
+    padding: "5px 20px",
   },
 
   button: {

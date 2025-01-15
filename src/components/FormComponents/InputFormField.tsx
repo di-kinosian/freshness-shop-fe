@@ -1,27 +1,28 @@
-import { Control, Controller } from "react-hook-form";
-import { BillingFormFields } from "../../main/types/enums";
-import { BillingFormData } from "@components/Cart/types";
+import { Control, Controller, FieldPath, FieldValues } from "react-hook-form";
 import FormField from "./FormField";
 
-interface Props {
-  name: BillingFormFields;
-  label: string;
+interface Props<T extends FieldValues> {
+  name: FieldPath<T>;
+  label?: string;
   placeholder?: string;
-  control: Control<BillingFormData>;
+  control: Control<T>;
+  rows?: number;
 }
 
-export const InputFormField = ({
+export function InputFormField<T extends FieldValues>({
   name,
   label,
   control,
   placeholder,
-}: Props) => {
+  rows,
+}: Props<T>) {
   return (
     <Controller
       control={control}
       name={name}
       render={({ field, fieldState }) => (
         <FormField
+          rows={rows}
           label={label}
           placeholder={placeholder || label}
           {...field}
@@ -30,4 +31,4 @@ export const InputFormField = ({
       )}
     />
   );
-};
+}

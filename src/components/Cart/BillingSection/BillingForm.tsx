@@ -20,7 +20,6 @@ import {
   selectCities,
   selectCountries,
 } from "../../../redux/features/location/selectors";
-import { NotesFormField } from "./BillingFormFields/NotesFormField";
 import { AutocompleteFormField } from "./BillingFormFields/AutocompleteFormField";
 import { CheckboxFormField } from "./BillingFormFields/PolicyFormField";
 import { MESSAGES } from "../../../main/constants/messages";
@@ -151,7 +150,13 @@ export const BillingForm = () => {
             Need something else? We will make it for you!
           </span>
         </div>
-        <NotesFormField control={control} />
+        <InputFormField
+          rows={3}
+          control={control}
+          name="notes"
+          label="Notes"
+          placeholder="Need a specific delivery day? Sending a gitf? Let’s say ..."
+        />
       </div>
       <div className="flex flex-col gap-6">
         <div>

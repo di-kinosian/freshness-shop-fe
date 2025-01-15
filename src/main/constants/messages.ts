@@ -30,7 +30,7 @@ export const MESSAGES = {
     ACCOUNT_ALREADY_EXISTS: "An account with this email already exists.",
     SIGNUP_FAILED: "Signup failed. Please try again later.",
     NETWORK_ERROR: "Network error. Please check your connection.",
-    URL_ERROR: "Url error: Missing redirection URL"
+    URL_ERROR: "Url error: Missing redirection URL",
   },
   SIGNUP: {
     SUCCESS: "Account was successfully created",
@@ -40,5 +40,9 @@ export const MESSAGES = {
       "I agree with sending Marketing and newsletter emails. No spam, promised!",
     TERMS_AND_CONDITIONS:
       "I agree with our terms and conditions and privacy policy.",
+  },
+  REVIEW: {
+    REVIEW_IS_REQUIRED: "Review is required",
+    REVIEW_MIN_LENGTH: "Review must be at least 2 characters",
   },
 };

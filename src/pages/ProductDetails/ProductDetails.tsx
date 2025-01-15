@@ -10,7 +10,7 @@ import { RelatedProducts } from "../../components/Carousel/RelatedProducts";
 import { ImageGallery } from "../../components/ImageGallery/ImageGallery";
 import { noProductImg } from "../../main/constants/images.constants";
 import { ProductParameters } from "./ProductParameters";
-import { ProductTabs } from "./ProductTabs";
+import { ProductTabs } from "./ProductTabs/ProductTabs";
 import { calculateOriginalPrice, formatMoney } from "../../main/helpers";
 import { ControlContainer } from "../../components/ControlContainer/ControlContainer";
 import { Select } from "../../components/Select/Select";
@@ -161,8 +161,7 @@ export const ProductDetails = () => {
               <span>{isInWishList ? "Product added" : "Add to wish list"}</span>
             </div>
           </Button>
-
-          <ProductTabs />
+          <ProductTabs product={product}/>
         </div>
       </div>
       <RelatedProducts />
