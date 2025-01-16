@@ -5,21 +5,22 @@ import RateReviewIcon from "@mui/icons-material/RateReview";
 import { useDialog } from "@components/Dialog/context/DialogContext";
 import { AddReviewForm } from "@components/AddReviewForm/AddReviewForm";
 import { Comment, Replies } from "./ReviewItem";
+import { useAppSelector } from "@redux/app/hooks";
+import { selectProfile } from "@redux/features/auth/selectors";
 
 interface Props {
   productId: string;
   comments: CommentResponce[];
-  handleMenuClick: (event: React.MouseEvent<SVGSVGElement>, id: string) => void;
   handleOpenReviewDialog: () => void;
 }
 
 export const ReviewsTab = ({
   comments,
-  handleMenuClick,
   handleOpenReviewDialog,
   productId,
 }: Props) => {
   const { openDialog, closeDialog } = useDialog();
+  const profile = useAppSelector(selectProfile);
 
   const handleOpenReplyDialog = (commentId: string): void => {
     openDialog({
@@ -36,9 +37,9 @@ export const ReviewsTab = ({
   };
 
   return (
-    <div className="min-h-[200px] w-full">
+    <div className="w-full">
       {comments.length ? (
-        <div className="flex flex-col gap-3 ">
+        <div className="flex flex-col gap-3">
           <Button
             variant="text"
             className="ml-auto"
@@ -49,24 +50,27 @@ export const ReviewsTab = ({
               <span className="underline">Add comment</span>
             </div>
           </Button>
-          {comments.map((comment) => {
-            return (
-              <div key={comment._id} className="flex flex-col gap-3">
-                <Comment
-                  comment={comment}
-                  onMenuClick={handleMenuClick}
-                  onReplyClick={handleOpenReplyDialog}
-                />
-
-                {comment.replies && (
-                  <Replies
-                    replies={comment.replies}
-                    onMenuClick={handleMenuClick}
+          <div className="w-full max-h-[500px] overflow-auto flex flex-col gap-3">
+            {comments.map((comment) => {
+              const isOwnComment = profile?._id === comment.user._id;
+              return (
+                <div key={comment._id} className="flex flex-col gap-3">
+                  <Comment
+                    isOwn={isOwnComment}
+                    author={comment.user}
+                    comment={comment}
+                    onReplyClick={handleOpenReplyDialog}
                   />
-                )}
-              </div>
-            );
-          })}
+                  {comment.replies && (
+                    <Replies
+                      profileId={profile?._id}
+                      replies={comment.replies}
+                    />
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       ) : (
         <div className="w-full flex flex-col gap-3">
