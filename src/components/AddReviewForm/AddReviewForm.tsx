@@ -6,11 +6,11 @@ import {
   ButtonVariant,
   ReviewFields,
 } from "../../main/types/enums";
-import { TextareaFormField } from "@components/FormComponents/TextareaFormField";
 import { Button } from "@components/Button/Button";
 import { AppDispatch } from "@redux/app/store";
 import { useDispatch } from "react-redux";
 import { createComments } from "@redux/features/comments/commentsSlice";
+import { InputFormField } from "@components/FormComponents/InputFormField";
 
 interface Props {
   onClose: () => void;
@@ -41,10 +41,11 @@ export const AddReviewForm = ({ onClose, productId, commentId }: Props) => {
       onSubmit={handleSubmit(onSubmit)}
       className="w-full flex flex-col gap-6"
     >
-      <TextareaFormField
+      <InputFormField
         name={ReviewFields.Review}
         control={control}
         placeholder="Write the review"
+        rows={3}
       />
       <div className="w-full flex gap-4 justify-center">
         <Button type="submit" size={ButtonSize.SMALL}>

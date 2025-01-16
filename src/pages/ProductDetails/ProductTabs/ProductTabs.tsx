@@ -15,6 +15,8 @@ interface Props {
   product: Product;
 }
 
+const tabs = ["Description", "Reviews", "Questions"];
+
 export const ProductTabs = ({ product }: Props) => {
   const [activeTab, setActiveTab] = useState<string>("Reviews");
   const comments = useAppSelector(selectComments);
@@ -36,7 +38,7 @@ export const ProductTabs = ({ product }: Props) => {
   return (
     <div className="w-full flex flex-col gap-3">
       <div className="w-full p-2 flex justify-between border-b border-grayBorder">
-        {["Description", "Reviews", "Questions"].map((tab) => (
+        {tabs.map((tab) => (
           <span
             key={tab}
             className={twMerge(
