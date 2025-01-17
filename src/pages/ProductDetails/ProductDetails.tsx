@@ -20,7 +20,7 @@ import {
   addToWishList,
   deleteFromWishList,
 } from "../../redux/features/auth/authSlise";
-import WishListIcon from "../../components/Product/WishListIcon";
+import WishListIcon from "../../components/Product/WishList/WishListIcon";
 import { twMerge } from "tailwind-merge";
 import { getProduct } from "../../redux/features/products/productThunks";
 import { selectProduct } from "../../redux/features/products/selectors";

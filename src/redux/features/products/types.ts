@@ -33,6 +33,7 @@ export interface PaginatedProductsResponse {
 
 export interface ProductsState {
   products: Product[];
+  isProductsLoading: boolean;
   relatedProducts: Product[];
   total: number;
   page: number;

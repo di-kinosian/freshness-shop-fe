@@ -20,13 +20,18 @@ import {
   showMoreProducts,
 } from "../../redux/features/products/productThunks";
 import { selectWishList } from "../../redux/features/auth/selectors";
-import { selectProducts } from "../../redux/features/products/selectors";
+import {
+  selectIsProductsLoading,
+  selectProducts,
+} from "../../redux/features/products/selectors";
 import { selectCart } from "../../redux/features/cart/selectors";
+import { ProductPageSkeleton } from "./ProductPageSkeleton";
 
 export const Products = () => {
   const dispatch: AppDispatch = useDispatch();
   const wishList = useAppSelector(selectWishList);
   const products = useAppSelector(selectProducts);
+  const isProductsLoading = useAppSelector(selectIsProductsLoading);
   const cart = useAppSelector(selectCart);
   const { total, limit, page, showMorePage, sortValue } = useAppSelector(
     (state) => state.product,
@@ -53,6 +58,10 @@ export const Products = () => {
   };
 
   const lastDownloadedPage = showMorePage || page;
+
+  if (isProductsLoading) {
+    return <ProductPageSkeleton />;
+  }
 
   return (
     <div className="flex flex-col gap-12">
